@@ -1,7 +1,7 @@
 # Moving Turtlebot4 Backward
 
 > 원본: https://indecisive-freedom-6e8.notion.site/c288e215779c83f88ef68139c5b7ec93  
-> 최종 수정: 2026-07-23 10:34 / 변환: 2026-10-08 14:07
+> 최종 수정: 2026-07-23 10:34 / 변환: 2026-10-08 15:51
 
 1. Check current setting
 

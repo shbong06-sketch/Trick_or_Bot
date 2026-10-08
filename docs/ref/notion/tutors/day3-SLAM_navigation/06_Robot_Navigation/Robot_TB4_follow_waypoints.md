@@ -1,7 +1,7 @@
 # Robot_TB4_follow_waypoints
 
 > 원본: https://indecisive-freedom-6e8.notion.site/3a48e215779c80e8bed6e8fdf02ab5e8  
-> 최종 수정: 2026-07-30 16:11 / 변환: 2026-10-08 14:07
+> 최종 수정: 2026-07-30 16:11 / 변환: 2026-10-08 15:51
 
 ### 학습 목표
 

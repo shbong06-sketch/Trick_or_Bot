@@ -1,7 +1,7 @@
 # User PC Single Robot Network Setup
 
 > 원본: https://indecisive-freedom-6e8.notion.site/d768e215779c825cb47d019718019c87  
-> 최종 수정: 2026-10-02 09:12 / 변환: 2026-10-08 14:04
+> 최종 수정: 2026-10-02 09:12 / 변환: 2026-10-08 15:48
 
 | 속성 | 값 |
 |---|---|

@@ -1,7 +1,7 @@
 # Robot_TB4_nav_through_pose
 
 > 원본: https://indecisive-freedom-6e8.notion.site/3a48e215779c8027aba6fb195aaade8c  
-> 최종 수정: 2026-07-30 16:11 / 변환: 2026-10-08 14:07
+> 최종 수정: 2026-07-30 16:11 / 변환: 2026-10-08 15:51
 
 ### 학습 목표
 

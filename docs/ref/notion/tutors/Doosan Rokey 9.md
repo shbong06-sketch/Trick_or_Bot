@@ -1,7 +1,7 @@
 # Doosan Rokey 9
 
 > 원본: https://indecisive-freedom-6e8.notion.site/29d8e215779c8060974ae4a5311b1942  
-> 최종 수정: 2026-10-08 09:43 / 변환: 2026-10-08 14:04
+> 최종 수정: 2026-10-08 09:43 / 변환: 2026-10-08 15:48
 
 |  |  |
 |---|---|
@@ -285,8 +285,8 @@
 |---|
 | [화면 캡쳐 및 영상 녹화 도구](day1-setup_development_process/appendix_day1/01_%ED%99%94%EB%A9%B4%20%EC%BA%A1%EC%B3%90%20%EB%B0%8F%20%EC%98%81%EC%83%81%20%EB%85%B9%ED%99%94%20%EB%8F%84%EA%B5%AC.md) |
 | [Git 연동 및 사용 (Git+VSCode)](day1-setup_development_process/appendix_day1/02_Git%20%EC%97%B0%EB%8F%99%20%EB%B0%8F%20%EC%82%AC%EC%9A%A9%20%28Git%2BVSCode%29.md) |
-| [Turtlebot4 Setup(NO ACTION NEEDED)](day1-setup_development_process/appendix_day1/03_Turtlebot4%20Setup%28NO%20ACTION%20NEEDED%29.md) |
-| [Creating Custom ROS2 Interface](day1-setup_development_process/appendix_day1/04_Creating%20Custom%20ROS2%20Interface.md) |
+| [Creating Custom ROS2 Interface](day1-setup_development_process/appendix_day1/03_Creating%20Custom%20ROS2%20Interface.md) |
+| [Turtlebot4 Setup(NO ACTION NEEDED)](day1-setup_development_process/appendix_day1/04_Turtlebot4%20Setup%28NO%20ACTION%20NEEDED%29.md) |
 
 #### 🗂️ DAY 2 - AI VISION (YOLO)
 
@@ -301,9 +301,9 @@
 
 | 제목 |
 |---|
-| [Recording and Playback ROS traffic](day2-AI_vision_YOLO/day2_appendix/01_Recording%20and%20Playback%20ROS%20traffic.md) |
+| [Aligned RGB/Depth FOV/Dim.](day2-AI_vision_YOLO/day2_appendix/01_Aligned%20RGB_Depth%20FOV_Dim.md) |
 | [도킹 스테이션에 충전 중이어도 카메라 활성화](day2-AI_vision_YOLO/day2_appendix/02_%EB%8F%84%ED%82%B9%20%EC%8A%A4%ED%85%8C%EC%9D%B4%EC%85%98%EC%97%90%20%EC%B6%A9%EC%A0%84%20%EC%A4%91%EC%9D%B4%EC%96%B4%EB%8F%84%20%EC%B9%B4%EB%A9%94%EB%9D%BC%20%ED%99%9C%EC%84%B1%ED%99%94.md) |
-| [Aligned RGB/Depth FOV/Dim.](day2-AI_vision_YOLO/day2_appendix/03_Aligned%20RGB_Depth%20FOV_Dim.md) |
+| [Recording and Playback ROS traffic](day2-AI_vision_YOLO/day2_appendix/03_Recording%20and%20Playback%20ROS%20traffic.md) |
 
 #### 🗂️ DAY 3 - SLAM & Navigation
 
@@ -322,18 +322,18 @@
 
 | 제목 |
 |---|
-| [Localization Recovery](day3-SLAM_navigation/day3_appendix/01_Localization%20Recovery.md) |
-| [Navigation Recovery](day3-SLAM_navigation/day3_appendix/02_Navigation%20Recovery.md) |
-| [Rviz에서 Marker 3D로 보는 방법](day3-SLAM_navigation/day3_appendix/03_Rviz%EC%97%90%EC%84%9C%20Marker%203D%EB%A1%9C%20%EB%B3%B4%EB%8A%94%20%EB%B0%A9%EB%B2%95.md) |
-| [Turtlebot4 Recovery](day3-SLAM_navigation/day3_appendix/04_Turtlebot4%20Recovery.md) |
+| [Rviz에서 Marker 3D로 보는 방법](day3-SLAM_navigation/day3_appendix/01_Rviz%EC%97%90%EC%84%9C%20Marker%203D%EB%A1%9C%20%EB%B3%B4%EB%8A%94%20%EB%B0%A9%EB%B2%95.md) |
+| [Turtlebot4 Recovery](day3-SLAM_navigation/day3_appendix/02_Turtlebot4%20Recovery.md) |
+| [Localization Recovery](day3-SLAM_navigation/day3_appendix/03_Localization%20Recovery.md) |
+| [Navigation Recovery](day3-SLAM_navigation/day3_appendix/04_Navigation%20Recovery.md) |
 
 #### 🗂️ DAY 5 - System Monitor & Multi Robot
 
 | 제목 | 상태 |
 |---|---|
-| [Multi Robot Standard Setup](day5-SystemMonitor_MultiRobot/01_Multi%20Robot%20Standard%20Setup.md) | 시작 전 |
-| [Multi Robot Custom Discovery Setup](day5-SystemMonitor_MultiRobot/02_Multi%20Robot%20Custom%20Discovery%20Setup.md) | 시작 전 |
-| [**Multi Robot Client Setup**](day5-SystemMonitor_MultiRobot/03__Multi%20Robot%20Client%20Setup_.md) | 시작 전 |
+| [Multi Robot Custom Discovery Setup](day5-SystemMonitor_MultiRobot/01_Multi%20Robot%20Custom%20Discovery%20Setup.md) | 완료 |
+| [**Multi Robot Client Setup**](day5-SystemMonitor_MultiRobot/02__Multi%20Robot%20Client%20Setup_.md) | 완료 |
+| [Multi Robot Standard Setup](day5-SystemMonitor_MultiRobot/03_Multi%20Robot%20Standard%20Setup.md) | 완료 |
 
 #### 🗂️ DAY 5 - Appendix
 
