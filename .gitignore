@@ -49,3 +49,15 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+
+# Frontend (Node / Vite)
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+.env.local
+.env.*.local
+
+# Backup files
+*.bak
+*.bak_*
