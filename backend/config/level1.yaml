@@ -1,0 +1,15 @@
+# Level 1 — 첫 번째 밤
+lv: 1
+name: 첫 번째 밤
+time_limit_s: 240        # 4:00
+pick_radius_m: 0.3       # 사탕 획득 반경
+video_fps: 15            # 서버가 중계하는 1인칭 영상 최대 fps
+
+# 이 파일 기준 상대 경로
+map_yaml: ../maps/holloween.yaml
+
+# 사탕 좌표 (map 프레임, m). tools/pick_candies.py로 다시 찍으면 이 블록이 교체된다.
+candies:
+  - {id: c1, x: 0.34, y: 0.37}
+  - {id: c2, x: 2.09, y: -1.03}
+  - {id: c3, x: 5.19, y: 1.53}

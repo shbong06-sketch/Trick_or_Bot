@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pumpkin Run</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0d0b14; color: #eee; font-family: system-ui, sans-serif; }
+    #fpv { position: relative; width: 100vw; height: 100vh; display: grid; place-items: center; }
+    #fpv .placeholder { color: #555; font-size: 1.4rem; }
+    #minimap { position: absolute; top: 16px; right: 16px; width: 220px; height: 160px;
+               border: 1px solid #444; background: #16131f; display: grid; place-items: center; color: #555; }
+    #hud { position: absolute; left: 16px; bottom: 16px; font-size: 0.85rem; line-height: 1.5;
+           background: rgba(0,0,0,.5); padding: 8px 12px; border-radius: 6px; white-space: pre; }
+  </style>
+</head>
+<body>
+  <div id="fpv">
+    <span class="placeholder">1인칭 영상 (다음 단계)</span>
+    <div id="minimap">미니맵</div>
+    <div id="hud">세션 불러오는 중…</div>
+  </div>
+  <script>
+    fetch('/api/session?lv=1')
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(s => {
+        const m = s.map;
+        document.getElementById('hud').textContent =
+          `Lv.${s.lv} ${s.name}${s.mock ? ' (MOCK)' : ''}\n` +
+          `제한 시간 ${Math.floor(s.time / 60)}:${String(s.time % 60).padStart(2, '0')}  사탕 ${s.candies.length}개\n` +
+          `맵 ${m.w}×${m.h}px @ ${m.res} m  원점 (${m.ox}, ${m.oy})\n` +
+          `카메라 ${s.cam.w}×${s.cam.h}  fx ${s.cam.fx}  영상 ${s.net.fps} fps`;
+      })
+      .catch(e => { document.getElementById('hud').textContent = `세션 로드 실패: ${e}`; });
+  </script>
+</body>
+</html>

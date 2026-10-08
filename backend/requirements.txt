@@ -1,0 +1,4 @@
+# rclpy는 시스템 ROS 2 Jazzy 것을 쓴다 (venv는 --system-site-packages로 생성)
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pyyaml>=6
