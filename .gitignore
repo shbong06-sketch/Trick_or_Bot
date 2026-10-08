@@ -49,3 +49,43 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
+
+# ===== Trick_or_Bot 추가 (2026-10-08) =====
+
+# ROS 2 colcon 빌드 산출물 (rokey_ws 등 워크스페이스)
+build/
+install/
+log/
+**/__pycache__/
+
+# rosbag 기록 (용량 큼). 터미널 로그 log_*/ 는 작으므로 추적한다.
+bag_*/
+*.db3
+*.mcap
+
+# 모델 가중치·체크포인트·영상 (용량 큼)
+*.pt
+# 패키지에 포함된 모델(5MB)은 추적한다
+!rokey_ws/src/detection_alert/models/*.pt
+*.pth
+*.onnx
+*.engine
+*.ckpt
+*.mp4
+*.avi
+
+# 압축 파일 (Notion 내보내기 등)
+*.zip
+
+# 이전 미니프로젝트 참고 자료 중 대용량 (코드·문서·csv·png 요약은 추적)
+docs/ref/past_project(mP4)/wc/03_YOLO_v8_object_detection/result_detection/
+docs/ref/past_project(mP4)/wc/05_non_YOLO_object_detection/result_detection/
+docs/ref/past_project(mP4)/wc/04_Inference/
+docs/ref/past_project(mP4)/wc/data_wc/
+docs/ref/past_project(mP4)/wc/models/
+
+# 학습/수집 데이터셋 (이미지 다수) — 새 작업 테마 폴더의 data 경로
+data_*/
+
+# 튜터님 강의 저장소 clone (중첩 git 저장소라 내용이 올라가지 않음). 원본: github.com/kimandreas/to_students
+docs/ref/lecture/to_students/

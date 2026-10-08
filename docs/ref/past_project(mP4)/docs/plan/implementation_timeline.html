@@ -1,0 +1,333 @@
+<title>Mini Project Timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 문서형 한 단. 위에 요약·결정사항, 가운데 간트(가로 스크롤), 아래 위험·체크리스트.
+   색은 웹캠 검출 bbox 색을 따른다: 웹캠 = car 주황, AMR = dummy 청록, 전원 = 초록 */
+:root {
+  --bg: #f6f7f5;
+  --surface: #ffffff;
+  --fg: #1d2421;
+  --muted: #5d6a64;
+  --line: #d9dfdb;
+  --grid: #e9ede9;
+  --webcam: #e2780e;
+  --amr: #0f8fa8;
+  --team: #2f8a4a;
+  --mile: #1d2421;
+  --warn: #b5470b;
+  --warn-bg: #fff1e6;
+  --lunch: #eceee9;
+  --now: #c62f2f;
+  --font-body: "IBM Plex Sans KR", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141917; --surface: #1c2320; --fg: #e5ebe7; --muted: #9aa8a1; --line: #303a35; --grid: #26302b;
+    --webcam: #f08a2a; --amr: #2bb3cc; --team: #4fb26a; --mile: #e5ebe7; --warn: #ff9b5c; --warn-bg: #3a2416;
+    --lunch: #222a26; --now: #ff6b6b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141917; --surface: #1c2320; --fg: #e5ebe7; --muted: #9aa8a1; --line: #303a35; --grid: #26302b;
+  --webcam: #f08a2a; --amr: #2bb3cc; --team: #4fb26a; --mile: #e5ebe7; --warn: #ff9b5c; --warn-bg: #3a2416;
+  --lunch: #222a26; --now: #ff6b6b; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 48px; display: grid; gap: 28px; }
+h1, h2 { text-wrap: balance; margin: 0; }
+h1 { font-size: 1.75rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.1rem; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; }
+.lead { color: var(--muted); max-width: 70ch; margin: 6px 0 0; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.alert { background: var(--warn-bg); border: 1px solid var(--warn); border-radius: 8px; padding: 14px 16px; display: grid; gap: 4px; }
+.alert strong { color: var(--warn); }
+
+.status { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; display: grid; gap: 6px; min-width: 0; }
+.card h3 { margin: 0; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+.card ul { margin: 0; padding-left: 18px; color: var(--fg); }
+.card li { margin: 2px 0; }
+.sw { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.pill { font-family: var(--font-mono); font-size: 0.72rem; padding: 1px 7px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
+.ok { color: var(--team); } .wip { color: var(--amr); } .risk { color: var(--warn); }
+
+/* 간트 */
+.gantt-box { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; }
+.gantt { --label: 240px; --slot: 50px; min-width: calc(var(--label) + var(--slot) * 21); position: relative; }
+.g-row { display: grid; grid-template-columns: var(--label) 1fr; border-top: 1px solid var(--grid); min-height: 38px; }
+.g-row:first-child { border-top: 0; }
+.g-label { padding: 8px 12px; font-size: 0.86rem; display: flex; align-items: center; gap: 8px; border-right: 1px solid var(--line); background: var(--surface); position: sticky; left: 0; z-index: 2; }
+.g-label .who { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); margin-left: auto; white-space: nowrap; }
+.g-group .g-label { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em; }
+.g-track { position: relative; }
+.g-head .g-track { display: grid; grid-template-columns: repeat(21, var(--slot)); }
+.g-head .tick { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); padding: 10px 0 6px 4px; border-left: 1px solid var(--grid); }
+.g-head .tick.tm { color: var(--fg); font-weight: 500; }
+.bar { position: absolute; top: 7px; height: 24px; border-radius: 5px; color: #fff; font-size: 0.74rem; padding: 0 8px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar.webcam { background: var(--webcam); } .bar.amr { background: var(--amr); } .bar.team { background: var(--team); }
+.bar.soft { background: transparent; color: var(--fg); border: 1.5px dashed var(--muted); }
+.mile { position: absolute; top: 9px; width: 14px; height: 14px; background: var(--mile); transform: translateX(-7px) rotate(45deg); }
+.mile.warn { background: var(--warn); }
+.mile-lbl { position: absolute; top: 8px; font-size: 0.74rem; font-weight: 500; white-space: nowrap; padding-left: 12px; }
+.shade { position: absolute; top: 0; bottom: 0; background: var(--lunch); z-index: 0; pointer-events: none; }
+.shade span { position: absolute; bottom: 4px; left: 4px; font-size: 0.7rem; color: var(--muted); }
+.vline { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px dashed var(--line); z-index: 1; pointer-events: none; }
+.vline.freeze { border-left-color: var(--mile); opacity: 0.55; }
+.vline.now { border-left: 2px solid var(--now); }
+.vline.now span { position: absolute; top: 2px; left: 4px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--now); background: var(--surface); padding: 0 3px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.82rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th, td { text-align: left; padding: 7px 8px; border-top: 1px solid var(--grid); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.03em; }
+.tbl { overflow-x: auto; }
+
+.code-box { display: grid; gap: 8px; }
+pre { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.5; }
+button { font-family: var(--font-body); font-size: 0.85rem; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; justify-self: start; }
+button:focus-visible { outline: 2px solid var(--amr); outline-offset: 2px; }
+.foot { color: var(--muted); font-size: 0.82rem; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">ROKEY mP4 · A1 · DAY4 · 2026-10-07 (수) · v2 (17:00 시연 기준)</div>
+    <h1>Mini Project Implementation Timeline</h1>
+    <p class="lead">웹캠 Detection Alert → AMR 이동 → 탐색·접근 시나리오를 <b>오늘 17:00 시연</b>에 맞춰 완성하고, 시연 뒤 22:00까지 문서화와 Final Project 준비를 마치는 일정. 기준 시각 11:50.</p>
+  </header>
+
+  <div class="alert">
+    <strong>시연: 오늘 17:00 (튜터님 DAY4 일정)</strong>
+    <span>점심을 빼면 시연까지 실제 작업 시간은 약 4시간이다. 실기 통합 시험은 <b>14:00 한 번</b>이 사실상 유일한 기회이고, <b>15:40에 코드를 동결</b>한다. 15:00까지 전체 시나리오가 한 번도 성공하지 못하면 <b>플랜 B</b>(아래 표)로 바꾼다.</span>
+  </div>
+
+  <section class="status" aria-label="현재 상태">
+    <div class="card">
+      <h3><span class="sw" style="background:var(--webcam)"></span>웹캠 · 민서 김, 09180_이원호 <span class="pill ok">완료·확정</span></h3>
+      <ul>
+        <li>YOLO26n car 검출, 알림(5프레임 중 3)</li>
+        <li>지도 좌표 변환: 오차 약 0.15~0.2 m</li>
+        <li>남은 일: 시연 현장 카메라 점검, 문서화</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="sw" style="background:var(--amr)"></span>AMR · 봉승현, sj b <span class="pill wip">실기 미검증</span></h3>
+      <ul>
+        <li>rccar_follow 숙제 모드: Gazebo 시험 통과</li>
+        <li>depth_transform: YOLO 검출 → car로 이동</li>
+        <li>문제: car를 놓치면 옛 좌표로 가서 충돌, 도착 후 방향 고정</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="sw" style="background:var(--team)"></span>통합 <span class="pill risk">미착수</span></h3>
+      <ul>
+        <li>웹캠 → AMR 실기 연동 시험 전</li>
+        <li>AMR 코드 기준(rccar_follow / depth_transform) 결정 필요</li>
+        <li>오늘 마감 문서: 시스템 요구서(시작 전), MINI flow-chart(진행 중)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-label="간트 차트" style="display:grid;gap:10px">
+    <h2>간트 차트</h2>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--team)"></span>전원</span>
+      <span><span class="sw" style="background:var(--webcam)"></span>웹캠 파트</span>
+      <span><span class="sw" style="background:var(--amr)"></span>AMR 파트</span>
+      <span><span class="sw" style="border:1.5px dashed var(--muted)"></span>상황에 따라·버퍼</span>
+      <span>◆ 마일스톤</span>
+    </div>
+    <div class="gantt-box"><div class="gantt" id="gantt"></div></div>
+  </section>
+
+  <section class="two">
+    <div class="card">
+      <h2>11:50 킥오프에서 정할 것 (20분)</h2>
+      <div class="tbl"><table>
+        <tr><th>결정</th><th>추천</th></tr>
+        <tr><td>AMR 코드 기준</td><td>rccar_follow 숙제 모드 (근거리 서보 접근·놓침 처리·감시 포함, 단위 시험 44개)</td></tr>
+        <tr><td>웹캠 → AMR 연결 topic</td><td><span class="mono">/webcam/car_alert</span>, <span class="mono">/webcam/detections</span> (지금 그대로)</td></tr>
+        <tr><td>웹캠 보정 파일</td><td>detection_alert와 rccar_follow의 homography.yaml이 같은지 확인</td></tr>
+        <tr><td>코드 동결</td><td>15:40 (이후 파라미터만)</td></tr>
+        <tr><td>플랜 B 전환 시각</td><td>15:00 판단</td></tr>
+        <tr><td>시연 진행자·역할</td><td>웹캠 화면 1명, 로봇·RViz 1명, 설명 1명, car 배치 1명</td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h2>위험과 대응</h2>
+      <div class="tbl"><table>
+        <tr><th>위험</th><th>대응</th></tr>
+        <tr><td>실기에서 처음 도는 코드, 시험 기회 1번</td><td>14:00 정각 시작, 회차마다 log·bag, 15:00 판단</td></tr>
+        <tr><td>car를 놓치면 충돌</td><td>0.5초 못 보면 이동 취소, 근거리는 서보 접근</td></tr>
+        <tr><td>삼각대가 움직임</td><td>16:20 <span class="mono">check_camera</span> ✅ 확인</td></tr>
+        <tr><td>배터리·Wi-Fi</td><td>12:10~14:00 도킹 충전, 시험은 시연 장소에서</td></tr>
+        <tr><td>시연 중 실패</td><td>15:40~16:20 성공 회차 영상 백업</td></tr>
+      </table></div>
+      <h2 style="margin-top:6px">플랜 B (15:00에 전체 성공 0회일 때)</h2>
+      <div class="tbl"><table>
+        <tr><th>단계</th><th>대체</th></tr>
+        <tr><td>웹캠 좌표로 목표 이동이 불안정</td><td>웹캠 알림으로 출발 + <b>고정 목표 좌표</b>(car 놓는 구역 앞)</td></tr>
+        <tr><td>근거리 접근이 불안정</td><td>car 발견 후 정지·방향만 맞추기 (충돌 금지 우선)</td></tr>
+        <tr><td>실기 전체가 불안정</td><td>성공 영상 + Gazebo 시연 + 구조 설명</td></tr>
+      </table></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>16:20 시연 준비 체크리스트</h2>
+    <ul>
+      <li>웹캠: <span class="mono">check_camera --cam N</span> → ✅ (❌면 재보정, 두 패키지의 homography.yaml 함께 갱신)</li>
+      <li>로봇: 배터리 충전, 도크 위, localization에 <span class="mono">map_261006_1156</span>, 도크 좌표로 initial pose</li>
+      <li>네트워크: 로봇 연결 상태로 (<span class="mono">ros_local.sh</span> 쓰지 않기)</li>
+      <li>경기장 비우기: 사람·불필요한 물체는 웹캠 화면 밖 (사람 다리 오검출 방지)</li>
+      <li>백업 영상과 Gazebo 화면을 바로 띄울 수 있게</li>
+    </ul>
+  </section>
+
+  <section class="code-box" aria-label="Notion용 mermaid">
+    <h2>팀 Notion에 붙여 넣기 (mermaid 간트)</h2>
+    <p class="foot" style="margin:0">Notion에서 <span class="mono">/code</span> 블록 → 언어 Mermaid로 바꾼 뒤 붙여 넣으면 같은 간트가 그려진다.</p>
+    <pre id="mermaid-src">gantt
+    title Mini Project Implementation Timeline (10/7, 17:00 시연)
+    dateFormat HH:mm
+    axisFormat %H:%M
+    section 전원
+    킥오프 (코드 기준·역할·플랜 B)          :11:50, 20m
+    점심                                    :13:00, 60m
+    통합 시험 1 (시나리오 2~3회, log·bag)   :14:00, 60m
+    플랜 B 판단                             :milestone, 15:00, 0m
+    코드 동결                               :milestone, 15:40, 0m
+    리허설 2회 + 백업 영상                  :15:40, 40m
+    시연 준비 (체크리스트)                  :16:20, 25m
+    시연                                    :milestone, 17:00, 0m
+    시연                                    :17:00, 30m
+    회고 + 문서화 (시스템 요구서, 결과)     :17:30, 90m
+    Final Project 준비 (DAY4 과제)          :19:00, 150m
+    마감 정리·병합                          :21:30, 30m
+    작업 마감                               :milestone, 22:00, 0m
+    section 웹캠 (민서 김, 09180_이원호)
+    check_camera + 보정 파일 동기화         :12:10, 30m
+    출발 신호 연동 확인                     :12:40, 20m
+    통합 시험 웹캠 운영                     :14:00, 60m
+    플로우차트 최종                         :15:00, 40m
+    리허설 웹캠 운영                        :15:40, 40m
+    Notion 수행 경과·결과 정리              :17:30, 90m
+    section AMR (봉승현, sj b)
+    놓침 정지·standoff·방향 수정            :12:10, 50m
+    통합 시험                               :14:00, 60m
+    버그 수정                               :15:00, 40m
+    리허설                                  :15:40, 40m
+    결과 정리·README                        :17:30, 90m</pre>
+    <button type="button" id="copy-btn">mermaid 복사</button>
+  </section>
+
+  <p class="foot">근거: 튜터님 DAY3·DAY4 Notion(10/7 다시 받음), 팀 Notion 내보내기(10/7 11:43: MINI 프로젝트 요구사항, 프로젝트 일정, 이슈 트래커 담당자), 교안 Day2 p47 예시 시나리오, 팀 저장소 원격 브랜치(10/7 11:28 fetch), detection_alert 실측(guidance_6_1·6_2).</p>
+</div>
+
+<script>
+(function () {
+  // 시간축: 11:30 ~ 22:00 (21칸, 30분)
+  var START = 11 * 60 + 30, SLOT = 30, TODAY_SLOTS = 21, TOTAL = 21;
+  function x(hhmm) {
+    var p = hhmm.split(':'); var m = +p[0] * 60 + +p[1];
+    return (m - START) / SLOT;
+  }
+  var rows = [
+    { group: '전원' },
+    { label: '킥오프 · 결정', who: '전원', bars: [['team', '11:50', '12:10', '']] },
+    { label: '통합 시험 1', who: '전원', bars: [['team', '14:00', '15:00', '시나리오 2~3회 · log·bag']] },
+    { label: '리허설 · 시연 준비', who: '전원', bars: [['team', '15:40', '16:20', '리허설 2회·영상'], ['team', '16:20', '16:45', '체크리스트'], ['soft', '16:45', '17:00', '']] },
+    { label: '시연', who: '전원', bars: [['team', '17:00', '17:30', '시연']] },
+    { label: '회고 · 문서화', who: '전원', bars: [['team', '17:30', '19:00', '시스템 요구서·결과 보고서']] },
+    { label: 'Final Project 준비', who: '전원 (DAY4 과제)', bars: [['team', '19:00', '21:30', '주제·기능별 요구사항·기기']] },
+    { label: '마감 정리', who: '전원', bars: [['team', '21:30', '22:00', '병합·백업']] },
+    { label: '마일스톤', who: '', miles: [['15:00', '플랜 B 판단', 'warn'], ['15:40', '코드 동결'], ['17:00', '시연'], ['22:00', '마감']] },
+    { group: '웹캠 · 민서 김, 09180_이원호' },
+    { label: 'check_camera · 보정 동기화', who: '웹캠', bars: [['webcam', '12:10', '12:40', '']] },
+    { label: '출발 신호 연동 확인', who: '웹캠', bars: [['webcam', '12:40', '13:00', '']] },
+    { label: '통합 시험 · 리허설 운영', who: '웹캠', bars: [['webcam', '14:00', '15:00', '시험 1'], ['webcam', '15:40', '16:20', '리허설']] },
+    { label: '플로우차트 최종', who: '웹캠', bars: [['webcam', '15:00', '15:40', 'topic 실제 이름']] },
+    { label: 'Notion 수행 경과 · 결과', who: '웹캠', bars: [['webcam', '17:30', '19:00', '']] },
+    { group: 'AMR · 봉승현, sj b' },
+    { label: '놓침 정지 · standoff · 방향', who: 'AMR', bars: [['amr', '12:10', '13:00', '충돌·방향 수정']] },
+    { label: '통합 시험 · 리허설', who: 'AMR', bars: [['amr', '14:00', '15:00', '시험 1'], ['amr', '15:40', '16:20', '리허설']] },
+    { label: '버그 수정', who: 'AMR', bars: [['amr', '15:00', '15:40', '동결 전 마지막']] },
+    { label: '결과 정리 · README', who: 'AMR', bars: [['amr', '17:30', '19:00', '']] },
+    { label: '플랜 B 준비', who: '상황에 따라', bars: [['soft', '15:00', '15:40', '고정 목표·정지 우선']] }
+  ];
+
+  var g = document.getElementById('gantt');
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function pct(slots) { return (slots / TOTAL * 100) + '%'; }
+
+  // 헤더
+  var head = el('div', 'g-row g-head');
+  head.appendChild(el('div', 'g-label', '<span class="mono" style="font-size:.75rem;color:var(--muted)">10/7 (수)</span>'));
+  var ht = el('div', 'g-track');
+  for (var i = 0; i < TODAY_SLOTS; i++) {
+    var m = START + i * SLOT, h = Math.floor(m / 60), mm = m % 60;
+    ht.appendChild(el('div', 'tick' + (mm === 0 ? ' tm' : ''), mm === 0 ? (h + ':00') : ''));
+  }
+  head.appendChild(ht); g.appendChild(head);
+
+  rows.forEach(function (r) {
+    var row = el('div', 'g-row' + (r.group ? ' g-group' : ''));
+    var lab = el('div', 'g-label');
+    if (r.group) { lab.textContent = r.group; } else {
+      lab.appendChild(document.createTextNode(r.label));
+      if (r.who) lab.appendChild(el('span', 'who', r.who));
+    }
+    row.appendChild(lab);
+    var tr = el('div', 'g-track');
+    // 점심 배경
+    var lunch = el('div', 'shade'); lunch.style.left = pct(x('13:00')); lunch.style.width = pct(2);
+    if (r.group) lunch.appendChild(el('span', null, '점심'));
+    tr.appendChild(lunch);
+    var fz = el('div', 'vline freeze'); fz.style.left = pct(x('15:40')); tr.appendChild(fz);
+    var dm = el('div', 'vline freeze'); dm.style.left = pct(x('17:00')); tr.appendChild(dm);
+    (r.bars || []).forEach(function (b) {
+      var bar = el('div', 'bar ' + b[0]); bar.style.left = pct(x(b[1])); bar.style.width = 'calc(' + pct(x(b[2]) - x(b[1])) + ' - 3px)';
+      bar.textContent = b[3]; bar.title = b[1] + '–' + b[2] + (b[3] ? ' ' + b[3] : '');
+      tr.appendChild(bar);
+    });
+    (r.miles || []).forEach(function (mi) {
+      var d = el('div', 'mile' + (mi[2] ? ' ' + mi[2] : '')); d.style.left = pct(x(mi[0])); d.title = mi[0] + ' ' + mi[1]; tr.appendChild(d);
+      var t = el('div', 'mile-lbl', mi[1]); t.style.left = pct(x(mi[0])); tr.appendChild(t);
+    });
+    row.appendChild(tr); g.appendChild(row);
+  });
+
+  // 지금 시각 표시 (한국 시간, 10/7 11:30~22:00 사이일 때만)
+  try {
+    var now = new Date(Date.now() + 9 * 3600 * 1000);
+    var ymd = now.toISOString().slice(0, 10);
+    var nm = now.getUTCHours() * 60 + now.getUTCMinutes();
+    if (ymd === '2026-10-07' && nm >= START && nm <= START + TODAY_SLOTS * SLOT) {
+      g.querySelectorAll('.g-row:not(.g-head) .g-track').forEach(function (t, idx) {
+        var v = el('div', 'vline now'); v.style.left = pct((nm - START) / SLOT);
+        if (idx === 0) v.appendChild(el('span', null, '지금 ' + String(Math.floor(nm / 60)).padStart(2, '0') + ':' + String(nm % 60).padStart(2, '0')));
+        t.appendChild(v);
+      });
+    }
+  } catch (e) { /* 시각 표시는 없어도 됨 */ }
+
+  var btn = document.getElementById('copy-btn');
+  btn.addEventListener('click', function () {
+    var src = document.getElementById('mermaid-src');
+    var text = src.textContent;
+    var done = function () { btn.textContent = '복사됨'; setTimeout(function () { btn.textContent = 'mermaid 복사'; }, 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { selectText(src); btn.textContent = '선택됨: Ctrl+C로 복사'; });
+    } else { selectText(src); btn.textContent = '선택됨: Ctrl+C로 복사'; }
+  });
+  function selectText(node) { var r = document.createRange(); r.selectNodeContents(node); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+})();
+</script>

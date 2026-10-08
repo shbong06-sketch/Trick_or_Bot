@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>amr_goto</name>
+  <version>0.1.0</version>
+  <description>웹캠 car 좌표를 받아 AMR을 car 앞 1.2 m까지 이동</description>
+  <maintainer email="codesorryy@gmail.com">mingja</maintainer>
+  <license>Apache-2.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>nav2_simple_commander</exec_depend>
+  <exec_depend>turtlebot4_navigation</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
