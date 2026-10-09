@@ -1,0 +1,44 @@
+# Paths below are relative to detection/. Docker mounts it at /workspace.
+dataset: dataset
+output_dir: experiments/phase1
+
+training:
+  seed: 42
+  input_size: [704, 704]
+  epochs: 100
+  batch_size: 16
+  early_stopping: true
+  patience: 20
+  workers: 2
+  gpu: L4
+
+# Full pretrained detector checkpoints are used for fine-tuning.
+models:
+  yolov8n:
+    framework: yolo
+    config: configs/phase1/yolo.yaml
+    weights: yolov8n.pt
+  yolo11n:
+    framework: yolo
+    config: configs/phase1/yolo.yaml
+    weights: yolo11n.pt
+  yolo26n:
+    framework: yolo
+    config: configs/phase1/yolo.yaml
+    weights: yolo26n.pt
+  dfine_n:
+    framework: dfine
+    config: configs/phase1/dfine_n.yaml
+    weights: checkpoints/dfine_n_coco.pth
+  deim_dfine_n:
+    framework: deim
+    config: configs/phase1/deim_dfine_n.yaml
+    weights: checkpoints/deim_dfine_n_coco.pth
+  rfdetr_n:
+    framework: rfdetr
+    config: configs/phase1/rfdetr_n.yaml
+    weights: automatic
+  rtdetrv2_s:
+    framework: rtdetrv2
+    config: configs/phase1/rtdetrv2_s.yaml
+    weights: checkpoints/rtdetrv2_s_coco.pth

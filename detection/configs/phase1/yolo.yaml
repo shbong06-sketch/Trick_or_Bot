@@ -1,0 +1,10 @@
+# Native Ultralytics training options; shared conditions come from common.yaml.
+pretrained: true
+optimizer: auto
+amp: true
+deterministic: true
+multi_scale: false
+rect: false
+# Keep effective batch at 16 instead of accumulating toward the default 64.
+nbs: 16
+close_mosaic: 10
