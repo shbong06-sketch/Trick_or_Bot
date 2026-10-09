@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN git clone https://github.com/Intellindust-AI-Lab/DEIM.git /opt/deim \
     && git -C /opt/deim checkout --detach "${DEIM_COMMIT}" \
     && pip install --no-cache-dir -r /opt/deim/requirements.txt \
-       "torch==2.5.1" "torchvision==0.20.1" "transformers==4.49.0" \
+       "torch==2.5.1" "torchvision==0.20.1" "transformers==4.49.0" matplotlib \
     && python /opt/deim/train.py --help
 
 WORKDIR /workspace
