@@ -160,6 +160,17 @@ def write_csv(path, fields, rows):
         writer.writerows(rows)
 
 
+def merge_csv(path, fields, rows, experiments):
+    preserved = []
+    if path.is_file():
+        with path.open(newline="") as stream:
+            reader = csv.DictReader(stream)
+            if tuple(reader.fieldnames or ()) != fields:
+                raise ValueError(f"Unexpected summary columns: {path}")
+            preserved = [row for row in reader if row["experiment"] not in experiments]
+    write_csv(path, fields, sorted([*preserved, *rows], key=lambda row: (row["model"], row["experiment"])))
+
+
 def collect():
     plan = spec()
     summary, deltas, selection = [], [], {}
@@ -190,8 +201,8 @@ def collect():
             if value:
                 delta.update({"delta_" + key: value[key] - baseline[key] for key in (*METRICS, *TIMING)})
             deltas.append(delta)
-    write_csv(RESULTS / "hyperparameter_summary.csv", FIELDS, summary)
-    write_csv(RESULTS / "hyperparameter_delta.csv", DELTA_FIELDS, deltas)
+    merge_csv(RESULTS / "hyperparameter_summary.csv", FIELDS, summary, set(plan["runs"]))
+    merge_csv(RESULTS / "hyperparameter_delta.csv", DELTA_FIELDS, deltas, set(plan["runs"]))
     (RESULTS / "exp01_selection.json").write_text(json.dumps(selection, indent=2) + "\n")
 
 

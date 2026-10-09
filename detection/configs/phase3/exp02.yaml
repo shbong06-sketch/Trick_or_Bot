@@ -1,0 +1,10 @@
+phase: 3
+step: learning_rate
+models: [yolo11n, yolov8n]
+inherited_selection: results/phase3/exp01_selection.json
+reference_experiment: '002'
+optimizer: SGD
+baseline_lr: 0.01
+runs:
+  '003': 0.005
+  '004': 0.02
