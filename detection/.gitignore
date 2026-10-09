@@ -1,5 +1,2 @@
 dataset/*
 !dataset/data.yaml
-
-/checkpoints/
-/experiments/

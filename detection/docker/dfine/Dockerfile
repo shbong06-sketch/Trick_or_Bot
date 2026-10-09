@@ -15,7 +15,4 @@ RUN git clone https://github.com/Peterande/D-FINE.git /opt/dfine \
 
 WORKDIR /workspace
 
-COPY scripts/phase1/requirements.txt /tmp/phase1-requirements.txt
-RUN pip install --no-cache-dir -r /tmp/phase1-requirements.txt && pip check
-
 CMD ["bash"]

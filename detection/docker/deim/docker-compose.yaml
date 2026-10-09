@@ -1,8 +1,8 @@
 services:
   trainer:
     build:
-      context: ../../
-      dockerfile: docker/deim/Dockerfile
+      context: .
+      dockerfile: Dockerfile
 
     working_dir: /workspace
 
