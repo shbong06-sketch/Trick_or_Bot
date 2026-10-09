@@ -44,6 +44,7 @@ async def ws_game(ws: WebSocket):
     await ws.send_text(game.state_msg())      # 늦게 들어온 화면도 진행 상태·시작 시각을 안다
     await ws.send_text(game.collected_msg())  # 이미 먹은 사탕은 안 그린다
     await ws.send_text(game.gate_msg())       # 탈출문이 이미 열렸는지
+    await ws.send_text(game.hud_msg())        # 하트·부우 상태·의심 게이지·CCTV
     pose_task = asyncio.create_task(_send_pose(ws, ws.app.state.bridge))
     try:
         while True:

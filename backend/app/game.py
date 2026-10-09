@@ -32,6 +32,7 @@ class Game:
         self.zone_r = float(level["gate_zone_r"])
         self.dwell_s = float(level["gate_dwell_s"])
         self.enter_r = float(level["gate_enter_r"])
+        self.max_hearts = int(level.get("hearts", 3))
 
         self.clients: set = set()              # /ws/game 연결들
         self.on_end = None                     # clear·over 때 호출 (로봇 정지)
@@ -46,6 +47,8 @@ class Game:
         self.t_end: float | None = None        # clear·over 시각
         self.dwell_from: float | None = None   # 문 앞 구역에 들어온 시각 (머무는 중일 때만)
         self.opened_at: float | None = None    # 문이 열린 시각
+        # HUD: 하트·부우 상태·의심 게이지·CCTV 감지. 부우 판단 로직이 set_hud()/hit()로 채운다 (지금은 mock 미리보기만)
+        self.hud = {"hp": self.max_hearts, "bs": "patrol", "sg": 0.0, "cc": 0}
 
     # ---- 보내는 메시지 ----
     async def broadcast(self, msg: str) -> None:
@@ -68,6 +71,29 @@ class Game:
         if self.reason:
             msg["r"] = self.reason
         return json.dumps(msg)
+
+    def hud_msg(self) -> str:
+        return json.dumps({"t": "hud", **self.hud, "max": self.max_hearts}, separators=(",", ":"))
+
+    async def set_hud(self, **changes) -> None:
+        """바뀐 값이 있을 때만 보낸다. bs = patrol|suspect|chase|search|return, sg = 의심 0~1, cc = CCTV 감지 0/1"""
+        if "sg" in changes:
+            changes["sg"] = round(min(1.0, max(0.0, float(changes["sg"]))), 2)
+        changed = {k: v for k, v in changes.items() if k in self.hud and self.hud[k] != v}
+        if changed:
+            self.hud.update(changed)
+            await self.broadcast(self.hud_msg())
+
+    async def hit(self) -> None:
+        """부우에게 맞음: 하트 1개 감소. 0이 되면 게임오버 (체포 판정 기준은 아직 미정)"""
+        if self.state != "run" or self.hud["hp"] <= 0:
+            return
+        self.hud["hp"] -= 1
+        log.info("피격: 하트 %d/%d", self.hud["hp"], self.max_hearts)
+        await self.broadcast(json.dumps({"t": "hit", "hp": self.hud["hp"]}))
+        await self.broadcast(self.hud_msg())
+        if self.hud["hp"] == 0:
+            await self._set_state("over", "caught")
 
     def gate_msg(self) -> str:
         # 문 상태가 바뀔 때만 보낸다. dw = 문 앞 구역에 들어온 시각 (머무는 진행률은 브라우저가 계산)
@@ -93,12 +119,14 @@ class Game:
         self.t0 = time.time()
         await self.broadcast(self.collected_msg())
         await self.broadcast(self.gate_msg())
+        await self.broadcast(self.hud_msg())
         await self._set_state("run")
 
     async def reset(self) -> None:
         self._reset_round()
         await self.broadcast(self.collected_msg())
         await self.broadcast(self.gate_msg())
+        await self.broadcast(self.hud_msg())
         await self._set_state("ready")
 
     # ---- 판정 루프 ----

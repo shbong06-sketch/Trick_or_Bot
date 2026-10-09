@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GameEngine } from '../game/engine.js';
 import { SPRITE, candySprite } from '../game/sprites.js';
+import { HudDefs, ScreenEffects, StatusBar, SuspicionGauge } from '../game/Hud.jsx';
+import { isMuted, playBoo, playHeartbeat, setMuted, unlockAudio } from '../game/audio.js';
 import '../game/game.css';
 
 // 도망자(펌킨) 플레이 화면: 1인칭 영상 + AR + HUD. 실시간 처리는 GameEngine, 여기서는 HUD와 화면 전환만 그린다.
@@ -12,6 +14,7 @@ export default function PlayerPage({ selectedLevel, onRestart, onLeaderboard }) 
   const engineRef = useRef(null);
   const [snap, setSnap] = useState(null);
   const [, setTick] = useState(0);  // 타이머·머무름 진행률 갱신용
+  const [muted, setMutedState] = useState(isMuted());
 
   useEffect(() => {
     const engine = new GameEngine({ lv: selectedLevel, video: videoRef.current, minimap: miniRef.current, onChange: setSnap });
@@ -21,6 +24,20 @@ export default function PlayerPage({ selectedLevel, onRestart, onLeaderboard }) 
     return () => { clearInterval(timer); engine.destroy(); };
   }, [selectedLevel]);
 
+  // 소리는 사용자 입력 뒤에만 켤 수 있다. M = 소리 끄기/켜기
+  useEffect(() => {
+    const unlock = () => unlockAudio();
+    const onKey = (e) => {
+      unlock();
+      if (e.code === 'KeyM' && !e.repeat && !(e.target instanceof HTMLInputElement)) {
+        setMuted(!isMuted()); setMutedState(isMuted());
+      }
+    };
+    addEventListener('pointerdown', unlock);
+    addEventListener('keydown', onKey);
+    return () => { removeEventListener('pointerdown', unlock); removeEventListener('keydown', onKey); };
+  }, []);
+
   const engine = engineRef.current;
   const s = snap;
   const session = s?.session;
@@ -29,13 +46,24 @@ export default function PlayerPage({ selectedLevel, onRestart, onLeaderboard }) 
   const total = session?.candies.length ?? 3;
   const allCollected = !!session && collected.size === total;
 
+  // 두근두근: 부우와의 거리(5 Hz 위치)로 0~1. 반경 밖이면 0. 벽은 무시 (데바데 공포 반경처럼)
+  const hud = s?.hud ?? { hp: 3, max: 3, bs: 'patrol', sg: 0, cc: 0 };
+  const beatR = session?.hud?.heartbeatR ?? 2;
+  const dist = s?.pose && s?.boo ? Math.hypot(s.pose[0] - s.boo[0], s.pose[1] - s.boo[1]) : Infinity;
+  const heartbeat = game.s === 'run' && dist < beatR ? 1 - dist / beatR : 0;
+  const chase = game.s === 'run' && hud.bs === 'chase';
+  useHeartbeatSound(heartbeat);
+  const shake = useHitShake(s?.hit);
+
   const remaining = engine && session ? Math.ceil(engine.remainingSec()) : null;
   const timerText = remaining == null ? '--:--' : `${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')}`;
 
   return (
-    <div className={`pr-screen ${s?.debug ? '' : 'pr-nodebug'}`}>
+    <div className={`pr-screen ${s?.debug ? '' : 'pr-nodebug'} ${shake ? 'pr-shake' : ''}`}>
+      <HudDefs />
       {!s?.hasVideo && <span className="pr-placeholder">영상 기다리는 중…</span>}
       <canvas ref={videoRef} className="pr-video" />
+      <ScreenEffects heartbeat={heartbeat} chase={chase} hit={s?.hit} />
 
       {/* 상단 중앙: 남은 시간 + 사탕 */}
       <div className="pr-top">
@@ -50,14 +78,15 @@ export default function PlayerPage({ selectedLevel, onRestart, onLeaderboard }) 
       {/* 우측 상단: 미니맵 */}
       <canvas ref={miniRef} className="pr-minimap" />
 
-      {/* 이후 단계에서 채울 자리: 하트, 추적 여부, 두근두근, CCTV 눈 아이콘 / 의심 게이지 */}
-      <div className="pr-status-bar">
-        <div data-slot="hearts" /><div data-slot="chase" /><div data-slot="heartbeat" /><div data-slot="cctv-eye" />
-      </div>
-      <div className="pr-gauge" />
+      {/* 왼쪽 하단 상태 바, 중앙 하단 의심 게이지 */}
+      {session && <StatusBar hud={hud} heartbeat={heartbeat} showCctv={(session.hud?.cctv ?? 0) > 0 || !!hud.cc} />}
+      {game.s === 'run' && <SuspicionGauge sg={hud.sg} chase={chase} />}
 
       <Keys mask={s?.mask ?? 0} />
       <Toast toast={s?.toast} />
+
+      {session?.mock && s?.debug && game.s === 'run' && <HudPreview />}
+      {muted && <div className="pr-muted">🔇 소리 꺼짐 (M)</div>}
 
       <div className="pr-debug">
         <div className={s?.statsBad ? 'bad' : ''}>{s?.connected ? s.stats : '서버 연결 중…'}</div>
@@ -74,6 +103,56 @@ export default function PlayerPage({ selectedLevel, onRestart, onLeaderboard }) 
         snap={s} engine={engine} total={total} collected={collected.size}
         onRestart={onRestart} onLeaderboard={onLeaderboard}
       />
+    </div>
+  );
+}
+
+// 두근두근 소리: 가까울수록 빠르고 크게
+function useHeartbeatSound(k) {
+  const kRef = useRef(k);
+  kRef.current = k;
+  useEffect(() => {
+    let timer;
+    const loop = () => {
+      const v = kRef.current;
+      if (v > 0) playHeartbeat(v);
+      timer = setTimeout(loop, v > 0 ? 60000 / (70 + 90 * v) : 300);
+    };
+    loop();
+    return () => clearTimeout(timer);
+  }, []);
+}
+
+// 피격: BOO!! 소리 + 화면 흔들림
+function useHitShake(hit) {
+  const [shake, setShake] = useState(false);
+  useEffect(() => {
+    if (!hit) return undefined;
+    playBoo();
+    setShake(true);
+    const t = setTimeout(() => setShake(false), 500);
+    return () => clearTimeout(t);
+  }, [hit?.n]);
+  return shake;
+}
+
+// mock 전용: 부우 판단 로직이 붙기 전에 HUD를 미리 보는 버튼 (서버 /api/debug/hud에 값을 넣는다)
+function HudPreview() {
+  const send = (body) => (e) => {
+    e.currentTarget.blur();  // 포커스가 남으면 Enter·Space가 버튼을 다시 누른다
+    fetch('/api/debug/hud', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  };
+  return (
+    <div className="pr-preview">
+      <b>HUD 미리보기 (mock)</b>
+      <button type="button" onClick={send({ sg: 0.3, bs: 'suspect' })}>의심 30%</button>
+      <button type="button" onClick={send({ sg: 0.7, bs: 'suspect' })}>의심 70%</button>
+      <button type="button" onClick={send({ sg: 1, bs: 'chase' })}>추적</button>
+      <button type="button" onClick={send({ sg: 0.4, bs: 'search' })}>수색</button>
+      <button type="button" onClick={send({ sg: 0, bs: 'patrol' })}>순찰(해제)</button>
+      <button type="button" onClick={send({ cc: 1 })}>CCTV 발각</button>
+      <button type="button" onClick={send({ cc: 0 })}>CCTV 해제</button>
+      <button type="button" className="danger" onClick={send({ hit: true })}>피격</button>
     </div>
   );
 }
@@ -140,7 +219,7 @@ function Overlay({ snap, engine, total, collected, onRestart, onLeaderboard }) {
         <div>
           <h1>🎃 Pumpkin Run</h1>
           <p>Lv.{session?.lv ?? '-'} {session?.name ?? ''} — 달빛 사탕 {total}개를 모아 부우를 피해 탈출하라!</p>
-          <p className="pr-small">W/S 전진·후진 · A/D 회전</p>
+          <p className="pr-small">W/S 전진·후진 · A/D 회전 · 부우에게 3번 잡히면 끝</p>
           <button type="button" className="pr-button" disabled={!snap?.connected} onClick={() => engine?.sendStart()}>시작 (Enter)</button>
         </div>
       </div>
@@ -155,7 +234,8 @@ function Overlay({ snap, engine, total, collected, onRestart, onLeaderboard }) {
     return (
       <div className="pr-overlay">
         <div>
-          <h1>{game.r === 'timeout' ? 'TIME OVER' : 'GAME OVER'}</h1>
+          <h1>{game.r === 'timeout' ? 'TIME OVER' : game.r === 'caught' ? '잡혔다!' : 'GAME OVER'}</h1>
+          {game.r === 'caught' && <p>부우: “축제 시작 전에는 사탕 금지야!”</p>}
           <p>달빛 사탕 {collected}/{total}</p>
           <button type="button" className="pr-button" onClick={restart}>재시작</button>
         </div>

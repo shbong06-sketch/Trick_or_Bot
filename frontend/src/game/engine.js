@@ -38,6 +38,8 @@ export class GameEngine {
     this.error = null;
     this.toast = null;                 // {text, n}
     this.pick = null;                  // 마지막 획득 측정 결과
+    this.hud = { hp: 3, max: 3, bs: 'patrol', sg: 0, cc: 0 };  // 하트·부우 상태·의심 게이지·CCTV 감지
+    this.hit = null;                   // 마지막 피격 {n, hp} (BOO!! 연출용)
 
     this.ws = null; this.wsVideo = null;
     this.seq = 0; this.mask = 0; this.heartbeat = null;
@@ -107,7 +109,7 @@ export class GameEngine {
       error: this.error, session: this.session, game: { ...this.game }, gate: { ...this.gate },
       collected: [...this.collected], busy: this.busy, connected: this.connected, mask: this.mask,
       debug: this.debug, toast: this.toast, pick: this.pick, stats: this.stats, statsBad: !!this.statsBad,
-      hasVideo: !!this.lastFrame,
+      hasVideo: !!this.lastFrame, hud: { ...this.hud }, hit: this.hit,
       pose: this.pose, boo: this.boo,
     };
   }
@@ -117,8 +119,7 @@ export class GameEngine {
   remainingSec() {
     const g = this.game;
     if (g.s === 'ready' || g.t0 == null) return g.dur;
-    if (g.s === 'over') return 0;
-    if (g.s === 'clear') return Math.max(0, g.dur - (g.el ?? 0));
+    if (g.s === 'clear' || g.s === 'over') return g.el == null ? 0 : Math.max(0, g.dur - g.el);  // 끝난 순간에 멈춤
     return Math.max(0, g.t0 + g.dur - this.serverNow());
   }
   dwellProgress() {
@@ -166,7 +167,7 @@ export class GameEngine {
         if (m.a) this.pose = m.a;
         if (m.b) this.boo = m.b;
         this.drawMinimap();
-        if (this.debug) this.emit();
+        this.emit();  // 두근두근(부우와의 거리)에 쓰므로 항상 갱신
         return;
       case 'st':
         // 레벨 선택에서 새로 들어왔는데 지난 회차가 끝난 상태로 남아 있으면 시작 전 상태로 되돌린다
@@ -184,6 +185,8 @@ export class GameEngine {
         this.drawMinimap();
         break;
       }
+      case 'hud': this.hud = { hp: m.hp, max: m.max, bs: m.bs, sg: m.sg, cc: m.cc }; break;
+      case 'hit': this.hit = { n: (this.hit?.n ?? 0) + 1, hp: m.hp }; break;
       case 'busy': this.busy = true; break;
       case 'own': this.busy = false; break;
       case 'cds':

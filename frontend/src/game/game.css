@@ -26,10 +26,92 @@
 .pr-minimap { position: absolute; top: 14px; right: 14px; width: 260px; border: 1px solid rgba(255,255,255,.18);
               border-radius: 8px; background: rgba(10, 6, 20, .7); }
 
-/* 이후 단계용 빈 자리 (지금은 숨김) */
-.pr-status-bar { position: absolute; left: 16px; bottom: 16px; display: flex; gap: 10px; }
-.pr-status-bar [data-slot] { display: none; }
-.pr-gauge { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); display: none; }
+/* ---- 왼쪽 하단 상태 바 (데바데 생존자 상태 칸 느낌) ---- */
+.pr-status-bar { position: absolute; left: 16px; bottom: 16px; display: flex; align-items: center; gap: 12px;
+                 padding: 10px 22px 10px 10px; background: linear-gradient(100deg, rgba(14,8,22,.88), rgba(30,14,34,.72));
+                 clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%); border-left: 3px solid #ff7a00; }
+.pr-portrait { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: #1c1024;
+               box-shadow: 0 0 0 3px var(--ring), 0 0 16px var(--ring); transition: box-shadow .3s; }
+.pr-portrait svg { width: 50px; height: 50px; }
+.pr-portrait.ring-ok { --ring: #4ade80; }
+.pr-portrait.ring-hurt { --ring: #fbbf24; }
+.pr-portrait.ring-low { --ring: #ef4444; animation: pr-ring-pulse 1s ease-in-out infinite; }
+.pr-portrait.ring-chase { --ring: #ff2d2d; animation: pr-ring-pulse .5s ease-in-out infinite; }
+@keyframes pr-ring-pulse { 50% { box-shadow: 0 0 0 5px var(--ring), 0 0 26px var(--ring); } }
+.pr-status-right { display: flex; flex-direction: column; gap: 7px; }
+.pr-hearts { display: flex; gap: 5px; }
+.pr-heart svg { width: 26px; height: 24px; display: block; filter: drop-shadow(0 0 4px rgba(255,60,80,.6)); }
+.pr-heart.empty svg { filter: none; opacity: .7; }
+.pr-heart.lost { animation: pr-heart-lost .9s ease-out; }
+@keyframes pr-heart-lost { 0% { transform: scale(1.6); filter: brightness(3); } 30% { transform: scale(.7) rotate(-12deg); } 100% { transform: none; } }
+.pr-status-icons { display: flex; gap: 6px; }
+.pr-tile { width: 58px; height: 46px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+           border: 1px solid #3d2b47; background: rgba(0,0,0,.45); color: #5d4b66; border-radius: 6px;
+           transform: skewX(-8deg); transition: color .25s, border-color .25s, box-shadow .25s; }
+.pr-tile > * { transform: skewX(8deg); }
+.pr-tile svg { width: 22px; height: 22px; }
+.pr-tile small { font-size: 10px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; }
+.pr-tile.chase.on { color: #fff; border-color: #ff2d2d; background: rgba(120,0,10,.6); box-shadow: 0 0 14px #ff2d2d; animation: pr-tile-flash .5s steps(2) infinite; }
+.pr-tile.chase.warn { color: #fbbf24; border-color: #b7791f; }
+@keyframes pr-tile-flash { 50% { background: rgba(200,0,20,.75); } }
+.pr-tile.beat.on { color: #ff4d6d; border-color: #9f1239; box-shadow: 0 0 10px rgba(255,77,109,.5); }
+.pr-tile.beat.on svg { animation: pr-heartbeat var(--beat) ease-in-out infinite; }
+@keyframes pr-heartbeat { 0%, 40%, 100% { transform: scale(1); } 10% { transform: scale(var(--beat-scale)); } 25% { transform: scale(calc(var(--beat-scale) * .96)); } }
+.pr-tile.cctv { color: #6b5b75; }
+.pr-tile.cctv.on { color: #ffe066; border-color: #ff4d4d; background: rgba(90,0,0,.55); box-shadow: 0 0 16px #ff4d4d; }
+.pr-tile.cctv.on svg { animation: pr-eye .8s ease-in-out infinite; }
+@keyframes pr-eye { 50% { transform: scale(1.18); filter: drop-shadow(0 0 6px #ff4d4d); } }
+
+/* ---- 중앙 하단 의심 게이지 (0이면 숨김) ---- */
+.pr-gauge { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(14px); display: flex; align-items: center; gap: 10px;
+            opacity: 0; pointer-events: none; transition: opacity .4s, transform .4s; --c1: #ffe066; --c2: #ffb020; }
+.pr-gauge.show { opacity: 1; transform: translateX(-50%); }
+.pr-gauge.mid { --c1: #ffb020; --c2: #ff7a00; }
+.pr-gauge.high { --c1: #ff7a00; --c2: #ff2d2d; }
+.pr-gauge-icon { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 900 1.6rem/1 system-ui;
+                 color: #1a0b14; background: var(--c1); box-shadow: 0 0 calc(8px + 22px * var(--sg)) var(--c2); }
+.pr-gauge.full .pr-gauge-icon { color: #fff; background: #ff2d2d; animation: pr-alert .45s ease-in-out infinite; }
+@keyframes pr-alert { 50% { transform: scale(1.2); } }
+.pr-gauge-body { width: 340px; }
+.pr-gauge-label { font-size: .8rem; font-weight: 700; color: var(--c1); text-shadow: 0 0 6px rgba(0,0,0,.9); margin-bottom: 4px; }
+.pr-gauge-track { position: relative; height: 12px; background: rgba(10,4,14,.8); border: 1px solid rgba(255,255,255,.18);
+                  transform: skewX(-20deg); overflow: hidden; }
+.pr-gauge-fill { position: absolute; inset: 0 auto 0 0; width: calc(var(--sg) * 100%); background: linear-gradient(90deg, var(--c1), var(--c2));
+                 box-shadow: 0 0 12px var(--c2); transition: width .35s ease-out; }
+.pr-gauge-tick { position: absolute; top: 0; bottom: 0; width: 2px; background: rgba(0,0,0,.55); }
+
+/* ---- 화면 연출 ---- */
+/* 두근두근: 화면 가장자리가 박동에 맞춰 붉게 */
+.pr-fx-beat { position: absolute; inset: 0; pointer-events: none; opacity: 0;
+              background: radial-gradient(ellipse at center, transparent 55%, rgba(200,0,30,.85) 100%);
+              animation: pr-fx-beat var(--beat) ease-out infinite; }
+@keyframes pr-fx-beat { 0% { opacity: var(--beat-k); } 18% { opacity: calc(var(--beat-k) * .35); } 30% { opacity: calc(var(--beat-k) * .8); } 100% { opacity: 0; } }
+/* 추적 중: 가장자리가 흐려지고 붉게 (가운데는 또렷하게) */
+.pr-fx-chase { position: absolute; inset: 0; pointer-events: none; backdrop-filter: blur(5px) saturate(1.4);
+               -webkit-mask-image: radial-gradient(ellipse at center, transparent 38%, #000 78%);
+               mask-image: radial-gradient(ellipse at center, transparent 38%, #000 78%);
+               background: rgba(160,0,20,.35); animation: pr-chase 1s ease-in-out infinite; }
+@keyframes pr-chase { 50% { background: rgba(200,0,25,.5); } }
+/* 피격: 번쩍 + BOO!! */
+.pr-fx-hit { position: absolute; inset: 0; pointer-events: none; display: grid; place-items: center;
+             animation: pr-hit-flash 1.3s ease-out forwards; }
+.pr-fx-hit span { font: 900 clamp(4rem, 14vw, 10rem)/1 system-ui; color: #fff; letter-spacing: .04em;
+                  -webkit-text-stroke: 4px #6d28d9; text-shadow: 0 0 30px #a855f7, 0 0 60px #ff2d2d;
+                  animation: pr-boo 1.3s cubic-bezier(.2,1.6,.4,1) forwards; }
+@keyframes pr-hit-flash { 0% { background: rgba(255,255,255,.75); } 12% { background: rgba(200,0,30,.55); } 100% { background: transparent; } }
+@keyframes pr-boo { 0% { transform: scale(.2) rotate(-12deg); opacity: 0; } 25% { transform: scale(1.15) rotate(4deg); opacity: 1; }
+                    70% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
+.pr-shake { animation: pr-shake .5s linear; }
+@keyframes pr-shake { 10%, 50%, 90% { transform: translate(-8px, 4px); } 30%, 70% { transform: translate(8px, -4px); } }
+
+/* mock 미리보기 버튼 */
+.pr-preview { position: absolute; right: 14px; bottom: 90px; display: flex; flex-direction: column; gap: 4px; padding: 8px;
+              background: rgba(10,6,20,.8); border: 1px dashed #6b4a7a; border-radius: 8px; font-size: 11px; }
+.pr-preview b { color: #c4a7d8; font-size: 11px; margin-bottom: 2px; }
+.pr-preview button { padding: 4px 8px; border: 1px solid #5b4366; border-radius: 5px; background: #2a1a33; color: #eee; font-size: 11px; text-align: left; }
+.pr-preview button.danger { border-color: #9f1239; background: #4c0519; }
+.pr-muted { position: absolute; right: 16px; bottom: 112px; font-size: 12px; color: #c9b8d8; }
+.pr-preview ~ .pr-muted { bottom: 330px; }
 
 /* 우측 하단: 키 표시 */
 .pr-keys { position: absolute; right: 16px; bottom: 16px; display: grid; grid-template-columns: repeat(3, 28px); gap: 3px; opacity: .8; }

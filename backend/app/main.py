@@ -71,6 +71,8 @@ def get_session(lv: int = 1):
         "map": {**{k: v for k, v in cfg["map"].items() if k != "occ"}, "occ": pack_occ(cfg["map"]["occ"])},
         "cam": app.state.bridge.camera_info(),
         "net": {"fps": cfg["video_fps"]},
+        "hud": {"hearts": cfg.get("hearts", 3), "heartbeatR": cfg.get("heartbeat_radius_m", 2.0),
+                "cctv": len(cfg.get("cctv") or [])},
         "mock": MOCK,
     }
 
@@ -107,6 +109,25 @@ def save_record(body: RecordIn):
     rid = app.state.records.add(clear["lv"], nickname, clear["time"])
     clear["saved"] = True
     return {"id": rid, "lv": clear["lv"], "time": clear["time"]}
+
+
+class HudPreview(BaseModel):
+    sg: float | None = None     # 의심 게이지 0~1
+    bs: str | None = None       # 부우 상태
+    cc: int | None = None       # CCTV 감지 0/1
+    hit: bool = False           # 피격 1회
+
+
+@app.post("/api/debug/hud")
+async def debug_hud(body: HudPreview):
+    """mock 전용: 부우 판단 로직이 붙기 전에 HUD(하트·추적·의심·CCTV) 화면을 미리 보기 위한 값 주입."""
+    if not MOCK:
+        raise HTTPException(403, "mock 모드에서만 쓸 수 있습니다")
+    game = app.state.game
+    await game.set_hud(**{k: v for k, v in body.model_dump().items() if k != "hit" and v is not None})
+    if body.hit:
+        await game.hit()
+    return game.hud
 
 
 @app.get("/api/leaderboard")

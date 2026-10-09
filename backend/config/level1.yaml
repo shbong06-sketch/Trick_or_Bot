@@ -4,6 +4,9 @@ name: 첫 번째 밤
 time_limit_s: 240        # 4:00
 pick_radius_m: 0.3       # 사탕 획득 반경
 video_fps: 15            # 서버가 중계하는 1인칭 영상 최대 fps
+hearts: 3                # 하트 수 (0이 되면 게임오버)
+heartbeat_radius_m: 2.0  # 부우가 이 거리 안이면 두근두근 [확인 필요]
+cctv: []                 # Lv.1은 CCTV 없음. Lv.2부터 [{id, x, y, ...}]
 
 # 이 파일 기준 상대 경로
 map_yaml: ../maps/holloween.yaml
