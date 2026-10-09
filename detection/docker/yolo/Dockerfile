@@ -1,5 +1,4 @@
-ARG ULTRALYTICS_IMAGE
-FROM ${ULTRALYTICS_IMAGE}
+FROM ultralytics/ultralytics:8.4.152
 
 WORKDIR /workspace
 
