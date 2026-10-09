@@ -1,0 +1,24 @@
+__include__:
+  - /opt/rtdetrv4/configs/rtv4/rtv4_hgnetv2_s_coco.yml
+
+num_classes: 1
+remap_mscoco_category: false
+output_dir: /workspace/experiments/rtdetrv4/rtdetrv4_s
+
+teacher_model:
+  dinov3_repo_path: /opt/dinov3
+  dinov3_weights_path: /workspace/checkpoints/dinov3_vitb16_pretrain_lvd1689m.pth
+
+train_dataloader:
+  total_batch_size: 4
+  num_workers: 2
+  dataset:
+    img_folder: /workspace/dataset/images/train
+    ann_file: /workspace/dataset/annotations/instances_train.json
+
+val_dataloader:
+  total_batch_size: 4
+  num_workers: 2
+  dataset:
+    img_folder: /workspace/dataset/images/valid
+    ann_file: /workspace/dataset/annotations/instances_valid.json
