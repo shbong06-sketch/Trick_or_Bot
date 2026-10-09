@@ -1,0 +1,16 @@
+phase: 3
+step: optimizer
+baseline: configs/phase2/{model}/baseline.yaml
+base_training: configs/phase1/common.yaml
+base_yolo: configs/phase1/yolo.yaml
+evaluation: configs/phase1/evaluation.yaml
+models: [yolo11n, yolov8n]
+runs:
+  '001':
+    optimizer: AdamW
+    lr0: 0.002
+    momentum: 0.9
+  '002':
+    optimizer: SGD
+    lr0: 0.01
+    momentum: 0.937
