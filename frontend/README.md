@@ -1,25 +1,25 @@
-# Trick or Bot — React UI 틀
+# Trick or Bot — React UI
 
-최신 기획안 기준으로 만든 **React 화면 구조 초안**입니다.
+실행 방법·게임 규칙·통신 구조는 저장소 루트 [`README.md`](../README.md)를 보세요.
 
-## 현재 들어 있는 화면
-- 메인 / Level 1~5 선택
-- 플레이어 화면 (OAK-D 카메라 영역, 타이머, 목표 진행, 미니맵 표시 영역)
-- 운영자 화면 (아레나 맵, 장비 연결 상태, 운영 제어, 이벤트 영역)
+```bash
+npm ci          # 처음 한 번
+npm run dev     # http://localhost:5173 (게임 서버 8000이 켜져 있어야 함)
+npm run build   # dist/ → 게임 서버가 http://<서버>:8000 에서 그대로 보여줌
+```
 
-## 이번 단계에서 구현하지 않은 것
-- 실제 WASD 로봇 조작
-- 로봇 카메라 실시간 영상
-- ROS 2 / Fast DDS 연결
-- FastAPI / WebSocket 서버
-- SQLite 기록
-- 실제 게임 규칙, 타이머, 안전 정지 로직
-- Three.js 장면
-
-운영 제어 버튼은 클릭해도 동작하지 않습니다. 탭 이동과 레벨 선택만 UI 미리보기를 위해 작동합니다.
+## 화면
+- 인트로 → 경고 → 타이틀 → 레벨 선택 (`HomePage`, 서버에 설정된 레벨만 시작 가능)
+- 도망자 플레이 화면 (`PlayerPage`): 1인칭 영상 + AR(사탕·탈출문) + HUD(타이머, 사탕, 미니맵, 상태 바, 의심 게이지)
+- 게임오버 → 재시작 → 레벨 선택 / 클리어 → 닉네임 → 리더보드 (`LeaderboardPage`)
+- 운영자 화면 (`AdminPage`): 아직 정적 레이아웃
 
 ## 폴더
 - `src/pages/` 화면
-- `src/components/` 공통 UI
-- `src/data/levels.js` 레벨 표시 데이터
-- `src/styles.css` 화면 스타일
+- `src/game/` 플레이 화면 실시간 처리
+  - `engine.js`: 서버 통신(/ws/game, /ws/video), WASD, 영상·AR·미니맵 그리기
+  - `geometry.js`: 맵 → 카메라 → 화면 투영, 벽 가림 판정
+  - `sprites.js`: 사탕·탈출문 그림
+  - `Hud.jsx`, `game.css`: 상태 바·의심 게이지·화면 연출
+  - `audio.js`: 효과음 (Web Audio 합성)
+- `src/components/` 공통 UI, `src/data/levels.js` 레벨 표시 데이터
