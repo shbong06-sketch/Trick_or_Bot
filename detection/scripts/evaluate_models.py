@@ -419,7 +419,7 @@ def collect(cfg):
         rows.append(row)
     if not rows:
         raise ValueError("No completed model screening summaries found")
-    path = ROOT/"records/phase1/model_comparison.csv"
+    path = ROOT/"results/phase1/model_comparison.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=FIELDS)

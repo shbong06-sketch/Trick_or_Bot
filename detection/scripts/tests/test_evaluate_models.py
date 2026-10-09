@@ -100,7 +100,7 @@ class ScreeningTests(unittest.TestCase):
                 (output/"model_screening_summary.json").write_text(json.dumps(row))
                 with patch.object(evaluate, "load_model", side_effect=AssertionError("inference")):
                     evaluate.collect(cfg)
-                result = (root/"records/phase1/model_comparison.csv").read_text()
+                result = (root/"results/phase1/model_comparison.csv").read_text()
                 self.assertIn("yolov8n", result)
 
 

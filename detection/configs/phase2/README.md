@@ -1,7 +1,7 @@
 # Phase 2 augmentation comparison
 
 `scripts/phase2.py` reads the four selected models from
-`records/phase1/model_comparison.csv` and checks each Phase 1 detailed JSON.
+`results/phase1/model_comparison.csv` and checks each Phase 1 detailed JSON.
 `baseline.yaml` points to the original Phase 1 checkpoint and metrics; it never
 starts a new training run. The three other conditions start from the same
 pretrained weights and use the Phase 1 training schedule and evaluation schema.

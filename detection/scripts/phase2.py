@@ -29,7 +29,7 @@ METRICS = {
 
 
 def selected_phase1():
-    path = ROOT / "records/phase1/model_comparison.csv"
+    path = ROOT / "results/phase1/model_comparison.csv"
     with path.open(newline="") as stream:
         rows = {row["model"]: row for row in csv.DictReader(stream)}
     missing = set(MODELS) - rows.keys()
@@ -135,7 +135,7 @@ def collect():
     summary_rows, delta_rows = [], []
     RESULTS.mkdir(parents=True, exist_ok=True)
     for name in MODELS:
-        details = {"model": name, "phase1_comparison": "records/phase1/model_comparison.csv",
+        details = {"model": name, "phase1_comparison": "results/phase1/model_comparison.csv",
                    "conditions": {}}
         for condition in CONDITIONS:
             condition_config(name, condition)
