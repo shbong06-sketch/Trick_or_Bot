@@ -1,0 +1,5 @@
+experiment,model,step,optimizer,lr0,momentum,batch_size,status,selected,inherited_from,config,validation_recall,validation_f1,validation_map50_95,validation_map50,best_epoch,time_to_best_seconds,ending_epoch,total_training_seconds
+004,yolo11n,batch_size,SGD,0.02,0.937,16,reused_exp02,True,experiments/phase3/002/yolo11n/exp01_config.yaml,experiments/phase3/004/yolo11n/exp02_config.yaml,1.0,1.0,0.9629794668730541,1.0,97,274.704,100,301.06460144500306
+005,yolo11n,batch_size,SGD,0.02,0.937,8,complete,False,experiments/phase3/004/yolo11n/exp02_config.yaml,experiments/phase3/005/yolo11n/exp03_config.yaml,1.0,0.9924812030075187,0.9542461534097338,1.0,99,425.978,100,448.08551875300327
+002,yolov8n,batch_size,SGD,0.01,0.937,16,reused_exp02,True,configs/phase2/yolov8n/baseline.yaml,experiments/phase3/002/yolov8n/exp01_config.yaml,1.0,1.0,0.9647719806795002,1.0,100,237.396,100,254.82826287200442
+005,yolov8n,batch_size,SGD,0.01,0.937,8,complete,False,experiments/phase3/002/yolov8n/exp01_config.yaml,experiments/phase3/005/yolov8n/exp03_config.yaml,1.0,0.9924812030075187,0.9530547760238312,1.0,99,339.034,100,359.367283036001
