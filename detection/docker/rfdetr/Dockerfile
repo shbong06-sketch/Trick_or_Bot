@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir "rfdetr[train]==${RFDETR_VERSION}" \
+RUN pip install --no-cache-dir "rfdetr[train,augment]==${RFDETR_VERSION}" \
     "torch==2.8.0" "torchvision==0.23.0" pycocotools \
     && python -c "from rfdetr import RFDETRNano; from rfdetr.training.trainer import build_trainer"
 
