@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage.jsx';
 import GameMenus from './components/GameMenus.jsx';
 import PlayerPage from './pages/PlayerPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
+import LeaderboardPage from './pages/LeaderboardPage.jsx';
 
 const pages = [
   { id: 'home', label: '메인 / 레벨 선택' },
@@ -16,6 +17,7 @@ export default function App() {
   const [page, setPage] = useState('intro');
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [lastRecord, setLastRecord] = useState(null);  // 클리어 후 저장한 기록 {lv, id}
 
   useEffect(() => {
     if (page !== 'intro') return;
@@ -106,7 +108,16 @@ export default function App() {
         </main>
       )}
       {page === 'home' && <HomePage selectedLevel={selectedLevel} onSelectLevel={setSelectedLevel} onOpenPlayer={() => setPage('player')} />}
-      {page === 'player' && <PlayerPage selectedLevel={selectedLevel} />}
+      {page === 'player' && (
+        <PlayerPage
+          selectedLevel={selectedLevel}
+          onRestart={() => setPage('home')}
+          onLeaderboard={(record) => { setLastRecord(record); setPage('leaderboard'); }}
+        />
+      )}
+      {page === 'leaderboard' && (
+        <LeaderboardPage lv={lastRecord?.lv ?? selectedLevel} highlightId={lastRecord?.id} onHome={() => setPage('home')} />
+      )}
       {page === 'admin' && <AdminPage />}
     </div>
   );

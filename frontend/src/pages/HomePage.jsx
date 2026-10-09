@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { levels } from '../data/levels.js';
 import Panel from '../components/Panel.jsx';
 
-// 메인 화면의 배치만 정의합니다. 게임 시작/로봇 연동은 아직 구현하지 않습니다.
+// 레벨 선택. 게임 서버에 설정이 있는 레벨만 시작할 수 있다 (GET /api/levels)
 export default function HomePage({ selectedLevel, onSelectLevel, onOpenPlayer }) {
+  const [available, setAvailable] = useState(null);  // 서버에 준비된 레벨 id 목록, null = 확인 중
+  useEffect(() => {
+    fetch('/api/levels').then((r) => (r.ok ? r.json() : [])).then((list) => setAvailable(list.map((l) => l.id))).catch(() => setAvailable([]));
+  }, []);
+  const ready = (id) => available?.includes(id);
   return (
     <main className="home page">
       <section className="home-hero" aria-label="게임 소개">
@@ -26,11 +31,14 @@ export default function HomePage({ selectedLevel, onSelectLevel, onOpenPlayer })
               className={`level-card ${selectedLevel === level.id ? 'selected' : ''}`}
               onClick={() => onSelectLevel(level.id)}
               aria-pressed={selectedLevel === level.id}
+              disabled={available != null && !ready(level.id)}
             >
               <span className="level-no">LEVEL {String(level.id).padStart(2, '0')}</span>
               <strong>{level.name}</strong>
               <small>제한 시간 {level.duration}</small>
-              <span className="level-card-foot" aria-hidden="true">{selectedLevel === level.id ? '● 선택됨' : '○ 선택 가능'}</span>
+              <span className="level-card-foot" aria-hidden="true">
+                {available != null && !ready(level.id) ? '준비 중' : selectedLevel === level.id ? '● 선택됨' : '○ 선택 가능'}
+              </span>
             </button>
           ))}
         </div>
@@ -39,11 +47,14 @@ export default function HomePage({ selectedLevel, onSelectLevel, onOpenPlayer })
             <span className="muted">선택한 레벨</span>
             <strong>LEVEL {selectedLevel} · {levels.find((level) => level.id === selectedLevel)?.name}</strong>
           </div>
-          <button className="primary-button" type="button" onClick={onOpenPlayer}>
-            플레이어 화면 미리보기 →
+          <button className="primary-button" type="button" onClick={onOpenPlayer} disabled={!ready(selectedLevel)}>
+            게임 시작 →
           </button>
         </div>
-        <p className="home-notice">현재는 화면 틀만 제공합니다. 실제 게임 시작 및 로봇 연결 기능은 없습니다.</p>
+        <p className="home-notice">
+          {available == null ? '게임 서버 확인 중…' : available.length === 0 ? '게임 서버에 연결할 수 없습니다. 백엔드가 켜져 있는지 확인하세요.'
+            : '게임 시작 후 Enter로 출발합니다. W/S 전진·후진, A/D 회전.'}
+        </p>
       </Panel>
     </main>
   );

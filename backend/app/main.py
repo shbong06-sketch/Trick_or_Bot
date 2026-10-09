@@ -4,11 +4,13 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
 
 from .bridge import create_bridge
 from .game import Game
-from .levels import load_level, pack_occ
-from .settings import MOCK, ROBOT, STATIC_DIR
+from .levels import list_levels, load_level, pack_occ
+from .records import Records
+from .settings import BACKEND_DIR, MOCK, ROBOT, STATIC_DIR
 from .teleop import Teleop
 from .video import VideoHub
 from .video import router as video_router
@@ -30,7 +32,9 @@ async def lifespan(app: FastAPI):
     game.on_end = lambda: teleop.halt("회차 종료")
     game_task = asyncio.create_task(game.run())
     app.state.bridge, app.state.teleop, app.state.video, app.state.game = bridge, teleop, video, game
+    app.state.records = Records()
     yield
+    app.state.records.close()
     game_task.cancel()
     teleop_task.cancel()
     teleop.halt("서버 종료")
@@ -40,6 +44,12 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Trick-or-Bot game server", lifespan=lifespan)
 app.include_router(ws_game_router)
 app.include_router(video_router)
+
+
+@app.get("/api/levels")
+def get_levels():
+    """설정이 준비된 레벨 목록. 레벨 선택 화면이 시작 가능 여부를 표시하는 데 쓴다."""
+    return list_levels()
 
 
 @app.get("/api/session")
@@ -79,5 +89,33 @@ async def reset_game():
     return {"state": app.state.game.state}
 
 
+class RecordIn(BaseModel):
+    nickname: str = Field(min_length=1, max_length=12)
+
+
+@app.post("/api/records")
+def save_record(body: RecordIn):
+    """방금 클리어한 회차를 닉네임과 함께 저장한다. 기록 시간은 서버가 판정한 값만 쓴다."""
+    clear = app.state.game.last_clear
+    if clear is None or app.state.game.state != "clear":
+        raise HTTPException(409, "저장할 클리어 기록이 없습니다")
+    if clear["saved"]:
+        raise HTTPException(409, "이미 저장한 기록입니다")
+    nickname = body.nickname.strip()
+    if not nickname:
+        raise HTTPException(422, "닉네임을 입력하세요")
+    rid = app.state.records.add(clear["lv"], nickname, clear["time"])
+    clear["saved"] = True
+    return {"id": rid, "lv": clear["lv"], "time": clear["time"]}
+
+
+@app.get("/api/leaderboard")
+def leaderboard(lv: int = 1, limit: int = 10):
+    return {"lv": lv, "records": app.state.records.top(lv, max(1, min(limit, 100)))}
+
+
 # API 라우트 뒤에 마운트해야 /api가 가려지지 않는다
-app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+# /proto = 백엔드 단독 시험용 화면, / = React 앱 빌드 결과 (frontend/dist, 없으면 시험용 화면)
+FRONTEND_DIST = BACKEND_DIR.parent / "frontend" / "dist"
+app.mount("/proto", StaticFiles(directory=STATIC_DIR, html=True), name="proto")
+app.mount("/", StaticFiles(directory=FRONTEND_DIST if FRONTEND_DIST.is_dir() else STATIC_DIR, html=True), name="web")

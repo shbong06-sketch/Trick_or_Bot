@@ -20,6 +20,7 @@ class Game:
 
     def __init__(self, level: dict, bridge: Bridge):
         self.bridge = bridge
+        self.lv = int(level["lv"])
         self.duration = float(level["time_limit_s"])
         self.radius = float(level["pick_radius_m"])
         self.candies = {c["id"]: (float(c["x"]), float(c["y"])) for c in level["candies"]}
@@ -37,6 +38,7 @@ class Game:
         self._reset_round()
         self.state = "ready"
         self.reason: str | None = None
+        self.last_clear: dict | None = None    # 마지막 클리어 {lv, time, saved}. 닉네임 저장에 쓴다
 
     def _reset_round(self) -> None:
         self.collected: dict[str, float] = {}  # id → 판정 시각 (서버 time.time())
@@ -77,6 +79,8 @@ class Game:
         self.state, self.reason = state, reason
         if state in ("clear", "over"):
             self.t_end = time.time()
+            if state == "clear":
+                self.last_clear = {"lv": self.lv, "time": round(self.t_end - self.t0, 2), "saved": False}
             if self.on_end:
                 self.on_end()
         log.info("상태 %s%s", state, f" ({reason})" if reason else "")

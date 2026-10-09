@@ -46,6 +46,15 @@ def pack_occ(occ: bytes) -> str:
     return base64.b64encode(bytes(packed)).decode()
 
 
+def list_levels() -> list[dict]:
+    """설정 파일이 있는 레벨 목록 (레벨 선택 화면용)."""
+    out = []
+    for path in sorted(CONFIG_DIR.glob("level*.yaml")):
+        cfg = _read_yaml(path)
+        out.append({"id": int(cfg["lv"]), "name": cfg["name"], "time": cfg["time_limit_s"]})
+    return sorted(out, key=lambda l: l["id"])
+
+
 def load_level(lv: int) -> dict:
     path = CONFIG_DIR / f"level{lv}.yaml"
     if not path.exists():

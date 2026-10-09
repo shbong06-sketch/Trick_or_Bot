@@ -65,3 +65,6 @@ npm-debug.log*
 # Backend (Python)
 .venv/
 __pycache__/
+
+# Backend 기록 DB
+backend/data/
