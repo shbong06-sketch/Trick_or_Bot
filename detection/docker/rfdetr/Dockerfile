@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir "rfdetr[train]==${RFDETR_VERSION}" \
-    "torch==2.8.0" "torchvision==0.23.0" \
+    "torch==2.8.0" "torchvision==0.23.0" pycocotools \
     && python -c "from rfdetr import RFDETRNano; from rfdetr.training.trainer import build_trainer"
 
 WORKDIR /workspace
