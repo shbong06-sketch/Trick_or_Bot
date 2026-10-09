@@ -1,0 +1,7 @@
+# Paths are relative to this YAML file; omit path to use its directory as the root.
+train: images/train
+val: images/valid
+test: images/test
+
+names:
+  0: pumpkin
