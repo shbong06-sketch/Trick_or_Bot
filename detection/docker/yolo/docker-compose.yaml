@@ -1,8 +1,8 @@
 services:
   yolo-trainer:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../../
+      dockerfile: docker/yolo/Dockerfile
 
     working_dir: /workspace
 

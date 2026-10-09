@@ -1,8 +1,8 @@
 services:
   trainer:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../../
+      dockerfile: docker/rtdetrv2/Dockerfile
 
     working_dir: /workspace
 

@@ -14,4 +14,7 @@ RUN git clone https://github.com/Intellindust-AI-Lab/DEIM.git /opt/deim \
 
 WORKDIR /workspace
 
+COPY scripts/phase1/requirements.txt /tmp/phase1-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/phase1-requirements.txt && pip check
+
 CMD ["bash"]

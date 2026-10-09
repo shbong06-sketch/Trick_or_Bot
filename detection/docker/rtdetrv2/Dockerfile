@@ -15,4 +15,7 @@ RUN git clone https://github.com/lyuwenyu/RT-DETR.git /opt/rtdetr \
 
 WORKDIR /workspace
 
+COPY scripts/phase1/requirements.txt /tmp/phase1-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/phase1-requirements.txt && pip check
+
 CMD ["bash"]

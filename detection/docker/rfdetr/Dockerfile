@@ -12,4 +12,7 @@ RUN pip install --no-cache-dir "rfdetr[train]==${RFDETR_VERSION}" \
 
 WORKDIR /workspace
 
+COPY scripts/phase1/requirements.txt /tmp/phase1-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/phase1-requirements.txt && pip check
+
 CMD ["bash"]
