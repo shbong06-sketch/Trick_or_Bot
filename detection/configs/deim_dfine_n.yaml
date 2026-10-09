@@ -1,0 +1,20 @@
+__include__:
+  - /opt/deim/configs/deim_dfine/deim_hgnetv2_n_coco.yml
+
+num_classes: 1
+remap_mscoco_category: false
+output_dir: /workspace/experiments/deim/deim_dfine_n
+
+train_dataloader:
+  total_batch_size: 8
+  num_workers: 2
+  dataset:
+    img_folder: /workspace/dataset/images/train
+    ann_file: /workspace/dataset/annotations/instances_train.json
+
+val_dataloader:
+  total_batch_size: 8
+  num_workers: 2
+  dataset:
+    img_folder: /workspace/dataset/images/valid
+    ann_file: /workspace/dataset/annotations/instances_valid.json
