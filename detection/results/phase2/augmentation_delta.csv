@@ -1,0 +1,17 @@
+model,condition,status,delta_map50,delta_precision,delta_recall,delta_f1,delta_correct_prediction_rate,delta_inference_ms_per_image,delta_inference_speed_percent
+yolo11n,baseline,reused_phase1,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+yolo11n,spatial,pending,,,,,,,
+yolo11n,photometric,pending,,,,,,,
+yolo11n,combined,pending,,,,,,,
+yolov8n,baseline,reused_phase1,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+yolov8n,spatial,pending,,,,,,,
+yolov8n,photometric,pending,,,,,,,
+yolov8n,combined,pending,,,,,,,
+rfdetr_n,baseline,reused_phase1,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+rfdetr_n,spatial,pending,,,,,,,
+rfdetr_n,photometric,pending,,,,,,,
+rfdetr_n,combined,pending,,,,,,,
+dfine_n,baseline,reused_phase1,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+dfine_n,spatial,pending,,,,,,,
+dfine_n,photometric,pending,,,,,,,
+dfine_n,combined,pending,,,,,,,
