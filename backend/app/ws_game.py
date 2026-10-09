@@ -1,10 +1,12 @@
 import asyncio
 import json
+import logging
 import time
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
 router = APIRouter()
+log = logging.getLogger("game")
 
 POSE_PERIOD = 0.2  # 5 Hz
 
@@ -29,6 +31,9 @@ async def _notify(ws: WebSocket, text: str) -> None:
 async def ws_game(ws: WebSocket):
     await ws.accept()
     teleop = ws.app.state.teleop
+    game = ws.app.state.game
+    game.clients.add(ws)
+    await ws.send_text(game.collected_msg())  # 늦게 들어온 화면도 이미 먹은 사탕은 안 그린다
     pose_task = asyncio.create_task(_send_pose(ws, ws.app.state.bridge))
     try:
         while True:
@@ -46,6 +51,10 @@ async def ws_game(ws: WebSocket):
                     teleop.on_keys(int(msg.get("b", 0)) & 0xF)
                 elif t == "h":
                     teleop.on_heartbeat()
+            if t == "cdlog":
+                # 브라우저가 보고한 측정값 (서버 시계 기준으로 환산된 ms)
+                log.info("측정 %s: 판정→수신 %.0f ms, 판정→화면에서 사라짐 %.0f ms",
+                         msg.get("id"), float(msg.get("rx", -1)), float(msg.get("gone", -1)))
             if t in ("k", "h", "ping"):
                 # 왕복 지연 측정용: c는 클라이언트 시각을 그대로 돌려준다.
                 # st(서버 시각, s)로 브라우저가 서버와의 시계 차이를 추정해 영상 지연을 계산한다
@@ -55,6 +64,7 @@ async def ws_game(ws: WebSocket):
         pass
     finally:
         pose_task.cancel()
+        game.clients.discard(ws)
         if ws is teleop.owner:
             teleop.owner = None
             teleop.halt("WebSocket 끊김")

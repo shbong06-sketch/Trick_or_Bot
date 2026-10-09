@@ -1,3 +1,4 @@
+import math
 import threading
 
 import rclpy
@@ -26,6 +27,7 @@ class RosBridge(Bridge):
         self._stamped = cfg["cmd_vel_type"] == "TwistStamped"
         self._frame = cfg.get("cmd_vel_frame", "base_link")
         self._map_frame = cfg["map_frame"]
+        self._base_frame = cfg["base_frame"]
         self._camera_frame = cfg.get("camera_frame") or None  # 비우면 영상 header.frame_id 사용
         self._tf_timeout = Duration(seconds=float(cfg["tf_timeout_s"]))
         self._sink: VideoSink | None = None
@@ -88,6 +90,16 @@ class RosBridge(Bridge):
         twist.linear.x = lin
         twist.angular.z = ang
         self._cmd_pub.publish(msg)
+
+    def pumpkin_pose(self):
+        """가장 최근 TF의 map → base_link. 아직 위치추정 전이면 None."""
+        try:
+            tf = self._tf_buffer.lookup_transform(self._map_frame, self._base_frame, Time())
+        except TransformException:
+            return None
+        t, q = tf.transform.translation, tf.transform.rotation
+        yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
+        return t.x, t.y, yaw
 
     # ---- 영상 ----
     def _on_image(self, msg: CompressedImage) -> None:

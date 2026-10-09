@@ -19,6 +19,7 @@
     #keys span.on { background: #f80; color: #000; border-color: #f80; }
     #net { position: absolute; top: 8px; left: 10px; font: 11px/1.3 monospace; color: #8a8; opacity: .8; }
     #net.bad, #vstat.bad { color: #f66; }
+    #pick { position: absolute; top: 52px; left: 10px; font: 11px/1.3 monospace; color: #fc6; opacity: .9; white-space: pre; }
     #vstat { position: absolute; top: 24px; left: 10px; font: 11px/1.3 monospace; color: #8a8; opacity: .8; white-space: pre; }
   </style>
 </head>
@@ -31,6 +32,7 @@
     <div id="hud">세션 불러오는 중…</div>
     <div id="net">연결 중…</div>
     <div id="vstat"></div>
+    <div id="pick"></div>
   </div>
   <script>
     const KEY_BITS = { KeyW: 1, KeyA: 2, KeyS: 4, KeyD: 8 };  // e.code라 한글 입력 상태에서도 동작
@@ -39,12 +41,15 @@
 
     let session = null, pose = null;
     let ws = null, seq = 0, mask = 0, heartbeat = null, rtt = null, busy = false;
+    let collected = new Set();           // 서버가 획득 판정한 사탕 id
+    const pendingGone = new Map();       // id → {ts: 서버 판정 시각, rx: 수신 시각} (브라우저 ms), 화면에서 빠지기 전
+    let occ = null;                      // 점유 격자 (Uint8Array, 셀당 1/0, 0행 = 맵 위쪽)
     let clockOffset = null;  // 서버 시계 − 브라우저 시계 (ms). 영상 지연 추정에 쓴다
     const offsetSamples = [];
 
     fetch('/api/session?lv=1')
       .then(r => r.ok ? r.json() : Promise.reject(r.status))
-      .then(s => { session = s; drawHud(); drawMinimap(); })
+      .then(s => { session = s; occ = unpackOcc(s.map); drawHud(); drawMinimap(); })
       .catch(e => { $('hud').textContent = `세션 로드 실패: ${e}`; });
 
     // ---- /ws/game ----
@@ -71,6 +76,13 @@
         else if (m.t === 'p') { pose = m.a; drawHud(); drawMinimap(); }
         else if (m.t === 'busy') { busy = true; drawNet(); }
         else if (m.t === 'own') { busy = false; drawNet(); }
+        else if (m.t === 'cds') { collected = new Set(m.ids); pendingGone.clear(); drawHud(); drawMinimap(); }
+        else if (m.t === 'cd') {
+          // 서버 판정 결과만 따른다. 다음에 그리는 프레임부터 이 사탕을 빼고, 사라진 시각을 잰다
+          collected.add(m.id);
+          pendingGone.set(m.id, { ts: m.ts * 1000, rx: Date.now() });
+          drawHud(); drawMinimap();
+        }
       };
     }
     function send(obj) {
@@ -153,6 +165,7 @@
       vctx.drawImage(bmp, dx, dy, dw, dh);
       lastFrame = { ...meta, w: bmp.width, h: bmp.height, k, dx, dy };
       if (meta.pose && session) drawAR(lastFrame);
+      if (pendingGone.size) reportGone();
       $('placeholder').style.display = 'none';
       vs.frames++;
       if (!meta.pose) vs.noPose++;
@@ -182,6 +195,8 @@
       const cam = session.cam, g = vctx;
       const items = [];
       for (const cd of session.candies) {
+        if (collected.has(cd.id)) continue;                              // 서버가 획득 판정함
+        if (occluded(f.pose[0], f.pose[1], cd.x, cd.y)) continue;        // 카메라→사탕 사이에 벽
         const pc = mapToCamera(f.pose, [cd.x, cd.y, 0]);
         if (pc[2] <= 0.05) continue;                                    // 카메라 뒤
         const [u, v] = cameraToPixel(cam, f, pc);
@@ -193,6 +208,42 @@
       const t = performance.now() / 1000;
       for (const it of items) drawCandy(g, it, t);
     }
+    // ---- 가림 처리: 맵 점유 격자에서 카메라→사탕 직선이 벽 셀을 지나는지 ----
+    function unpackOcc(m) {
+      const bits = Uint8Array.from(atob(m.occ), ch => ch.charCodeAt(0));
+      const out = new Uint8Array(m.w * m.h);
+      for (let i = 0; i < out.length; i++) out[i] = (bits[i >> 3] >> (i & 7)) & 1;
+      return out;
+    }
+    function occluded(x0, y0, x1, y1) {
+      if (!occ) return false;
+      const m = session.map;
+      const cell = (x, y) => {
+        const c = Math.floor((x - m.ox) / m.res), r = m.h - 1 - Math.floor((y - m.oy) / m.res);
+        return c < 0 || c >= m.w || r < 0 || r >= m.h ? -1 : r * m.w + c;
+      };
+      const a = cell(x0, y0), b = cell(x1, y1);
+      const n = Math.ceil(Math.hypot(x1 - x0, y1 - y0) / (m.res * 0.25)); // 1/4칸 간격 표본 (모서리 스침도 잡게)
+      for (let i = 1; i < n; i++) {
+        const k = cell(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n);
+        if (k >= 0 && k !== a && k !== b && occ[k]) return true;        // 양 끝 칸은 제외
+      }
+      return false;
+    }
+
+    // ---- 획득 측정: 서버 판정 → 수신 → 화면에서 사라짐 ----
+    function reportGone() {
+      const now = Date.now(), off = clockOffset ?? 0;
+      for (const [id, e] of pendingGone) {
+        const rx = e.rx + off - e.ts, gone = now + off - e.ts;   // 서버 시계 기준 ms
+        console.log(`[획득] ${id} 판정→수신 ${rx.toFixed(0)} ms, 판정→화면에서 사라짐 ${gone.toFixed(0)} ms`);
+        send({ t: 'cdlog', id, rx: Math.round(rx), gone: Math.round(gone) });
+        $('pick').textContent = `획득 ${id}: 판정→사라짐 ${gone.toFixed(0)} ms (수신 ${rx.toFixed(0)} ms)`;
+        $('pick').style.color = gone > 500 ? '#f66' : '#fc6';
+      }
+      pendingGone.clear();
+    }
+
     // ---- 사탕 스프라이트: 한 번만 그려 두고 프레임마다 크기만 바꿔 찍는다 ----
     const SPRITE = 256, BODY = 0.25 * SPRITE;   // 스프라이트 크기, 그 안의 몸통 반지름
     const candySprite = (() => {
@@ -331,7 +382,7 @@
       const p = pose ? `펌킨 x ${pose[0].toFixed(2)}  y ${pose[1].toFixed(2)}  yaw ${(pose[2] * 180 / Math.PI).toFixed(0)}°` : '펌킨 위치 —';
       $('hud').textContent =
         `Lv.${s.lv} ${s.name}${s.mock ? ' (MOCK)' : ''}\n` +
-        `제한 시간 ${Math.floor(s.time / 60)}:${String(s.time % 60).padStart(2, '0')}  사탕 ${s.candies.length}개\n` +
+        `제한 시간 ${Math.floor(s.time / 60)}:${String(s.time % 60).padStart(2, '0')}  사탕 ${collected.size}/${s.candies.length}\n` +
         `맵 ${m.w}×${m.h}px @ ${m.res} m  원점 (${m.ox}, ${m.oy})\n` + p;
     }
     // 임시 미니맵: 맵 범위 안에 사탕과 펌킨만 그린다 (맵 이미지는 이후 단계)
@@ -341,8 +392,11 @@
       const k = c.width / m.w;  // 맵 px → 캔버스 px
       const toC = (x, y) => [(x - m.ox) / m.res * k, c.height - (y - m.oy) / m.res * k];
       g.clearRect(0, 0, c.width, c.height);
-      g.fillStyle = '#f80';
-      for (const cd of session.candies) { const [u, v] = toC(cd.x, cd.y); g.beginPath(); g.arc(u, v, 4, 0, 7); g.fill(); }
+      for (const cd of session.candies) {
+        const [u, v] = toC(cd.x, cd.y);
+        g.fillStyle = collected.has(cd.id) ? '#555' : '#f80';
+        g.beginPath(); g.arc(u, v, 4, 0, 7); g.fill();
+      }
       if (pose) {
         const [u, v] = toC(pose[0], pose[1]), yaw = pose[2];
         g.fillStyle = '#4cf'; g.beginPath(); g.arc(u, v, 5, 0, 7); g.fill();

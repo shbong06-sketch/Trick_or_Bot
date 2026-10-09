@@ -6,7 +6,8 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 
 from .bridge import create_bridge
-from .levels import load_level
+from .game import Game
+from .levels import load_level, pack_occ
 from .settings import MOCK, ROBOT, STATIC_DIR
 from .teleop import Teleop
 from .video import VideoHub
@@ -25,8 +26,11 @@ async def lifespan(app: FastAPI):
     bridge.start()
     teleop = Teleop(bridge, ROBOT["pumpkin"])
     teleop_task = asyncio.create_task(teleop.run())
-    app.state.bridge, app.state.teleop, app.state.video = bridge, teleop, video
+    game = Game(level, bridge)
+    game_task = asyncio.create_task(game.run())
+    app.state.bridge, app.state.teleop, app.state.video, app.state.game = bridge, teleop, video, game
     yield
+    game_task.cancel()
     teleop_task.cancel()
     teleop.halt("서버 종료")
     bridge.stop()
@@ -50,11 +54,19 @@ def get_session(lv: int = 1):
         "time": cfg["time_limit_s"],
         "pickR": cfg["pick_radius_m"],
         "candies": cfg["candies"],
-        "map": cfg["map"],
+        # 점유 격자는 비트로 묶어 여기서 한 번만 보낸다 (브라우저 가림 처리용)
+        "map": {**{k: v for k, v in cfg["map"].items() if k != "occ"}, "occ": pack_occ(cfg["map"]["occ"])},
         "cam": app.state.bridge.camera_info(),
         "net": {"fps": cfg["video_fps"]},
         "mock": MOCK,
     }
+
+
+@app.post("/api/game/reset")
+async def reset_game():
+    """임시: 회차 시작·종료 흐름이 생기기 전까지 테스트용으로 사탕 획득 상태만 초기화한다."""
+    await app.state.game.reset()
+    return {"ok": True}
 
 
 # API 라우트 뒤에 마운트해야 /api가 가려지지 않는다

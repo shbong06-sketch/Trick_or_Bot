@@ -16,6 +16,38 @@ Q_BASE_OPTICAL = (-0.5, 0.5, -0.5, 0.5)
 GRID_STEP = 0.5          # 바닥 격자 간격 (m)
 MARK_R = 0.10            # 사탕 자리 바닥 표시 반지름 (m). 실제 아레나의 바닥 테이프 역할
 NEAR = 0.05              # 이보다 가까운 점은 잘라 낸다 (m)
+WALL_H = 0.6             # 판자벽 높이 (m), SR-015
+
+
+def _wall_segments(m: dict) -> list[tuple[tuple[float, float], tuple[float, float]]]:
+    """점유 격자에서 벽 면(점유/비점유 셀 경계)을 뽑아 일직선으로 이어 붙인다."""
+    w, h, res, ox, oy, occ = m["w"], m["h"], m["res"], m["ox"], m["oy"], m["occ"]
+
+    def o(r, c):
+        return 0 <= r < h and 0 <= c < w and occ[r * w + c] == 1
+
+    segs = []
+    for r in range(h + 1):          # 가로 경계: r행 위쪽 변, y는 고정
+        y = oy + (h - r) * res
+        c = 0
+        while c < w:
+            if o(r, c) != o(r - 1, c):
+                c0 = c
+                while c < w and o(r, c) != o(r - 1, c):
+                    c += 1
+                segs.append(((ox + c0 * res, y), (ox + c * res, y)))
+            c += 1
+    for c in range(w + 1):          # 세로 경계: c열 왼쪽 변, x는 고정
+        x = ox + c * res
+        r = 0
+        while r < h:
+            if o(r, c) != o(r, c - 1):
+                r0 = r
+                while r < h and o(r, c) != o(r, c - 1):
+                    r += 1
+                segs.append(((x, oy + (h - r) * res), (x, oy + (h - r0) * res)))
+            r += 1
+    return segs
 
 
 def _quat_mul(a, b):
@@ -42,6 +74,7 @@ class MockBridge(Bridge):
         self._t = time.monotonic()
         self._candies = [(c["x"], c["y"]) for c in level["candies"]]
         m = level["map"]
+        self._walls = _wall_segments(m)
         self._bounds = (m["ox"], m["oy"], m["ox"] + m["w"] * m["res"], m["oy"] + m["h"] * m["res"])
         self._sink: VideoSink | None = None
         self._running = False
@@ -138,6 +171,18 @@ class MockBridge(Bridge):
                         pa, pb = (cut, pb) if pa[2] < NEAR else (pa, cut)
                     return proj(pa) + proj(pb)
 
+                def poly(pts3):
+                    """광학 프레임 다각형을 z ≥ NEAR로 잘라 투영한다."""
+                    out = []
+                    for i, p in enumerate(pts3):
+                        q = pts3[(i + 1) % len(pts3)]
+                        if p[2] >= NEAR:
+                            out.append(p)
+                        if (p[2] >= NEAR) != (q[2] >= NEAR):
+                            t = (NEAR - p[2]) / (q[2] - p[2])
+                            out.append(tuple(p[k] + t * (q[k] - p[k]) for k in range(3)))
+                    return [proj(p) for p in out] if len(out) >= 3 else None
+
                 img = Image.new("RGB", (w, h), (18, 14, 28))
                 d = ImageDraw.Draw(img)
                 d.rectangle([0, cy, w, h], fill=(30, 25, 42))  # 카메라가 수평이라 지평선 = cy
@@ -158,6 +203,20 @@ class MockBridge(Bridge):
                         d.line(l, fill=(0, 230, 120), width=1)
                     if (l := seg((px, py - MARK_R), (px, py + MARK_R))):
                         d.line(l, fill=(0, 230, 120), width=1)
+                # 벽: 먼 면부터 그려 가까운 면이 앞을 가리게 한다 (사탕 자리 표시도 가려진다)
+                faces = []
+                for (a, b) in self._walls:
+                    ca, cb = to_cam(*a), to_cam(*b)
+                    if ca[2] < NEAR and cb[2] < NEAR:
+                        continue
+                    mid = ((a[0] + b[0]) / 2 - cam_x, (a[1] + b[1]) / 2 - cam_y)
+                    faces.append((mid[0] ** 2 + mid[1] ** 2, a, b))
+                for _, a, b in sorted(faces, key=lambda f: f[0], reverse=True):
+                    pts = poly([to_cam(a[0], a[1], 0), to_cam(b[0], b[1], 0),
+                                to_cam(b[0], b[1], WALL_H), to_cam(a[0], a[1], WALL_H)])
+                    if pts:
+                        shade = (92, 70, 58) if a[1] == b[1] else (120, 92, 72)  # 가로·세로 면 밝기 차이
+                        d.polygon(pts, fill=shade, outline=(60, 44, 36))
                 clock = datetime.fromtimestamp(stamp).strftime("%H:%M:%S.%f")[:-3]
                 d.text((20, 20), clock, font=big, fill=(255, 255, 255))
                 d.text((20, 76), f"MOCK cam #{seq}  {w}x{h}",
