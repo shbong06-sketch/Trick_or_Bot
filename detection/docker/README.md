@@ -12,7 +12,7 @@
 | D-FINE | `detection/docker/dfine` | `trainer` |
 | DEIM-D-FINE | `detection/docker/deim` | `trainer` |
 | RF-DETR | `detection/docker/rfdetr` | `trainer` |
-| RT-DETRv4 | `detection/docker/rtdetrv4` | `trainer` |
+| RT-DETRv2-S | `detection/docker/rtdetrv2` | `trainer` |
 
 ```bash
 docker compose build
@@ -20,6 +20,18 @@ docker compose run --rm <서비스> nvidia-smi
 ```
 
 YOLO 이미지는 Dockerfile에서 `ultralytics/ultralytics:8.4.152`로 고정합니다.
+
+## Weight 다운로드
+
+다운로드는 최초 한 번만 수행합니다. `wget`은 호스트에서, `gdown`은 일회용 컨테이너에서 실행합니다.
+
+| 모델 | 방식 | 저장 파일 (`detection/checkpoints/` 기준) |
+|---|---|---|
+| YOLO | 자동 다운로드 | 컨테이너 작업 디렉터리 `/workspace`에 저장 |
+| D-FINE-N | `wget` (GitHub Releases) | `dfine_n_coco.pth` |
+| DEIM-D-FINE-N | `gdown` (Google Drive) | `deim_dfine_n_coco.pth` |
+| RF-DETR-N | 자동 다운로드 | `rfdetr/` |
+| RT-DETRv2-S | `wget` (GitHub Releases) | `rtdetrv2_s_coco.pth` |
 
 ## YOLO smoke run
 
@@ -41,9 +53,9 @@ done
 
 ```bash
 mkdir -p ../../checkpoints
-curl --fail --location --retry 3 \
-  https://github.com/Peterande/storage/releases/download/dfinev1.0/dfine_n_coco.pth \
-  --output ../../checkpoints/dfine_n_coco.pth
+wget --tries=3 --timeout=30 \
+  --output-document=../../checkpoints/dfine_n_coco.pth \
+  https://github.com/Peterande/storage/releases/download/dfinev1.0/dfine_n_coco.pth
 ```
 
 ```bash
@@ -58,8 +70,17 @@ docker compose run --rm trainer \
 
 ## DEIM-D-FINE smoke run
 
-[공식 N checkpoint](https://drive.google.com/file/d/1ZPEhiU9nhW4M5jLnYOFwTSLQC1Ugf62e/view)를
-`detection/checkpoints/deim_dfine_n_coco.pth`로 저장한 뒤 `detection/docker/deim`에서 실행합니다.
+`detection/docker/deim`에서 [공식 N checkpoint](https://drive.google.com/file/d/1ZPEhiU9nhW4M5jLnYOFwTSLQC1Ugf62e/view)를
+최초 한 번 다운로드합니다. Google Drive 파일은 일회용 컨테이너에서 `gdown`으로 받습니다.
+
+```bash
+docker compose run --rm trainer bash -lc '
+  pip install --no-cache-dir gdown==5.2.0 &&
+  mkdir -p /workspace/checkpoints &&
+  gdown 1ZPEhiU9nhW4M5jLnYOFwTSLQC1Ugf62e \
+    -O /workspace/checkpoints/deim_dfine_n_coco.pth
+'
+```
 
 ```bash
 docker compose run --rm trainer \
@@ -74,7 +95,14 @@ docker compose run --rm trainer \
 ## RF-DETR smoke run
 
 `detection/docker/rfdetr`에서 실행합니다. Pretrained weight는 자동 다운로드되어
-`detection/checkpoints/` 아래에 보관됩니다.
+`detection/checkpoints/rfdetr/`에 보관됩니다. Hugging Face 캐시는
+`detection/checkpoints/huggingface/`에 남습니다. 별도 수동 다운로드는 필요하지 않습니다.
+학습 전에 weight만 준비하려면 다음 명령을 실행합니다.
+
+```bash
+docker compose run --rm trainer python -c \
+  'from rfdetr import RFDETRNano; RFDETRNano(device="cpu")'
+```
 
 ```bash
 docker compose run --rm trainer python -c '
@@ -89,24 +117,28 @@ model.train(
 '
 ```
 
-## RT-DETRv4 smoke run
+## RT-DETRv2-S smoke run
 
-다음 weight를 `detection/checkpoints/`에 준비한 뒤 `detection/docker/rtdetrv4`에서 실행합니다.
+`detection/docker/rtdetrv2`에서 [공식 S (ResNet-18) checkpoint](https://github.com/lyuwenyu/RT-DETR/tree/main/rtdetrv2_pytorch#model-zoo)를
+최초 한 번 다운로드합니다.
 
-- [공식 S checkpoint](https://drive.google.com/file/d/1jDAVxblqRPEWed7Hxm6GwcEl7zn72U6z): `rtdetrv4_s_coco.pth`
-- [DINOv3 공식 다운로드](https://github.com/facebookresearch/dinov3#pretrained-models):
-  ViT-B/16 LVD-1689M weight를 `dinov3_vitb16_pretrain_lvd1689m.pth`로 저장
+```bash
+mkdir -p ../../checkpoints
+wget --tries=3 --timeout=30 \
+  --output-document=../../checkpoints/rtdetrv2_s_coco.pth \
+  https://github.com/lyuwenyu/storage/releases/download/v0.2/rtdetrv2_r18vd_120e_coco_rerun_48.1.pth
+```
 
 ```bash
 docker compose run --rm trainer \
-  python /opt/rtdetrv4/train.py \
-  -c /workspace/configs/rtdetrv4_s.yaml \
-  -t /workspace/checkpoints/rtdetrv4_s_coco.pth \
+  python /opt/rtdetr/rtdetrv2_pytorch/tools/train.py \
+  -c /workspace/configs/rtdetrv2_s.yaml \
+  -t /workspace/checkpoints/rtdetrv2_s_coco.pth \
   --device cuda:0 --use-amp --seed 0 \
-  --output-dir /workspace/experiments/rtdetrv4/rtdetrv4_s_smoke \
+  --output-dir /workspace/experiments/rtdetrv2/rtdetrv2_s_smoke \
   -u epoches=1
 ```
 
 1 epoch는 실행 확인용입니다. 본 학습 조건은 실험 계획에 맞춰 설정합니다.
-DEIM과 RT-DETRv4의 epoch 인자는 공식 코드에 맞춰 `epoches`를 사용합니다.
-모델은 한 번에 하나씩 실행합니다. RT-DETRv4는 DINOv3 teacher를 포함합니다.
+DEIM과 RT-DETRv2의 epoch 인자는 공식 코드에 맞춰 `epoches`를 사용합니다.
+모델은 한 번에 하나씩 실행합니다.
