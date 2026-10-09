@@ -3,8 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        ULTRALYTICS_IMAGE: ${ULTRALYTICS_IMAGE:?Set ULTRALYTICS_IMAGE to a compatible versioned image or digest}
 
     working_dir: /workspace
 
