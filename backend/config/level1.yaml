@@ -13,6 +13,7 @@ map_yaml: ../maps/holloween.yaml
 
 # 펌킨 시작 위치 (map 프레임, m / rad). mock 로봇의 초기 위치로도 쓴다
 pumpkin_start: {x: 5.13, y: -1.27, yaw: 1.57}
+boo_start: {x: 0.00, y: 0.00, yaw: 0.00}    # 부우 시작 위치 (시뮬레이터 스폰·AMCL 초기 위치)
 
 # 사탕 좌표 (map 프레임, m). tools/pick_candies.py로 다시 찍으면 이 블록이 교체된다.
 candies:

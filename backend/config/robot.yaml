@@ -9,6 +9,7 @@ pumpkin:
   watchdog_s: 0.5                    # 입력이 이만큼 끊기면 정지
 
   image_topic: /robot2/oakd/rgb/image_raw/compressed   # 1인칭 영상 (best effort, depth 1로 구독)
+  camera_info_topic: ""              # [확인 필요] 예: /robot2/oakd/rgb/camera_info (비우면 camera_placeholder 사용)
   tf_topic: /robot2/tf               # [확인 필요] 네임스페이스 TF가 아니면 /tf
   tf_static_topic: /robot2/tf_static # [확인 필요] 네임스페이스 TF가 아니면 /tf_static
   map_frame: map

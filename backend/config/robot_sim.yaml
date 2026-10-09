@@ -1,0 +1,38 @@
+# Gazebo(TurtleBot4 시뮬레이터)용 로봇 설정. 실행: ROBOT_CONFIG=robot_sim.yaml
+# 실물과 다른 점: cmd_vel이 TwistStamped, 카메라가 preview 토픽(raw → 런치에서 compressed로 변환), 시뮬레이션 시간
+use_sim_time: true
+
+pumpkin:
+  cmd_vel_topic: /robot2/cmd_vel
+  cmd_vel_type: TwistStamped
+  cmd_vel_frame: base_link
+  max_lin: 0.2
+  max_ang: 1.0
+  cmd_rate_hz: 10
+  watchdog_s: 0.5
+
+  image_topic: /robot2/oakd/rgb/preview/image_raw/compressed
+  camera_info_topic: /robot2/oakd/rgb/preview/camera_info
+  tf_topic: /robot2/tf
+  tf_static_topic: /robot2/tf_static
+  map_frame: map
+  base_frame: base_link
+  camera_frame: ""
+  tf_timeout_s: 0.05
+
+boo:
+  tf_topic: /robot1/tf
+  tf_static_topic: /robot1/tf_static
+  map_frame: map
+  base_frame: base_link
+  mock_speed: 0.2
+
+# camera_info가 오기 전까지만 쓰는 값
+camera_placeholder:
+  w: 250
+  h: 250
+  fx: 200.0
+  fy: 200.0
+  cx: 125.0
+  cy: 125.0
+  frame: oakd_rgb_camera_optical_frame

@@ -6,10 +6,11 @@ from geometry_msgs.msg import Twist, TwistStamped
 from rclpy.duration import Duration
 from rclpy.executors import ExternalShutdownException, SingleThreadedExecutor
 from rclpy.node import Node
+from rclpy.parameter import Parameter
 from rclpy.qos import HistoryPolicy, QoSProfile, ReliabilityPolicy
 from rclpy.signals import SignalHandlerOptions
 from rclpy.time import Time
-from sensor_msgs.msg import CompressedImage
+from sensor_msgs.msg import CameraInfo, CompressedImage
 from tf2_ros import Buffer, ExtrapolationException, TransformException, TransformListener
 
 from ..protocol import Pose7
@@ -35,10 +36,16 @@ class RosBridge(Bridge):
 
         # 시그널은 uvicorn이 받는다. rclpy가 먼저 종료하면 마지막 정지 명령을 못 보낸다
         rclpy.init(signal_handler_options=SignalHandlerOptions.NO)
-        self._node = Node("trick_or_bot_game_server")
+        # Gazebo에서는 시뮬레이션 시간을 써야 TwistStamped 시각이 컨트롤러와 맞는다
+        sim_time = [Parameter("use_sim_time", value=bool(ROBOT.get("use_sim_time", False)))]
+        self._node = Node("trick_or_bot_game_server", parameter_overrides=sim_time)
         self._cmd_pub = self._node.create_publisher(
             TwistStamped if self._stamped else Twist, cfg["cmd_vel_topic"], 10)
         self._node.create_subscription(CompressedImage, cfg["image_topic"], self._on_image, IMAGE_QOS)
+        # 카메라 내부 파라미터: camera_info가 오면 그 값, 아직 없으면 자리표시 값
+        self._cam: dict | None = None
+        if cfg.get("camera_info_topic"):
+            self._node.create_subscription(CameraInfo, cfg["camera_info_topic"], self._on_camera_info, IMAGE_QOS)
 
         # TF는 로봇마다 전용 노드·스레드에서 받는다. 영상 콜백이 TF 도착을 잠깐 기다려도 막히지 않게 하기 위함
         # 로봇 TF가 네임스페이스 아래(/robot2/tf)에 있으면 /tf를 리매핑한다
@@ -84,8 +91,13 @@ class RosBridge(Bridge):
         self._sink = sink
 
     def camera_info(self) -> dict:
-        # camera_info 구독은 이후 단계
-        return dict(ROBOT["camera_placeholder"])
+        return dict(self._cam) if self._cam else dict(ROBOT["camera_placeholder"])
+
+    def _on_camera_info(self, msg: CameraInfo) -> None:
+        if self._cam is None:
+            self._node.get_logger().info(f"camera_info 수신: {msg.width}×{msg.height}, fx={msg.k[0]:.1f}, frame={msg.header.frame_id}")
+        self._cam = {"w": msg.width, "h": msg.height, "fx": msg.k[0], "fy": msg.k[4], "cx": msg.k[2], "cy": msg.k[5],
+                     "frame": msg.header.frame_id, "src": "camera_info"}
 
     def send_cmd(self, lin: float, ang: float) -> None:
         if self._stamped:
