@@ -113,11 +113,43 @@ def prf(tp, fp, fn):
 
 
 def f1_peak(images, truth, predictions, match_iou):
-    scores = {item["score"] for image in images for item in predictions[image["id"]]}
-    # Every observed score is included; the next representable score covers the empty set.
-    thresholds = sorted(scores | {0.0, math.nextafter(max(scores), math.inf) if scores else 1.0})
-    values = [(prf(*counts(images, truth, predictions, t, match_iou))[2], t) for t in thresholds]
-    return max(values, key=lambda pair: (pair[0], pair[1]))
+    # A descending threshold only adds predictions. Match each one once, then
+    # score the complete group at every observed confidence boundary.
+    gt = defaultdict(list)
+    items = []
+    total_gt = 0
+    for image in images:
+        image_id = image["id"]
+        for item in truth[image_id]:
+            gt[image_id, item["category_id"]].append(item["bbox"])
+            total_gt += 1
+        for item in predictions[image_id]:
+            items.append((item["score"], image_id, item["category_id"], item["bbox"]))
+    if not items:
+        return 0.0, 1.0
+    items.sort(key=lambda item: -item[0])  # Stable order preserves same-score ties.
+    best = (0.0, math.nextafter(items[0][0], math.inf))
+    used = defaultdict(set)
+    tp = fp = index = 0
+    while index < len(items):
+        threshold = items[index][0]
+        while index < len(items) and items[index][0] == threshold:
+            _, image_id, category, box = items[index]
+            key = image_id, category
+            candidates = [(iou(box, target), j) for j, target in enumerate(gt[key])
+                          if j not in used[key]]
+            overlap, j = max(candidates, default=(0, None))
+            if overlap >= match_iou:
+                tp += 1
+                used[key].add(j)
+            else:
+                fp += 1
+            index += 1
+        fn = total_gt-tp
+        f1 = prf(tp, fp, fn)[2]
+        if (f1, threshold) > best:
+            best = f1, threshold
+    return best
 
 
 def load_split(dataset, split):
@@ -327,20 +359,27 @@ def evaluate(cfg, ev, name):
     ev = dict(ev)
     if framework != "yolo":
         ev["nms_iou"] = None  # Query-based detectors do not run NMS.
+    print(f"[{name}] loading best checkpoint", flush=True)
     model = load_model(framework, folder, checkpoint)
     dataset = ROOT/cfg["dataset"]
     metrics = {}
     for split in ("valid", "test"):
         data, images, truth, category_id = load_split(dataset, split)
+        print(f"[{name}] {split}: predicting {len(images)} images", flush=True)
         predictions = {}
         rgb_images = []
-        for image in images:
+        for index, image in enumerate(images, 1):
             rgb = read_rgb(dataset, split, image)
             if split == "test":
                 rgb_images.append(rgb)
             predictions[image["id"]] = predict(model, framework, rgb, category_id, ev)
+            if index % 20 == 0 or index == len(images):
+                print(f"[{name}] {split}: {index}/{len(images)} images", flush=True)
+        print(f"[{name}] {split}: computing metrics", flush=True)
         result = split_metrics(data, images, truth, predictions, ev, split == "valid")
         if split == "test":
+            print(f"[{name}] test: benchmarking {ev['warmup']} warmup + "
+                  f"{ev['repeats']} passes", flush=True)
             result["inference_ms_per_image"] = benchmark(model, framework, rgb_images, category_id, ev)
             result.update(benchmark_precision="fp32", benchmark_warmup=ev["warmup"],
                           benchmark_repeats=ev["repeats"], benchmark_batch_size=1)

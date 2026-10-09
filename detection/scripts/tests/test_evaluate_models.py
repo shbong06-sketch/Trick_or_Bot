@@ -1,6 +1,8 @@
 """CPU-only checks; no checkpoint, dataset inference, or GPU is used."""
 import importlib.util
 import json
+import math
+import random
 import tempfile
 import unittest
 from pathlib import Path
@@ -44,6 +46,21 @@ class ScreeningTests(unittest.TestCase):
     def test_f1_observed_boundary(self):
         self.assertEqual(evaluate.f1_peak(self.images, self.truth, self.pred, .5), (1.0, .8))
         self.assertEqual(evaluate.counts(self.images, self.truth, self.pred, .8, .5), (1, 0, 0))
+
+    def test_f1_sweep_matches_full_recount(self):
+        rng = random.Random(42)
+        boxes = ([0, 0, 10, 10], [5, 5, 15, 15], [20, 20, 30, 30])
+        for _ in range(50):
+            truth = {image["id"]: [{"bbox": rng.choice(boxes), "category_id": 0}
+                                     for _ in range(rng.randrange(3))] for image in self.images}
+            predictions = {image["id"]: [{"bbox": rng.choice(boxes),
+                                          "score": rng.choice((.2, .5, .8)), "category_id": 0}
+                                         for _ in range(rng.randrange(8))] for image in self.images}
+            scores = {item["score"] for values in predictions.values() for item in values}
+            thresholds = scores | {0.0, math.nextafter(max(scores), math.inf) if scores else 1.0}
+            expected = max((evaluate.prf(*evaluate.counts(self.images, truth, predictions, t, .5))[2], t)
+                           for t in thresholds)
+            self.assertEqual(evaluate.f1_peak(self.images, truth, predictions, .5), expected)
 
     def test_normalization_and_empty_test_mean(self):
         rows = [([-1, 0, 12, 11], .8, 0), ([0, 0, 10, 10], .9, 1)]
