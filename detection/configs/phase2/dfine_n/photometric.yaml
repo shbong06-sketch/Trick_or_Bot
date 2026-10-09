@@ -1,0 +1,26 @@
+model: dfine_n
+condition: photometric
+source_phase: phase1
+train: true
+intent: photometric_robustness
+native:
+  ops:
+  - type: ColorJitter
+    brightness: 0.25
+    contrast: 0.18
+    saturation: 0.2
+    hue: 0.005
+  - type: SanitizeBoundingBoxes
+    min_size: 1
+  - type: Resize
+    size:
+    - 704
+    - 704
+  - type: SanitizeBoundingBoxes
+    min_size: 1
+  - type: ConvertPILImage
+    dtype: float32
+    scale: true
+  - type: ConvertBoxes
+    fmt: cxcywh
+    normalize: true

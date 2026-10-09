@@ -1,0 +1,21 @@
+model: yolov8n
+condition: photometric
+source_phase: phase1
+train: true
+intent: photometric_robustness
+native:
+  phase2_contrast: 0.18
+  degrees: 0
+  translate: 0
+  scale: 0
+  fliplr: 0
+  flipud: 0
+  hsv_h: 0.005
+  hsv_s: 0.2
+  hsv_v: 0.25
+  mosaic: 0
+  mixup: 0
+  cutmix: 0
+  copy_paste: 0
+  bgr: 0
+  erasing: 0

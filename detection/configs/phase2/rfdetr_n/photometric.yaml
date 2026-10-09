@@ -1,0 +1,17 @@
+model: rfdetr_n
+condition: photometric
+source_phase: phase1
+train: true
+intent: photometric_robustness
+native:
+  augmentation_backend: albumentations
+  aug_config:
+    ColorJitter:
+      brightness: 0.25
+      contrast: 0.18
+      saturation: 0.2
+      hue: 0.005
+      p: 1.0
+  multi_scale: false
+  expanded_scales: false
+  scale_jitter: false

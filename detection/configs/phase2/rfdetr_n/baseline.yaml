@@ -1,0 +1,5 @@
+model: rfdetr_n
+condition: baseline
+source_phase: phase1
+train: false
+recipe: official_phase1_unchanged

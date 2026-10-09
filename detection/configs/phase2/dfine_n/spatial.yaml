@@ -1,0 +1,33 @@
+model: dfine_n
+condition: spatial
+source_phase: phase1
+train: true
+intent: spatial_debias
+native:
+  ops:
+  - type: RandomAffine
+    degrees:
+    - -5
+    - 5
+    translate:
+    - 0.2
+    - 0.2
+    scale:
+    - 0.7
+    - 1.3
+  - type: RandomHorizontalFlip
+    p: 0.5
+  - type: SanitizeBoundingBoxes
+    min_size: 1
+  - type: Resize
+    size:
+    - 704
+    - 704
+  - type: SanitizeBoundingBoxes
+    min_size: 1
+  - type: ConvertPILImage
+    dtype: float32
+    scale: true
+  - type: ConvertBoxes
+    fmt: cxcywh
+    normalize: true

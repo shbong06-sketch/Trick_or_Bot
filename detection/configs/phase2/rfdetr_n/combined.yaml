@@ -1,0 +1,34 @@
+model: rfdetr_n
+condition: combined
+source_phase: phase1
+train: true
+intent: combined_moderate
+native:
+  augmentation_backend: albumentations
+  aug_config:
+    HorizontalFlip:
+      p: 0.5
+    Affine:
+      scale:
+      - 0.8
+      - 1.2
+      translate_percent:
+        x:
+        - -0.15
+        - 0.15
+        y:
+        - -0.15
+        - 0.15
+      rotate:
+      - -5
+      - 5
+      p: 1.0
+    ColorJitter:
+      brightness: 0.2
+      contrast: 0.15
+      saturation: 0.15
+      hue: 0.005
+      p: 1.0
+  multi_scale: false
+  expanded_scales: false
+  scale_jitter: false
