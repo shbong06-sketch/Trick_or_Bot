@@ -27,6 +27,7 @@ async def lifespan(app: FastAPI):
     teleop = Teleop(bridge, ROBOT["pumpkin"])
     teleop_task = asyncio.create_task(teleop.run())
     game = Game(level, bridge)
+    game.on_end = lambda: teleop.halt("회차 종료")
     game_task = asyncio.create_task(game.run())
     app.state.bridge, app.state.teleop, app.state.video, app.state.game = bridge, teleop, video, game
     yield
@@ -54,6 +55,8 @@ def get_session(lv: int = 1):
         "time": cfg["time_limit_s"],
         "pickR": cfg["pick_radius_m"],
         "candies": cfg["candies"],
+        "gate": {**cfg["gate"], "front": cfg["gate_front_m"], "zoneR": cfg["gate_zone_r"],
+                 "dwell": cfg["gate_dwell_s"], "enterR": cfg["gate_enter_r"]},
         # 점유 격자는 비트로 묶어 여기서 한 번만 보낸다 (브라우저 가림 처리용)
         "map": {**{k: v for k, v in cfg["map"].items() if k != "occ"}, "occ": pack_occ(cfg["map"]["occ"])},
         "cam": app.state.bridge.camera_info(),
@@ -62,11 +65,18 @@ def get_session(lv: int = 1):
     }
 
 
+@app.post("/api/game/start")
+async def start_game():
+    """회차 시작 (운영자용). 플레이어 화면에서는 Enter로 시작한다."""
+    await app.state.game.start()
+    return {"state": app.state.game.state}
+
+
 @app.post("/api/game/reset")
 async def reset_game():
-    """임시: 회차 시작·종료 흐름이 생기기 전까지 테스트용으로 사탕 획득 상태만 초기화한다."""
+    """시작 전 상태로 되돌린다. 로봇 복귀는 이후 단계."""
     await app.state.game.reset()
-    return {"ok": True}
+    return {"state": app.state.game.state}
 
 
 # API 라우트 뒤에 마운트해야 /api가 가려지지 않는다

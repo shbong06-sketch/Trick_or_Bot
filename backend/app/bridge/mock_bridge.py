@@ -73,6 +73,9 @@ class MockBridge(Bridge):
         self._lin = self._ang = 0.0
         self._t = time.monotonic()
         self._candies = [(c["x"], c["y"]) for c in level["candies"]]
+        self._patrol = [(p["x"], p["y"]) for p in level.get("boo_patrol") or []]
+        self._boo_speed = float(ROBOT["boo"]["mock_speed"])
+        self._t_start = time.monotonic()
         m = level["map"]
         self._walls = _wall_segments(m)
         self._bounds = (m["ox"], m["oy"], m["ox"] + m["w"] * m["res"], m["oy"] + m["h"] * m["res"])
@@ -117,6 +120,18 @@ class MockBridge(Bridge):
         with self._lock:
             self._integrate()
             return self._x, self._y, self._yaw
+
+    def boo_pose(self):
+        """mock 부우: 순찰선 두 점을 일정 속도로 왕복한다."""
+        if len(self._patrol) < 2:
+            return None
+        (ax, ay), (bx, by) = self._patrol[:2]
+        length = math.hypot(bx - ax, by - ay)
+        s = (time.monotonic() - self._t_start) * self._boo_speed % (2 * length)
+        forward = s <= length
+        f = (s if forward else 2 * length - s) / length
+        yaw = math.atan2(by - ay, bx - ax) + (0.0 if forward else math.pi)
+        return ax + f * (bx - ax), ay + f * (by - ay), math.atan2(math.sin(yaw), math.cos(yaw))
 
     # ---- 가짜 카메라 ----
     def _camera_pose(self, x: float, y: float, yaw: float) -> Pose7:

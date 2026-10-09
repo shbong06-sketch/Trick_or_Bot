@@ -40,16 +40,23 @@ class RosBridge(Bridge):
             TwistStamped if self._stamped else Twist, cfg["cmd_vel_topic"], 10)
         self._node.create_subscription(CompressedImage, cfg["image_topic"], self._on_image, IMAGE_QOS)
 
-        # TF는 전용 노드·스레드에서 받는다. 영상 콜백이 TF 도착을 잠깐 기다려도 막히지 않게 하기 위함
+        # TF는 로봇마다 전용 노드·스레드에서 받는다. 영상 콜백이 TF 도착을 잠깐 기다려도 막히지 않게 하기 위함
         # 로봇 TF가 네임스페이스 아래(/robot2/tf)에 있으면 /tf를 리매핑한다
-        self._tf_node = Node("trick_or_bot_tf", cli_args=[
-            "--ros-args", "-r", f"/tf:={cfg['tf_topic']}", "-r", f"/tf_static:={cfg['tf_static_topic']}"])
-        self._tf_buffer = Buffer()
-        self._tf_listener = TransformListener(self._tf_buffer, self._tf_node, spin_thread=True)
+        self._tf_buffer, self._tf_node, self._tf_listener = self._make_tf("trick_or_bot_tf_pumpkin", cfg)
+        boo = ROBOT["boo"]
+        self._boo_map, self._boo_base = boo["map_frame"], boo["base_frame"]
+        self._boo_tf, self._boo_tf_node, self._boo_tf_listener = self._make_tf("trick_or_bot_tf_boo", boo)
 
         self._executor = SingleThreadedExecutor()
         self._executor.add_node(self._node)
         self._thread = threading.Thread(target=self._spin, daemon=True)
+
+    @staticmethod
+    def _make_tf(name: str, cfg: dict):
+        node = Node(name, cli_args=[
+            "--ros-args", "-r", f"/tf:={cfg['tf_topic']}", "-r", f"/tf_static:={cfg['tf_static_topic']}"])
+        buffer = Buffer()
+        return buffer, node, TransformListener(buffer, node, spin_thread=True)
 
     def _spin(self) -> None:
         try:
@@ -67,8 +74,9 @@ class RosBridge(Bridge):
     def stop(self) -> None:
         self.send_cmd(0.0, 0.0)
         self._executor.shutdown()
-        self._tf_listener.unregister()
-        self._tf_node.destroy_node()
+        for listener, node in ((self._tf_listener, self._tf_node), (self._boo_tf_listener, self._boo_tf_node)):
+            listener.unregister()
+            node.destroy_node()
         self._node.destroy_node()
         rclpy.try_shutdown()
 
@@ -91,15 +99,22 @@ class RosBridge(Bridge):
         twist.angular.z = ang
         self._cmd_pub.publish(msg)
 
-    def pumpkin_pose(self):
-        """가장 최근 TF의 map → base_link. 아직 위치추정 전이면 None."""
+    @staticmethod
+    def _latest_pose(buffer: Buffer, map_frame: str, base_frame: str):
+        """가장 최근 TF의 map → base_link (x, y, yaw). 아직 위치추정 전이면 None."""
         try:
-            tf = self._tf_buffer.lookup_transform(self._map_frame, self._base_frame, Time())
+            tf = buffer.lookup_transform(map_frame, base_frame, Time())
         except TransformException:
             return None
         t, q = tf.transform.translation, tf.transform.rotation
         yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
         return t.x, t.y, yaw
+
+    def pumpkin_pose(self):
+        return self._latest_pose(self._tf_buffer, self._map_frame, self._base_frame)
+
+    def boo_pose(self):
+        return self._latest_pose(self._boo_tf, self._boo_map, self._boo_base)
 
     # ---- 영상 ----
     def _on_image(self, msg: CompressedImage) -> None:

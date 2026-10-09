@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
-"""맵 이미지 위를 클릭해 사탕 위치와 펌킨 시작 위치를 찍고 레벨 yaml에 저장한다.
+"""맵 이미지 위를 클릭해 사탕·펌킨 시작 위치·탈출문을 찍고 레벨 yaml에 저장한다.
 
   python3 tools/pick_candies.py                       # config/level1.yaml
   python3 tools/pick_candies.py config/level2.yaml -n 3
   python3 tools/pick_candies.py --start               # 시작 위치 모드로 열기
+  python3 tools/pick_candies.py --gate                # 탈출문 모드로 열기
 
 조작:
-  Tab        = 사탕 모드 / 시작 위치 모드 전환
+  Tab        = 사탕 → 시작 위치 → 탈출문 모드 순서로 전환
   사탕 모드   왼쪽 클릭 = 추가, 오른쪽 클릭 = 마지막 점 삭제, R = 모두 지우기
   시작 모드   왼쪽 버튼을 누른 곳 = 위치, 누른 채 끌면 = 바라보는 방향 (끌지 않으면 방향 유지)
-  S = 저장 (candies 블록과 pumpkin_start 줄만 바뀐다), Q/Esc = 종료
+  탈출문 모드 왼쪽 버튼을 누른 곳 = 문 위치, 누른 채 끌면 = 문이 바라보는 방향(문 앞 구역 쪽)
+  S = 저장 (candies 블록, pumpkin_start 줄, gate 줄만 바뀐다), Q/Esc = 종료
 """
 import argparse
 import math
@@ -23,6 +25,7 @@ import yaml
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 MAX_W, MAX_H = 900, 700
 DRAG_MIN_PX = 6  # 이보다 짧게 끌면 방향은 바꾸지 않는다
+MODES = ("candy", "start", "gate")
 
 
 def read_pgm(path: Path) -> tuple[int, int, int, bytes]:
@@ -39,10 +42,10 @@ def read_pgm(path: Path) -> tuple[int, int, int, bytes]:
 
 
 class Picker:
-    def __init__(self, level_path: Path, count: int, start_mode: bool = False):
+    def __init__(self, level_path: Path, count: int, mode: str = "candy"):
         self.level_path = level_path
         self.count = count
-        self.mode = "start" if start_mode else "candy"
+        self.mode = mode
         level = yaml.safe_load(level_path.read_text(encoding="utf-8"))
         map_yaml = (level_path.parent / level["map_yaml"]).resolve()
         meta = yaml.safe_load(map_yaml.read_text(encoding="utf-8"))
@@ -59,7 +62,12 @@ class Picker:
         self.points = [(float(c["x"]), float(c["y"])) for c in level.get("candies") or []][:count]
         s = level.get("pumpkin_start")
         self.start = (float(s["x"]), float(s["y"]), float(s.get("yaw", 0.0))) if s else None
-        self.drag_from = None  # 시작 모드에서 누른 캔버스 좌표
+        g = level.get("gate")
+        self.gate = (float(g["x"]), float(g["y"]), float(g.get("yaw", 0.0))) if g else None
+        self.gate_front = float(level.get("gate_front_m", 0.4))
+        self.gate_zone_r = float(level.get("gate_zone_r", 0.3))
+        self.gate_enter_r = float(level.get("gate_enter_r", 0.15))
+        self.drag_from = None  # 시작·탈출문 모드에서 누른 캔버스 좌표
 
         self.root = tk.Tk()
         self.root.title(f"위치 찍기 — {level_path.name} / {map_yaml.name}")
@@ -112,7 +120,7 @@ class Picker:
 
     # ---- 입력 ----
     def on_toggle(self, e=None):
-        self.mode = "start" if self.mode == "candy" else "candy"
+        self.mode = MODES[(MODES.index(self.mode) + 1) % len(MODES)]
         self.redraw()
         return "break"  # Tab 포커스 이동 막기
 
@@ -123,6 +131,10 @@ class Picker:
                 return
             self.points.append(self.canvas_to_map(e.x, e.y))
             self.redraw()
+        elif self.mode == "gate":
+            self.drag_from = (e.x, e.y)
+            self.gate = (*self.canvas_to_map(e.x, e.y), self.gate[2] if self.gate else 0.0)
+            self.redraw()
         else:
             self.drag_from = (e.x, e.y)
             x, y = self.canvas_to_map(e.x, e.y)
@@ -131,12 +143,16 @@ class Picker:
             self.redraw()
 
     def on_drag(self, e):
-        if self.mode != "start" or not self.drag_from:
+        if self.mode not in ("start", "gate") or not self.drag_from:
             return
         dx, dy = e.x - self.drag_from[0], e.y - self.drag_from[1]
         if math.hypot(dx, dy) >= DRAG_MIN_PX:
             # 캔버스 y는 아래로 증가, map y는 위로 증가
-            self.start = (self.start[0], self.start[1], math.atan2(-dy, dx))
+            yaw = math.atan2(-dy, dx)
+            if self.mode == "start":
+                self.start = (self.start[0], self.start[1], yaw)
+            else:
+                self.gate = (self.gate[0], self.gate[1], yaw)
             self.redraw()
         self.on_move(e)
 
@@ -162,10 +178,13 @@ class Picker:
         self.canvas.delete("pt")
         if self.mode == "candy":
             self.mode_label.config(fg="#c60", text="[사탕 모드]  왼쪽 클릭: 추가   오른쪽 클릭: 마지막 삭제   "
-                                                     "R: 모두 지우기   Tab: 시작 위치 모드   S: 저장   Q: 종료")
-        else:
+                                                     "R: 모두 지우기   Tab: 다음 모드   S: 저장   Q: 종료")
+        elif self.mode == "start":
             self.mode_label.config(fg="#07a", text="[시작 위치 모드]  누른 곳 = 위치, 누른 채 끌기 = 방향   "
-                                                     "Tab: 사탕 모드   S: 저장   Q: 종료")
+                                                     "Tab: 다음 모드   S: 저장   Q: 종료")
+        else:
+            self.mode_label.config(fg="#a0a", text="[탈출문 모드]  누른 곳 = 문 위치, 누른 채 끌기 = 문 앞 방향   "
+                                                     "Tab: 다음 모드   S: 저장   Q: 종료")
         # 맵 원점 (0,0)
         ox, oy = self.map_to_canvas(0.0, 0.0)
         self.canvas.create_line(ox - 8, oy, ox + 8, oy, fill="#3a7", tags="pt")
@@ -196,6 +215,25 @@ class Picker:
                          f"({math.degrees(yaw):+.0f}°){self._warn(x, y)}")
         else:
             lines.append("시작: 없음")
+        if self.gate:
+            x, y, yaw = self.gate
+            cx, cy = self.map_to_canvas(x, y)
+            px = self.zoom / self.res  # m → 캔버스 px
+            # 문 앞 구역 (사탕을 다 모은 뒤 여기서 머무르면 문이 열림)
+            fx, fy = x + self.gate_front * math.cos(yaw), y + self.gate_front * math.sin(yaw)
+            fcx, fcy = self.map_to_canvas(fx, fy)
+            zr = self.gate_zone_r * px
+            self.canvas.create_oval(fcx - zr, fcy - zr, fcx + zr, fcy + zr, outline="#a0a", dash=(4, 2), tags="pt")
+            # 문 지점 (열린 뒤 여기 닿으면 클리어)
+            er = self.gate_enter_r * px
+            self.canvas.create_oval(cx - er, cy - er, cx + er, cy + er, fill="#c6c", outline="#a0a", width=2, tags="pt")
+            self.canvas.create_line(cx, cy, fcx, fcy, fill="#a0a", width=3, arrow="last", tags="pt")
+            self.canvas.create_text(cx - er - 4, cy - er, text="gate", fill="#a0a",
+                                    font=("sans", 10, "bold"), anchor="se", tags="pt")
+            lines.append(f"탈출문: x={x:+.2f}  y={y:+.2f}  yaw={yaw:+.2f} rad ({math.degrees(yaw):+.0f}°){self._warn(x, y)}"
+                         f"   문 앞 구역 중심 ({fx:+.2f}, {fy:+.2f}){self._warn(fx, fy)}")
+        else:
+            lines.append("탈출문: 없음")
         lines.append("초록 + = map 원점 (0,0), 파란 원 = 로봇 크기(반지름 0.17 m)")
         self.info.config(text="\n".join(lines))
 
@@ -230,6 +268,13 @@ class Picker:
                 text = text.replace("\ncandies:", f"\n{line}\n\ncandies:", 1)
             saved.append("시작 위치")
             print(line)
+        if self.gate:
+            x, y, yaw = self.gate
+            line = f"gate: {{x: {x:.2f}, y: {y:.2f}, yaw: {yaw:.2f}}}"
+            pattern = re.compile(r"^gate:.*$", re.M)
+            text = pattern.sub(lambda m: line, text, count=1) if pattern.search(text) else text.rstrip("\n") + f"\n\n{line}\n"
+            saved.append("탈출문")
+            print(line)
         self.level_path.write_text(text.rstrip("\n") + "\n", encoding="utf-8")
         self.status.config(text=f"저장함 ({', '.join(saved)}) → {self.level_path}")
 
@@ -242,8 +287,10 @@ def main():
     ap.add_argument("level", nargs="?", default=str(BACKEND_DIR / "config/level1.yaml"))
     ap.add_argument("-n", "--count", type=int, default=3, help="사탕 개수 (기본 3)")
     ap.add_argument("--start", action="store_true", help="시작 위치 모드로 연다")
+    ap.add_argument("--gate", action="store_true", help="탈출문 모드로 연다")
     args = ap.parse_args()
-    Picker(Path(args.level).resolve(), args.count, args.start).run()
+    mode = "gate" if args.gate else "start" if args.start else "candy"
+    Picker(Path(args.level).resolve(), args.count, mode).run()
 
 
 if __name__ == "__main__":

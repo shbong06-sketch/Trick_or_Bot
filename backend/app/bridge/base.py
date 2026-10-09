@@ -30,6 +30,10 @@ class Bridge(ABC):
         """map 프레임 펌킨 위치 (x, y, yaw). 아직 모르면 None."""
         return None
 
+    def boo_pose(self) -> tuple[float, float, float] | None:
+        """map 프레임 부우 위치 (x, y, yaw). 아직 모르면 None."""
+        return None
+
     @abstractmethod
     def set_video_sink(self, sink: VideoSink) -> None:
         """펌킨 카메라 JPEG를 받을 곳. start() 전에 호출한다."""
