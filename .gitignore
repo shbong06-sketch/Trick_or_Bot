@@ -68,3 +68,9 @@ __pycache__/
 
 # Backend 기록 DB
 backend/data/
+
+# TrickOrBot ROS 2 workspace
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+ros2_ws/**/__pycache__/
