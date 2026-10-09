@@ -2,6 +2,10 @@
 
 결과는 호스트의 `detection/experiments/`에 저장됩니다.
 
+Phase 1의 7개 모델 비교는 [공통 CLI 안내](../records/phase1/README.md)를 사용합니다.
+아래 smoke run과 Phase 1 조건은 다릅니다. Docker build context는 `detection/`이며
+공통 평가 의존성을 `scripts/phase1/requirements.txt`에서 설치합니다.
+
 ## 빌드 및 GPU 확인
 
 각 환경 디렉터리에서 실행합니다.
