@@ -1,0 +1,15 @@
+__include__: [../rtdetrv2_s.yaml]
+epoches: 100
+eval_spatial_size: [704, 704]
+lr_scheduler:
+  milestones: [80]
+train_dataloader:
+  total_batch_size: 16
+  dataset:
+    transforms:
+      policy: {epoch: 88}
+  collate_fn:
+    scales: null
+    stop_epoch: 88
+val_dataloader:
+  total_batch_size: 16

@@ -1,0 +1,58 @@
+schema_version: 1
+dataset:
+  name: trick_or_bot_v01
+  root: dataset
+  manifest: records/dataset_analysis/freeze_manifest.csv
+  split_dirs: {train: train, val: valid, test: test}
+  target_split: [0.7, 0.2, 0.1]
+  # Phase 0 observed 417, rather than the originally requested 416.
+  observed_images: 417
+common:
+  seed: 42
+  input_size: [704, 704]
+  epochs: 100
+  batch_size: 16
+  early_stopping: true
+  patience: 20
+  min_delta: 0.0
+  gpu: L4
+  workers: 2
+evaluation:
+  confidence: 0.25
+  match_iou: 0.50
+  ap_score_floor: 0.001
+  nms_iou: 0.70
+  max_detections: 100
+  f1_confidence_step: 0.01
+  warmup: 20
+  repeats: 3
+  precision: fp32
+models:
+  yolov8n:
+    framework: yolo
+    weights: yolov8n.pt
+    train: {optimizer: AdamW, lr0: 0.001, lrf: 0.01, cos_lr: true, weight_decay: 0.0005, amp: true, nbs: 16, multi_scale: false, close_mosaic: 10}
+  yolo11n:
+    framework: yolo
+    weights: yolo11n.pt
+    train: {optimizer: AdamW, lr0: 0.001, lrf: 0.01, cos_lr: true, weight_decay: 0.0005, amp: true, nbs: 16, multi_scale: false, close_mosaic: 10}
+  yolo26n:
+    framework: yolo
+    weights: yolo26n.pt
+    train: {optimizer: MuSGD, lr0: 0.01, lrf: 0.01, cos_lr: true, weight_decay: 0.0005, amp: true, nbs: 16, multi_scale: false, close_mosaic: 10}
+  dfine_n:
+    framework: dfine
+    weights: checkpoints/dfine_n_coco.pth
+    recipe: configs/phase1/dfine_n.yaml
+  deim_dfine_n:
+    framework: deim
+    weights: checkpoints/deim_dfine_n_coco.pth
+    recipe: configs/phase1/deim_dfine_n.yaml
+  rfdetr_n:
+    framework: rfdetr
+    weights: automatic
+    train: {lr: 0.0001, lr_encoder: 0.00015, weight_decay: 0.0001, grad_accum_steps: 1, multi_scale: false, expanded_scales: false, scale_jitter: false, use_ema: true, amp_dtype: fp16, best_model_metric: map, early_stopping_use_ema: true, early_stopping_min_delta: 0.0, eval_interval: 1, eval_max_dets: 100, run_test: false, wandb: false, tensorboard: false}
+  rtdetrv2_s:
+    framework: rtdetrv2
+    weights: checkpoints/rtdetrv2_s_coco.pth
+    recipe: configs/phase1/rtdetrv2_s.yaml

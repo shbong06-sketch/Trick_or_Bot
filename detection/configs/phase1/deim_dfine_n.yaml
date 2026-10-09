@@ -1,0 +1,20 @@
+__include__: [../deim_dfine_n.yaml]
+epoches: 100
+eval_spatial_size: [704, 704]
+HGNetv2:
+  pretrained: false
+flat_epoch: 44
+no_aug_epoch: 12
+warmup_iter: 100
+train_dataloader:
+  total_batch_size: 16
+  dataset:
+    transforms:
+      policy: {epoch: [4, 44, 88]}
+  collate_fn:
+    base_size: 704
+    base_size_repeat: null
+    mixup_epochs: [4, 44]
+    stop_epoch: 88
+val_dataloader:
+  total_batch_size: 16
