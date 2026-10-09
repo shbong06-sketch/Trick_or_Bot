@@ -1,0 +1,4 @@
+split,width,height,images,ratio
+test,704,704,42,1.0
+train,704,704,292,1.0
+val,704,704,83,1.0

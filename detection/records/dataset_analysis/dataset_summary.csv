@@ -1,0 +1,3 @@
+dataset,format,expected_images,images,image_count_matches,classes,annotations,invalid_annotations,split_mismatches,leakage_candidate_pairs,structural_issues
+trick_or_bot_v01,YOLO,416,417,False,"{""0"": ""pumpkin""}",340,0,0,675,0
+trick_or_bot_v01,COCO,416,417,False,"""pumpkin""",340,0,0,675,0
