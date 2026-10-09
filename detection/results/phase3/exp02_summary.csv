@@ -1,9 +1,7 @@
 experiment,model,step,optimizer,lr0,momentum,status,selected,inherited_from,config,validation_recall,validation_f1,validation_map50_95,validation_map50,best_epoch,time_to_best_seconds,ending_epoch,total_training_seconds
-001,yolo11n,optimizer,AdamW,0.002,0.9,complete,False,configs/phase2/yolo11n/baseline.yaml,experiments/phase3/001/yolo11n/exp01_config.yaml,1.0,1.0,0.9615105867900005,1.0,88,262.207,100,317.58706342799996
-002,yolo11n,optimizer,SGD,0.01,0.937,complete,True,configs/phase2/yolo11n/baseline.yaml,experiments/phase3/002/yolo11n/exp01_config.yaml,1.0,1.0,0.9615164273932175,1.0,94,264.773,100,299.63479296600417
+002,yolo11n,learning_rate,SGD,0.01,0.937,reused_exp01,False,configs/phase2/yolo11n/baseline.yaml,experiments/phase3/002/yolo11n/exp01_config.yaml,1.0,1.0,0.9615164273932175,1.0,94,264.773,100,299.63479296600417
 003,yolo11n,learning_rate,SGD,0.005,0.937,complete,False,experiments/phase3/002/yolo11n/exp01_config.yaml,experiments/phase3/003/yolo11n/exp02_config.yaml,1.0,1.0,0.9570791077083417,1.0,98,280.467,100,304.3226803130019
 004,yolo11n,learning_rate,SGD,0.02,0.937,complete,True,experiments/phase3/002/yolo11n/exp01_config.yaml,experiments/phase3/004/yolo11n/exp02_config.yaml,1.0,1.0,0.9629794668730541,1.0,97,274.704,100,301.06460144500306
-001,yolov8n,optimizer,AdamW,0.002,0.9,complete,False,configs/phase2/yolov8n/baseline.yaml,experiments/phase3/001/yolov8n/exp01_config.yaml,1.0,1.0,0.9568352016874853,1.0,78,194.486,98,261.44580466700427
-002,yolov8n,optimizer,SGD,0.01,0.937,complete,True,configs/phase2/yolov8n/baseline.yaml,experiments/phase3/002/yolov8n/exp01_config.yaml,1.0,1.0,0.9647719806795002,1.0,100,237.396,100,254.82826287200442
+002,yolov8n,learning_rate,SGD,0.01,0.937,reused_exp01,True,configs/phase2/yolov8n/baseline.yaml,experiments/phase3/002/yolov8n/exp01_config.yaml,1.0,1.0,0.9647719806795002,1.0,100,237.396,100,254.82826287200442
 003,yolov8n,learning_rate,SGD,0.005,0.937,complete,False,experiments/phase3/002/yolov8n/exp01_config.yaml,experiments/phase3/003/yolov8n/exp02_config.yaml,1.0,1.0,0.9612059671343831,1.0,97,233.984,100,258.44433302700054
 004,yolov8n,learning_rate,SGD,0.02,0.937,complete,False,experiments/phase3/002/yolov8n/exp01_config.yaml,experiments/phase3/004/yolov8n/exp02_config.yaml,1.0,0.9924812030075187,0.9643168665289054,1.0,99,237.891,100,258.2309646499998

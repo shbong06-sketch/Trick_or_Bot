@@ -1,0 +1,14 @@
+{
+  "yolo11n": {
+    "status": "complete",
+    "selected_experiment": "004",
+    "optimizer": "SGD",
+    "lr0": 0.02
+  },
+  "yolov8n": {
+    "status": "complete",
+    "selected_experiment": "002",
+    "optimizer": "SGD",
+    "lr0": 0.01
+  }
+}
