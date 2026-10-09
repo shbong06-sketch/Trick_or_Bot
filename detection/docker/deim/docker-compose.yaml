@@ -1,0 +1,23 @@
+services:
+  trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    working_dir: /workspace
+
+    volumes:
+      - ../../:/workspace
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ["0"]
+              capabilities: [gpu]
+
+    shm_size: "8gb"
+    stdin_open: true
+    tty: true
+    command: bash
