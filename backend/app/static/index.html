@@ -8,30 +8,347 @@
     html, body { margin: 0; height: 100%; background: #0d0b14; color: #eee; font-family: system-ui, sans-serif; }
     #fpv { position: relative; width: 100vw; height: 100vh; display: grid; place-items: center; }
     #fpv .placeholder { color: #555; font-size: 1.4rem; }
-    #minimap { position: absolute; top: 16px; right: 16px; width: 220px; height: 160px;
-               border: 1px solid #444; background: #16131f; display: grid; place-items: center; color: #555; }
+    #video { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #minimap { position: absolute; top: 16px; right: 16px; border: 1px solid #444; background: #16131f; }
     #hud { position: absolute; left: 16px; bottom: 16px; font-size: 0.85rem; line-height: 1.5;
            background: rgba(0,0,0,.5); padding: 8px 12px; border-radius: 6px; white-space: pre; }
+    #keys { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%);
+            display: grid; grid-template-columns: repeat(3, 36px); gap: 4px; }
+    #keys span { height: 36px; display: grid; place-items: center; border: 1px solid #555;
+                 border-radius: 6px; color: #888; font-weight: 600; }
+    #keys span.on { background: #f80; color: #000; border-color: #f80; }
+    #net { position: absolute; top: 8px; left: 10px; font: 11px/1.3 monospace; color: #8a8; opacity: .8; }
+    #net.bad, #vstat.bad { color: #f66; }
+    #vstat { position: absolute; top: 24px; left: 10px; font: 11px/1.3 monospace; color: #8a8; opacity: .8; white-space: pre; }
   </style>
 </head>
 <body>
   <div id="fpv">
-    <span class="placeholder">1인칭 영상 (다음 단계)</span>
-    <div id="minimap">미니맵</div>
+    <span class="placeholder" id="placeholder">영상 기다리는 중…</span>
+    <canvas id="video"></canvas>
+    <canvas id="minimap" width="260" height="192"></canvas>
+    <div id="keys"><i></i><span data-k="1">W</span><i></i><span data-k="2">A</span><span data-k="4">S</span><span data-k="8">D</span></div>
     <div id="hud">세션 불러오는 중…</div>
+    <div id="net">연결 중…</div>
+    <div id="vstat"></div>
   </div>
   <script>
+    const KEY_BITS = { KeyW: 1, KeyA: 2, KeyS: 4, KeyD: 8 };  // e.code라 한글 입력 상태에서도 동작
+    const HEARTBEAT_MS = 100;
+    const $ = id => document.getElementById(id);
+
+    let session = null, pose = null;
+    let ws = null, seq = 0, mask = 0, heartbeat = null, rtt = null, busy = false;
+    let clockOffset = null;  // 서버 시계 − 브라우저 시계 (ms). 영상 지연 추정에 쓴다
+    const offsetSamples = [];
+
     fetch('/api/session?lv=1')
       .then(r => r.ok ? r.json() : Promise.reject(r.status))
-      .then(s => {
-        const m = s.map;
-        document.getElementById('hud').textContent =
-          `Lv.${s.lv} ${s.name}${s.mock ? ' (MOCK)' : ''}\n` +
-          `제한 시간 ${Math.floor(s.time / 60)}:${String(s.time % 60).padStart(2, '0')}  사탕 ${s.candies.length}개\n` +
-          `맵 ${m.w}×${m.h}px @ ${m.res} m  원점 (${m.ox}, ${m.oy})\n` +
-          `카메라 ${s.cam.w}×${s.cam.h}  fx ${s.cam.fx}  영상 ${s.net.fps} fps`;
-      })
-      .catch(e => { document.getElementById('hud').textContent = `세션 로드 실패: ${e}`; });
+      .then(s => { session = s; drawHud(); drawMinimap(); })
+      .catch(e => { $('hud').textContent = `세션 로드 실패: ${e}`; });
+
+    // ---- /ws/game ----
+    function connect() {
+      ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/game`);
+      ws.onopen = () => { busy = false; drawNet(); };
+      ws.onclose = () => {
+        stopHeartbeat();
+        mask = 0; drawKeys();
+        $('net').textContent = '연결 끊김 — 재연결 중…'; $('net').className = 'bad';
+        setTimeout(connect, 1000);
+      };
+      ws.onmessage = e => {
+        const m = JSON.parse(e.data);
+        if (m.t === 'a') {
+          const d = performance.now() - m.c;
+          rtt = rtt == null ? d : rtt * 0.8 + d * 0.2;
+          drawNet(d);
+          // 왕복이 가장 짧았던 최근 표본으로 시계 차이를 추정 (서버 시각은 왕복의 중간이라고 가정)
+          offsetSamples.push({ d, off: m.st * 1000 + d / 2 - Date.now() });
+          if (offsetSamples.length > 20) offsetSamples.shift();
+          clockOffset = offsetSamples.reduce((a, b) => (b.d < a.d ? b : a)).off;
+        }
+        else if (m.t === 'p') { pose = m.a; drawHud(); drawMinimap(); }
+        else if (m.t === 'busy') { busy = true; drawNet(); }
+        else if (m.t === 'own') { busy = false; drawNet(); }
+      };
+    }
+    function send(obj) {
+      if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(obj));
+    }
+    connect();
+    setInterval(() => send({ t: 'ping', s: ++seq, c: performance.now() }), 2000);
+
+    // ---- 키 입력: 상태가 바뀔 때만 보내고, 누르는 동안 100 ms heartbeat ----
+    function setMask(next) {
+      if (next === mask) return;
+      mask = next;
+      send({ t: 'k', b: mask, s: ++seq, c: performance.now() });
+      drawKeys();
+      if (mask && !heartbeat) heartbeat = setInterval(() => send({ t: 'h', s: ++seq, c: performance.now() }), HEARTBEAT_MS);
+      if (!mask) stopHeartbeat();
+    }
+    function stopHeartbeat() { clearInterval(heartbeat); heartbeat = null; }
+
+    addEventListener('keydown', e => {
+      const bit = KEY_BITS[e.code];
+      if (!bit) return;
+      e.preventDefault();
+      if (!e.repeat) setMask(mask | bit);
+    });
+    addEventListener('keyup', e => {
+      const bit = KEY_BITS[e.code];
+      if (bit) setMask(mask & ~bit);
+    });
+    // 포커스를 잃으면 keyup이 오지 않으므로 직접 정지
+    addEventListener('blur', () => setMask(0));
+    document.addEventListener('visibilitychange', () => { if (document.hidden) setMask(0); });
+    addEventListener('pagehide', () => { setMask(0); ws && ws.close(); });
+
+    // ---- /ws/video: 44바이트 헤더 + JPEG ----
+    // u8 ver | u8 flags | u16 | u32 seq | f64 stamp | f32×7 map→광학 프레임 (x,y,z,qx,qy,qz,qw)
+    const HEADER = 44, FLAG_POSE = 1;
+    const video = $('video'), vctx = video.getContext('2d');
+    let pending = null, decoding = false;   // 디코딩 중에 온 프레임은 최신 1장만 남긴다
+    let lastFrame = null;                    // 다음 단계(AR)에서 쓸 {seq, stamp, pose, w, h}
+    const vs = { frames: 0, bytes: 0, dropped: 0, lat: [], noPose: 0 };
+
+    function connectVideo() {
+      const v = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/video`);
+      v.binaryType = 'arraybuffer';
+      v.onmessage = e => {
+        vs.bytes += e.data.byteLength;
+        if (pending) vs.dropped++;
+        pending = e.data;
+        if (!decoding) decodeLatest();
+      };
+      v.onclose = () => setTimeout(connectVideo, 1000);
+    }
+    async function decodeLatest() {
+      decoding = true;
+      while (pending) {
+        const buf = pending; pending = null;
+        const dv = new DataView(buf);
+        const meta = {
+          seq: dv.getUint32(4, true),
+          stamp: dv.getFloat64(8, true),
+          pose: dv.getUint8(1) & FLAG_POSE ? Array.from({ length: 7 }, (_, i) => dv.getFloat32(16 + 4 * i, true)) : null,
+        };
+        try {
+          const bmp = await createImageBitmap(new Blob([new Uint8Array(buf, HEADER)], { type: 'image/jpeg' }));
+          drawFrame(bmp, meta);
+          bmp.close();
+        } catch (err) { console.warn('JPEG 디코딩 실패', err); }
+      }
+      decoding = false;
+    }
+    function drawFrame(bmp, meta) {
+      const dpr = devicePixelRatio || 1;
+      const W = Math.round(video.clientWidth * dpr), H = Math.round(video.clientHeight * dpr);
+      if (video.width !== W || video.height !== H) { video.width = W; video.height = H; }
+      // 비율 유지(contain): AR 좌표 변환에 같은 배율·오프셋을 쓴다
+      const k = Math.min(W / bmp.width, H / bmp.height);
+      const dw = bmp.width * k, dh = bmp.height * k, dx = (W - dw) / 2, dy = (H - dh) / 2;
+      vctx.fillStyle = '#000'; vctx.fillRect(0, 0, W, H);
+      vctx.drawImage(bmp, dx, dy, dw, dh);
+      lastFrame = { ...meta, w: bmp.width, h: bmp.height, k, dx, dy };
+      if (meta.pose && session) drawAR(lastFrame);
+      $('placeholder').style.display = 'none';
+      vs.frames++;
+      if (!meta.pose) vs.noPose++;
+      if (clockOffset != null) vs.lat.push(Date.now() + clockOffset - meta.stamp * 1000);
+    }
+    // ---- AR: 사탕 맵 좌표(바닥 z=0)를 이 프레임의 카메라 포즈로 투영 (브라우저 오버레이만) ----
+    const CANDY_R = 0.08;                 // 화면에 그릴 사탕 크기 기준 반지름 (m)
+    const ICON_MIN = 6, ICON_MAX = 140;   // 아이콘 반지름 한계 (canvas px)
+    let showArDebug = true;               // G 키: 거리·id 표시 켜고 끄기
+
+    // map 점 p → 광학 프레임 점: R^T (p − t). R은 쿼터니언 (qx,qy,qz,qw)
+    function mapToCamera(pose, p) {
+      const [tx, ty, tz, qx, qy, qz, qw] = pose;
+      const vx = p[0] - tx, vy = p[1] - ty, vz = p[2] - tz;
+      // 켤레 쿼터니언으로 회전: v' = v + 2w(u×v) + 2u×(u×v), u = −(qx,qy,qz)
+      const ux = -qx, uy = -qy, uz = -qz;
+      const cx1 = uy * vz - uz * vy, cy1 = uz * vx - ux * vz, cz1 = ux * vy - uy * vx;
+      const cx2 = uy * cz1 - uz * cy1, cy2 = uz * cx1 - ux * cz1, cz2 = ux * cy1 - uy * cx1;
+      return [vx + 2 * (qw * cx1 + cx2), vy + 2 * (qw * cy1 + cy2), vz + 2 * (qw * cz1 + cz2)];
+    }
+    // 광학 프레임 점 → 영상 픽셀. 실제 영상 크기가 camera_info와 다르면 내부 파라미터를 비율대로 맞춘다
+    function cameraToPixel(cam, frame, pc) {
+      const sx = frame.w / cam.w, sy = frame.h / cam.h;
+      return [cam.fx * sx * pc[0] / pc[2] + cam.cx * sx, cam.fy * sy * pc[1] / pc[2] + cam.cy * sy];
+    }
+    function drawAR(f) {
+      const cam = session.cam, g = vctx;
+      const items = [];
+      for (const cd of session.candies) {
+        const pc = mapToCamera(f.pose, [cd.x, cd.y, 0]);
+        if (pc[2] <= 0.05) continue;                                    // 카메라 뒤
+        const [u, v] = cameraToPixel(cam, f, pc);
+        if (u < 0 || u >= f.w || v < 0 || v >= f.h) continue;           // 화면 밖
+        const r = Math.min(ICON_MAX, Math.max(ICON_MIN, cam.fx * (f.w / cam.w) * CANDY_R / pc[2] * f.k));
+        items.push({ id: cd.id, X: f.dx + u * f.k, Y: f.dy + v * f.k, r, dist: Math.hypot(pc[0], pc[2]) });
+      }
+      items.sort((a, b) => b.dist - a.dist);  // 먼 것부터 그려 가까운 것이 위에 오게
+      const t = performance.now() / 1000;
+      for (const it of items) drawCandy(g, it, t);
+    }
+    // ---- 사탕 스프라이트: 한 번만 그려 두고 프레임마다 크기만 바꿔 찍는다 ----
+    const SPRITE = 256, BODY = 0.25 * SPRITE;   // 스프라이트 크기, 그 안의 몸통 반지름
+    const candySprite = (() => {
+      const c = document.createElement('canvas');
+      c.width = c.height = SPRITE;
+      const g = c.getContext('2d'), m = SPRITE / 2;
+
+      // 달빛 사탕 후광
+      const glow = g.createRadialGradient(m, m, BODY * 0.6, m, m, SPRITE * 0.5);
+      glow.addColorStop(0, 'rgba(255,214,120,.55)');
+      glow.addColorStop(1, 'rgba(255,214,120,0)');
+      g.fillStyle = glow; g.fillRect(0, 0, SPRITE, SPRITE);
+
+      // 양쪽 포장지: 몸통에서 퍼지는 부채꼴 + 주름
+      for (const s of [-1, 1]) {
+        const x0 = m + s * BODY * 0.75, x1 = m + s * BODY * 1.85;
+        const wrap = g.createLinearGradient(x0, 0, x1, 0);
+        wrap.addColorStop(0, '#c2410c'); wrap.addColorStop(0.45, '#fb923c'); wrap.addColorStop(1, '#fdba74');
+        g.fillStyle = wrap;
+        g.beginPath();
+        g.moveTo(x0, m - BODY * 0.22);
+        g.quadraticCurveTo(m + s * BODY * 1.3, m - BODY * 0.35, x1, m - BODY * 0.78);
+        g.quadraticCurveTo(m + s * BODY * 1.62, m, x1, m + BODY * 0.78);
+        g.quadraticCurveTo(m + s * BODY * 1.3, m + BODY * 0.35, x0, m + BODY * 0.22);
+        g.closePath(); g.fill();
+        g.strokeStyle = 'rgba(124,45,18,.45)'; g.lineWidth = SPRITE * 0.008;
+        for (const k of [-0.5, -0.2, 0.15, 0.45]) {
+          g.beginPath();
+          g.moveTo(m + s * BODY * 0.95, m + k * BODY * 0.35);
+          g.lineTo(m + s * BODY * 1.75, m + k * BODY * 1.5);
+          g.stroke();
+        }
+        // 매듭 (몸통과 포장지 사이 조여진 부분)
+        g.fillStyle = '#9a3412';
+        g.beginPath(); g.ellipse(m + s * BODY * 0.92, m, BODY * 0.12, BODY * 0.28, 0, 0, 7); g.fill();
+      }
+
+      // 몸통: 왼쪽 위에서 빛을 받는 구
+      const body = g.createRadialGradient(m - BODY * 0.35, m - BODY * 0.4, BODY * 0.1, m, m, BODY);
+      body.addColorStop(0, '#ffe7a3'); body.addColorStop(0.35, '#ff9f1c');
+      body.addColorStop(0.8, '#e2550f'); body.addColorStop(1, '#8a2c06');
+      g.fillStyle = body;
+      g.beginPath(); g.arc(m, m, BODY, 0, 7); g.fill();
+
+      // 소용돌이 줄무늬 (몸통 안쪽으로 잘라 그림)
+      g.save();
+      g.beginPath(); g.arc(m, m, BODY, 0, 7); g.clip();
+      g.strokeStyle = 'rgba(255,250,240,.9)'; g.lineWidth = BODY * 0.2; g.lineCap = 'round';
+      for (let k = 0; k < 3; k++) {
+        g.beginPath();
+        for (let t = 0; t <= 1.001; t += 0.04) {
+          const ang = k * 2.094 + t * 3.6, rr = BODY * (0.08 + 0.95 * t);
+          const x = m + rr * Math.cos(ang), y = m + rr * Math.sin(ang);
+          t === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+        }
+        g.stroke();
+      }
+      // 줄무늬 위에 다시 음영을 얹어 둥글게 보이게
+      const shade = g.createRadialGradient(m - BODY * 0.3, m - BODY * 0.35, BODY * 0.2, m, m, BODY * 1.02);
+      shade.addColorStop(0, 'rgba(0,0,0,0)'); shade.addColorStop(0.7, 'rgba(60,20,0,.15)');
+      shade.addColorStop(1, 'rgba(60,20,0,.55)');
+      g.fillStyle = shade; g.fillRect(m - BODY, m - BODY, BODY * 2, BODY * 2);
+      g.restore();
+
+      // 반사광과 아래쪽 테두리 빛
+      const spec = g.createRadialGradient(m - BODY * 0.38, m - BODY * 0.45, 0, m - BODY * 0.38, m - BODY * 0.45, BODY * 0.42);
+      spec.addColorStop(0, 'rgba(255,255,255,.95)'); spec.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = spec;
+      g.beginPath(); g.ellipse(m - BODY * 0.38, m - BODY * 0.45, BODY * 0.42, BODY * 0.28, -0.6, 0, 7); g.fill();
+      g.strokeStyle = 'rgba(255,220,160,.5)'; g.lineWidth = BODY * 0.06;
+      g.beginPath(); g.arc(m, m, BODY * 0.93, 0.3, 1.9); g.stroke();
+      return c;
+    })();
+
+    // 바닥 점(X, Y)에 그림자를 깔고, 그 위에 사탕을 띄운다. r은 거리로 정한 화면상 크기(px)
+    function drawCandy(g, { id, X, Y, r, dist }, t) {
+      const phase = id.charCodeAt(id.length - 1);         // 사탕마다 움직임이 어긋나게
+      const bob = (Math.sin(t * 2.2 + phase) + 1) / 2;     // 0~1 위아래
+      const bodyR = r * 0.7;
+      const lift = r * (0.9 + 0.35 * bob);                 // 바닥에서 몸통 중심까지 높이
+      const cy = Y - lift;
+
+      g.save();
+      // 바닥 그림자: 사탕이 높이 뜰수록 작고 옅게
+      const sw = r * (1.15 - 0.25 * bob), sh = sw * 0.32;
+      const sg = g.createRadialGradient(X, Y, 0, X, Y, sw);
+      sg.addColorStop(0, `rgba(0,0,0,${0.55 - 0.2 * bob})`); sg.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = sg;
+      g.beginPath(); g.ellipse(X, Y, sw, sh, 0, 0, 7); g.fill();
+
+      // 스프라이트를 몸통 크기에 맞춰 찍고, 살짝 흔든다
+      const k = bodyR / BODY;
+      g.translate(X, cy);
+      g.rotate(Math.sin(t * 1.3 + phase) * 0.18);
+      g.drawImage(candySprite, -SPRITE / 2 * k, -SPRITE / 2 * k, SPRITE * k, SPRITE * k);
+      g.restore();
+
+      if (showArDebug) {
+        g.save();
+        g.font = `${Math.max(11, Math.min(18, r * 0.45))}px monospace`;
+        g.textAlign = 'center';
+        g.fillStyle = 'rgba(0,0,0,.6)'; g.fillText(`${id} ${dist.toFixed(1)}m`, X + 1, cy - bodyR * 1.9 + 1);
+        g.fillStyle = '#fff';           g.fillText(`${id} ${dist.toFixed(1)}m`, X, cy - bodyR * 1.9);
+        g.restore();
+      }
+    }
+    addEventListener('keydown', e => { if (e.code === 'KeyG' && !e.repeat) showArDebug = !showArDebug; });
+
+    setInterval(() => {
+      const lat = vs.lat.length ? vs.lat.reduce((a, b) => a + b) / vs.lat.length : null;
+      const el = $('vstat');
+      el.textContent =
+        `영상 ${vs.frames} fps  ${(vs.bytes * 8 / 1000).toFixed(0)} kbps  ` +
+        `지연 ${lat == null ? '—' : lat.toFixed(0) + ' ms'}` +
+        (vs.dropped ? `  건너뜀 ${vs.dropped}` : '') +
+        (vs.noPose ? `  포즈 없음 ${vs.noPose}` : '') +
+        (lastFrame ? `\n${lastFrame.w}×${lastFrame.h}` : '');
+      el.className = (lat != null && lat > 500) || vs.bytes * 8 > 2e6 ? 'bad' : '';
+      Object.assign(vs, { frames: 0, bytes: 0, dropped: 0, lat: [], noPose: 0 });
+    }, 1000);
+    connectVideo();
+
+    // ---- 화면 ----
+    function drawKeys() {
+      document.querySelectorAll('#keys span').forEach(el => el.classList.toggle('on', (mask & +el.dataset.k) > 0));
+    }
+    function drawNet(last) {
+      const el = $('net');
+      if (busy) { el.textContent = '다른 탭이 조작 중 — 이 탭에서 키를 누르면 가져옴'; el.className = 'bad'; return; }
+      el.textContent = rtt == null ? '입력 RTT —' : `입력 RTT ${(last ?? rtt).toFixed(0)} ms (평균 ${rtt.toFixed(0)})`;
+      el.className = rtt != null && rtt > 300 ? 'bad' : '';
+    }
+    function drawHud() {
+      if (!session) return;
+      const s = session, m = s.map;
+      const p = pose ? `펌킨 x ${pose[0].toFixed(2)}  y ${pose[1].toFixed(2)}  yaw ${(pose[2] * 180 / Math.PI).toFixed(0)}°` : '펌킨 위치 —';
+      $('hud').textContent =
+        `Lv.${s.lv} ${s.name}${s.mock ? ' (MOCK)' : ''}\n` +
+        `제한 시간 ${Math.floor(s.time / 60)}:${String(s.time % 60).padStart(2, '0')}  사탕 ${s.candies.length}개\n` +
+        `맵 ${m.w}×${m.h}px @ ${m.res} m  원점 (${m.ox}, ${m.oy})\n` + p;
+    }
+    // 임시 미니맵: 맵 범위 안에 사탕과 펌킨만 그린다 (맵 이미지는 이후 단계)
+    function drawMinimap() {
+      if (!session) return;
+      const c = $('minimap'), g = c.getContext('2d'), m = session.map;
+      const k = c.width / m.w;  // 맵 px → 캔버스 px
+      const toC = (x, y) => [(x - m.ox) / m.res * k, c.height - (y - m.oy) / m.res * k];
+      g.clearRect(0, 0, c.width, c.height);
+      g.fillStyle = '#f80';
+      for (const cd of session.candies) { const [u, v] = toC(cd.x, cd.y); g.beginPath(); g.arc(u, v, 4, 0, 7); g.fill(); }
+      if (pose) {
+        const [u, v] = toC(pose[0], pose[1]), yaw = pose[2];
+        g.fillStyle = '#4cf'; g.beginPath(); g.arc(u, v, 5, 0, 7); g.fill();
+        g.strokeStyle = '#4cf'; g.beginPath(); g.moveTo(u, v); g.lineTo(u + 12 * Math.cos(yaw), v - 12 * Math.sin(yaw)); g.stroke();
+      }
+    }
   </script>
 </body>
 </html>

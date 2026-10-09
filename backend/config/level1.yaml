@@ -8,6 +8,9 @@ video_fps: 15            # 서버가 중계하는 1인칭 영상 최대 fps
 # 이 파일 기준 상대 경로
 map_yaml: ../maps/holloween.yaml
 
+# 펌킨 시작 위치 (map 프레임, m / rad). mock 로봇의 초기 위치로도 쓴다
+pumpkin_start: {x: 5.13, y: -1.27, yaw: 1.57}
+
 # 사탕 좌표 (map 프레임, m). tools/pick_candies.py로 다시 찍으면 이 블록이 교체된다.
 candies:
   - {id: c1, x: 0.34, y: 0.37}
