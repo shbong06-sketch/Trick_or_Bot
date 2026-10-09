@@ -166,7 +166,7 @@ def collect():
             lr = plan["baseline_lr"] if reused else plan["runs"][number]
             row = {"experiment": number, "model": model, "step": "learning_rate",
                    "optimizer": plan["optimizer"], "lr0": lr,
-                   "momentum": parent["native"]["momentum"], "status": status,
+                   "momentum": parent["native"]["momentum"], "batch_size": 16, "status": status,
                    "selected": number == winner,
                    "inherited_from": parent["inherited_from"] if reused else
                    f"experiments/phase3/002/{model}/exp01_config.yaml",

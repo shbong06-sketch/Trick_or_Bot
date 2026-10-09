@@ -21,7 +21,7 @@ EXPERIMENTS = ROOT / "experiments/phase3"
 RESULTS = ROOT / "results/phase3"
 METRICS = ("validation_recall", "validation_f1", "validation_map50_95", "validation_map50")
 TIMING = ("best_epoch", "time_to_best_seconds", "ending_epoch", "total_training_seconds")
-FIELDS = ("experiment", "model", "step", "optimizer", "lr0", "momentum", "status", "selected",
+FIELDS = ("experiment", "model", "step", "optimizer", "lr0", "momentum", "batch_size", "status", "selected",
           "inherited_from", "config", *METRICS, *TIMING)
 DELTA_FIELDS = ("experiment", "model", "status", "baseline", *("delta_" + key for key in (*METRICS, *TIMING)))
 
@@ -165,9 +165,13 @@ def merge_csv(path, fields, rows, experiments):
     if path.is_file():
         with path.open(newline="") as stream:
             reader = csv.DictReader(stream)
-            if tuple(reader.fieldnames or ()) != fields:
+            old_fields = tuple(reader.fieldnames or ())
+            if old_fields != fields and old_fields != tuple(key for key in fields if key != "batch_size"):
                 raise ValueError(f"Unexpected summary columns: {path}")
             preserved = [row for row in reader if row["experiment"] not in experiments]
+            if old_fields != fields:
+                for row in preserved:
+                    row["batch_size"] = 16
     write_csv(path, fields, sorted([*preserved, *rows], key=lambda row: (row["model"], row["experiment"])))
 
 
@@ -192,7 +196,7 @@ def collect():
             status = ("complete" if value else "awaiting_validation" if recorded_status == "complete"
                       else "failed" if recorded_status == "failed" else "pending")
             summary.append({"experiment": number, "model": model, "step": "optimizer",
-                            **settings, "status": status, "selected": number == winner,
+                            **settings, "batch_size": 16, "status": status, "selected": number == winner,
                             "inherited_from": plan["baseline"].format(model=model),
                             "config": str((directory / "exp01_config.yaml").relative_to(ROOT)),
                             **(value or {})})
