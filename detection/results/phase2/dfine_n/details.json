@@ -1,6 +1,6 @@
 {
   "model": "dfine_n",
-  "phase1_comparison": "records/phase1/model_comparison.csv",
+  "phase1_comparison": "results/phase1/model_comparison.csv",
   "conditions": {
     "baseline": {
       "status": "reused_phase1",
@@ -424,45 +424,1273 @@
       }
     },
     "spatial": {
-      "status": "pending",
+      "status": "complete",
       "config": "configs/phase2/dfine_n/spatial.yaml",
-      "metrics": null,
+      "metrics": {
+        "model": "dfine_n",
+        "framework": "dfine",
+        "checkpoint": "experiments/phase2/spatial/dfine_n/best_phase2.pth",
+        "training_hyperparameters": {
+          "training": {
+            "seed": 42,
+            "input_size": [
+              704,
+              704
+            ],
+            "epochs": 100,
+            "batch_size": 16,
+            "early_stopping": true,
+            "patience": 20,
+            "workers": 2,
+            "gpu": "L4"
+          },
+          "model": {
+            "framework": "dfine",
+            "config": "experiments/phase2/spatial/dfine_n/phase2_native.yaml",
+            "weights": "checkpoints/dfine_n_coco.pth"
+          },
+          "settings": {
+            "task": "detection",
+            "evaluator": {
+              "type": "CocoEvaluator",
+              "iou_types": [
+                "bbox"
+              ]
+            },
+            "num_classes": 1,
+            "remap_mscoco_category": false,
+            "train_dataloader": {
+              "type": "DataLoader",
+              "dataset": {
+                "type": "CocoDetection",
+                "img_folder": "/workspace/dataset/images/train",
+                "ann_file": "/workspace/dataset/annotations/instances_train.json",
+                "return_masks": false,
+                "transforms": {
+                  "type": "Compose",
+                  "ops": [
+                    {
+                      "type": "RandomAffine",
+                      "degrees": [
+                        -5,
+                        5
+                      ],
+                      "translate": [
+                        0.2,
+                        0.2
+                      ],
+                      "scale": [
+                        0.7,
+                        1.3
+                      ]
+                    },
+                    {
+                      "type": "RandomHorizontalFlip",
+                      "p": 0.5
+                    },
+                    {
+                      "type": "SanitizeBoundingBoxes",
+                      "min_size": 1
+                    },
+                    {
+                      "type": "Resize",
+                      "size": [
+                        704,
+                        704
+                      ]
+                    },
+                    {
+                      "type": "SanitizeBoundingBoxes",
+                      "min_size": 1
+                    },
+                    {
+                      "type": "ConvertPILImage",
+                      "dtype": "float32",
+                      "scale": true
+                    },
+                    {
+                      "type": "ConvertBoxes",
+                      "fmt": "cxcywh",
+                      "normalize": true
+                    }
+                  ],
+                  "policy": {
+                    "name": "stop_epoch",
+                    "epoch": 88,
+                    "ops": [
+                      "RandomPhotometricDistort",
+                      "RandomZoomOut",
+                      "RandomIoUCrop"
+                    ]
+                  }
+                }
+              },
+              "shuffle": true,
+              "num_workers": 2,
+              "drop_last": true,
+              "collate_fn": {
+                "type": "BatchImageCollateFunction",
+                "base_size": 704,
+                "base_size_repeat": null,
+                "stop_epoch": 88,
+                "ema_restart_decay": 0.9999
+              },
+              "total_batch_size": 16
+            },
+            "val_dataloader": {
+              "type": "DataLoader",
+              "dataset": {
+                "type": "CocoDetection",
+                "img_folder": "/workspace/dataset/images/valid",
+                "ann_file": "/workspace/dataset/annotations/instances_valid.json",
+                "return_masks": false,
+                "transforms": {
+                  "type": "Compose",
+                  "ops": [
+                    {
+                      "type": "Resize",
+                      "size": [
+                        704,
+                        704
+                      ]
+                    },
+                    {
+                      "type": "ConvertPILImage",
+                      "dtype": "float32",
+                      "scale": true
+                    }
+                  ]
+                }
+              },
+              "shuffle": false,
+              "num_workers": 2,
+              "drop_last": false,
+              "collate_fn": {
+                "type": "BatchImageCollateFunction"
+              },
+              "total_batch_size": 16
+            },
+            "print_freq": 100,
+            "output_dir": "/workspace/experiments/phase2/spatial/dfine_n",
+            "checkpoint_freq": 12,
+            "sync_bn": true,
+            "find_unused_parameters": false,
+            "use_amp": true,
+            "scaler": {
+              "type": "GradScaler",
+              "enabled": true
+            },
+            "use_ema": true,
+            "ema": {
+              "type": "ModelEMA",
+              "decay": 0.9999,
+              "warmups": 1000,
+              "start": 0
+            },
+            "use_wandb": false,
+            "project_name": "D-FINE",
+            "exp_name": "baseline",
+            "epochs": 100,
+            "clip_max_norm": 0.1,
+            "optimizer": {
+              "type": "AdamW",
+              "params": [
+                {
+                  "params": "^(?=.*backbone)(?!.*norm|bn).*$",
+                  "lr": 0.0004
+                },
+                {
+                  "params": "^(?=.*backbone)(?=.*norm|bn).*$",
+                  "lr": 0.0004,
+                  "weight_decay": 0.0
+                },
+                {
+                  "params": "^(?=.*(?:encoder|decoder))(?=.*(?:norm|bn|bias)).*$",
+                  "weight_decay": 0.0
+                }
+              ],
+              "lr": 0.0008,
+              "betas": [
+                0.9,
+                0.999
+              ],
+              "weight_decay": 0.0001
+            },
+            "lr_scheduler": {
+              "type": "MultiStepLR",
+              "milestones": [
+                80
+              ],
+              "gamma": 0.1
+            },
+            "lr_warmup_scheduler": {
+              "type": "LinearWarmup",
+              "warmup_duration": 100
+            },
+            "model": "DFINE",
+            "criterion": "DFINECriterion",
+            "postprocessor": "DFINEPostProcessor",
+            "use_focal_loss": true,
+            "eval_spatial_size": [
+              704,
+              704
+            ],
+            "DFINE": {
+              "backbone": "HGNetv2",
+              "encoder": "HybridEncoder",
+              "decoder": "DFINETransformer"
+            },
+            "HGNetv2": {
+              "pretrained": false,
+              "local_model_dir": "weight/hgnetv2/",
+              "name": "B0",
+              "return_idx": [
+                2,
+                3
+              ],
+              "freeze_at": -1,
+              "freeze_norm": false,
+              "use_lab": true
+            },
+            "HybridEncoder": {
+              "in_channels": [
+                512,
+                1024
+              ],
+              "feat_strides": [
+                16,
+                32
+              ],
+              "hidden_dim": 128,
+              "use_encoder_idx": [
+                1
+              ],
+              "num_encoder_layers": 1,
+              "nhead": 8,
+              "dim_feedforward": 512,
+              "dropout": 0.0,
+              "enc_act": "gelu",
+              "expansion": 0.34,
+              "depth_mult": 0.5,
+              "act": "silu"
+            },
+            "DFINETransformer": {
+              "feat_channels": [
+                128,
+                128
+              ],
+              "feat_strides": [
+                16,
+                32
+              ],
+              "hidden_dim": 128,
+              "num_levels": 2,
+              "num_layers": 3,
+              "eval_idx": -1,
+              "num_queries": 300,
+              "num_denoising": 100,
+              "label_noise_ratio": 0.5,
+              "box_noise_scale": 1.0,
+              "reg_max": 32,
+              "reg_scale": 4,
+              "layer_scale": 1,
+              "num_points": [
+                6,
+                6
+              ],
+              "cross_attn_method": "default",
+              "query_select_method": "default",
+              "dim_feedforward": 512
+            },
+            "DFINEPostProcessor": {
+              "num_top_queries": 300
+            },
+            "DFINECriterion": {
+              "weight_dict": {
+                "loss_vfl": 1,
+                "loss_bbox": 5,
+                "loss_giou": 2,
+                "loss_fgl": 0.15,
+                "loss_ddf": 1.5
+              },
+              "losses": [
+                "vfl",
+                "boxes",
+                "local"
+              ],
+              "alpha": 0.75,
+              "gamma": 2.0,
+              "reg_max": 32,
+              "matcher": {
+                "type": "HungarianMatcher",
+                "weight_dict": {
+                  "cost_class": 2,
+                  "cost_bbox": 5,
+                  "cost_giou": 2
+                },
+                "alpha": 0.25,
+                "gamma": 2.0
+              }
+            },
+            "tuning": "/workspace/checkpoints/dfine_n_coco.pth",
+            "device": "cuda:0",
+            "seed": 42
+          }
+        },
+        "optimizer": "AdamW",
+        "optimizer_param_groups": [
+          {
+            "lr": 4e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0001,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0004
+          },
+          {
+            "lr": 4e-05,
+            "weight_decay": 0.0,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0004
+          },
+          {
+            "weight_decay": 0.0,
+            "lr": 8e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0008
+          },
+          {
+            "lr": 8e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0001,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0008
+          }
+        ],
+        "scheduler": "MultiStepLR",
+        "ending_epochs": 100,
+        "total_training_seconds": 1191.1672708289989,
+        "validation_map50": 1.0,
+        "validation_map50_95": 0.9733004667787982,
+        "validation_precision": 1.0,
+        "validation_recall": 1.0,
+        "validation_f1": 1.0,
+        "validation_f1_peak": 1.0,
+        "validation_f1_confidence": 0.6771692037582397,
+        "validation_tp": 66,
+        "validation_fp": 0,
+        "validation_fn": 0,
+        "test_map50": 1.0,
+        "test_map50_95": 0.9633132041652441,
+        "test_tp": 33,
+        "test_fp": 1,
+        "test_fn": 0,
+        "test_correct_predictions_percent": 97.05882352941177,
+        "test_inference_ms_per_image": 25.41831033395572,
+        "test_average_confidence": 0.9509878219927058,
+        "model_size_bytes": 15293506,
+        "parameter_count": 3731817,
+        "training_peak_vram_bytes": 5011962880,
+        "operating_confidence": 0.25,
+        "matching_iou": 0.5,
+        "nms_iou": null,
+        "ap_score_cutoff": 0.001,
+        "benchmark_precision": "fp32",
+        "benchmark_scope": "decoded RGB -> preprocessing -> GPU transfer -> inference -> postprocessing -> CPU boxes; excludes file read, model load, matching, save",
+        "benchmark_warmup": 20,
+        "benchmark_repeats": 3,
+        "benchmark_batch_size": 1
+      },
       "delta_from_baseline": {
-        "delta_map50": null,
-        "delta_precision": null,
-        "delta_recall": null,
-        "delta_f1": null,
-        "delta_correct_prediction_rate": null,
-        "delta_inference_ms_per_image": null,
-        "delta_inference_speed_percent": null
+        "delta_map50": 0.0,
+        "delta_precision": 0.02941176470588236,
+        "delta_recall": 0.0,
+        "delta_f1": 0.014925373134328401,
+        "delta_correct_prediction_rate": -2.941176470588232,
+        "delta_inference_ms_per_image": -2.404302110494065,
+        "delta_inference_speed_percent": 9.458937588318816
       }
     },
     "photometric": {
-      "status": "pending",
+      "status": "complete",
       "config": "configs/phase2/dfine_n/photometric.yaml",
-      "metrics": null,
+      "metrics": {
+        "model": "dfine_n",
+        "framework": "dfine",
+        "checkpoint": "experiments/phase2/photometric/dfine_n/best_phase2.pth",
+        "training_hyperparameters": {
+          "training": {
+            "seed": 42,
+            "input_size": [
+              704,
+              704
+            ],
+            "epochs": 100,
+            "batch_size": 16,
+            "early_stopping": true,
+            "patience": 20,
+            "workers": 2,
+            "gpu": "L4"
+          },
+          "model": {
+            "framework": "dfine",
+            "config": "experiments/phase2/photometric/dfine_n/phase2_native.yaml",
+            "weights": "checkpoints/dfine_n_coco.pth"
+          },
+          "settings": {
+            "task": "detection",
+            "evaluator": {
+              "type": "CocoEvaluator",
+              "iou_types": [
+                "bbox"
+              ]
+            },
+            "num_classes": 1,
+            "remap_mscoco_category": false,
+            "train_dataloader": {
+              "type": "DataLoader",
+              "dataset": {
+                "type": "CocoDetection",
+                "img_folder": "/workspace/dataset/images/train",
+                "ann_file": "/workspace/dataset/annotations/instances_train.json",
+                "return_masks": false,
+                "transforms": {
+                  "type": "Compose",
+                  "ops": [
+                    {
+                      "type": "ColorJitter",
+                      "brightness": 0.25,
+                      "contrast": 0.18,
+                      "saturation": 0.2,
+                      "hue": 0.005
+                    },
+                    {
+                      "type": "SanitizeBoundingBoxes",
+                      "min_size": 1
+                    },
+                    {
+                      "type": "Resize",
+                      "size": [
+                        704,
+                        704
+                      ]
+                    },
+                    {
+                      "type": "SanitizeBoundingBoxes",
+                      "min_size": 1
+                    },
+                    {
+                      "type": "ConvertPILImage",
+                      "dtype": "float32",
+                      "scale": true
+                    },
+                    {
+                      "type": "ConvertBoxes",
+                      "fmt": "cxcywh",
+                      "normalize": true
+                    }
+                  ],
+                  "policy": {
+                    "name": "stop_epoch",
+                    "epoch": 88,
+                    "ops": [
+                      "RandomPhotometricDistort",
+                      "RandomZoomOut",
+                      "RandomIoUCrop"
+                    ]
+                  }
+                }
+              },
+              "shuffle": true,
+              "num_workers": 2,
+              "drop_last": true,
+              "collate_fn": {
+                "type": "BatchImageCollateFunction",
+                "base_size": 704,
+                "base_size_repeat": null,
+                "stop_epoch": 88,
+                "ema_restart_decay": 0.9999
+              },
+              "total_batch_size": 16
+            },
+            "val_dataloader": {
+              "type": "DataLoader",
+              "dataset": {
+                "type": "CocoDetection",
+                "img_folder": "/workspace/dataset/images/valid",
+                "ann_file": "/workspace/dataset/annotations/instances_valid.json",
+                "return_masks": false,
+                "transforms": {
+                  "type": "Compose",
+                  "ops": [
+                    {
+                      "type": "Resize",
+                      "size": [
+                        704,
+                        704
+                      ]
+                    },
+                    {
+                      "type": "ConvertPILImage",
+                      "dtype": "float32",
+                      "scale": true
+                    }
+                  ]
+                }
+              },
+              "shuffle": false,
+              "num_workers": 2,
+              "drop_last": false,
+              "collate_fn": {
+                "type": "BatchImageCollateFunction"
+              },
+              "total_batch_size": 16
+            },
+            "print_freq": 100,
+            "output_dir": "/workspace/experiments/phase2/photometric/dfine_n",
+            "checkpoint_freq": 12,
+            "sync_bn": true,
+            "find_unused_parameters": false,
+            "use_amp": true,
+            "scaler": {
+              "type": "GradScaler",
+              "enabled": true
+            },
+            "use_ema": true,
+            "ema": {
+              "type": "ModelEMA",
+              "decay": 0.9999,
+              "warmups": 1000,
+              "start": 0
+            },
+            "use_wandb": false,
+            "project_name": "D-FINE",
+            "exp_name": "baseline",
+            "epochs": 100,
+            "clip_max_norm": 0.1,
+            "optimizer": {
+              "type": "AdamW",
+              "params": [
+                {
+                  "params": "^(?=.*backbone)(?!.*norm|bn).*$",
+                  "lr": 0.0004
+                },
+                {
+                  "params": "^(?=.*backbone)(?=.*norm|bn).*$",
+                  "lr": 0.0004,
+                  "weight_decay": 0.0
+                },
+                {
+                  "params": "^(?=.*(?:encoder|decoder))(?=.*(?:norm|bn|bias)).*$",
+                  "weight_decay": 0.0
+                }
+              ],
+              "lr": 0.0008,
+              "betas": [
+                0.9,
+                0.999
+              ],
+              "weight_decay": 0.0001
+            },
+            "lr_scheduler": {
+              "type": "MultiStepLR",
+              "milestones": [
+                80
+              ],
+              "gamma": 0.1
+            },
+            "lr_warmup_scheduler": {
+              "type": "LinearWarmup",
+              "warmup_duration": 100
+            },
+            "model": "DFINE",
+            "criterion": "DFINECriterion",
+            "postprocessor": "DFINEPostProcessor",
+            "use_focal_loss": true,
+            "eval_spatial_size": [
+              704,
+              704
+            ],
+            "DFINE": {
+              "backbone": "HGNetv2",
+              "encoder": "HybridEncoder",
+              "decoder": "DFINETransformer"
+            },
+            "HGNetv2": {
+              "pretrained": false,
+              "local_model_dir": "weight/hgnetv2/",
+              "name": "B0",
+              "return_idx": [
+                2,
+                3
+              ],
+              "freeze_at": -1,
+              "freeze_norm": false,
+              "use_lab": true
+            },
+            "HybridEncoder": {
+              "in_channels": [
+                512,
+                1024
+              ],
+              "feat_strides": [
+                16,
+                32
+              ],
+              "hidden_dim": 128,
+              "use_encoder_idx": [
+                1
+              ],
+              "num_encoder_layers": 1,
+              "nhead": 8,
+              "dim_feedforward": 512,
+              "dropout": 0.0,
+              "enc_act": "gelu",
+              "expansion": 0.34,
+              "depth_mult": 0.5,
+              "act": "silu"
+            },
+            "DFINETransformer": {
+              "feat_channels": [
+                128,
+                128
+              ],
+              "feat_strides": [
+                16,
+                32
+              ],
+              "hidden_dim": 128,
+              "num_levels": 2,
+              "num_layers": 3,
+              "eval_idx": -1,
+              "num_queries": 300,
+              "num_denoising": 100,
+              "label_noise_ratio": 0.5,
+              "box_noise_scale": 1.0,
+              "reg_max": 32,
+              "reg_scale": 4,
+              "layer_scale": 1,
+              "num_points": [
+                6,
+                6
+              ],
+              "cross_attn_method": "default",
+              "query_select_method": "default",
+              "dim_feedforward": 512
+            },
+            "DFINEPostProcessor": {
+              "num_top_queries": 300
+            },
+            "DFINECriterion": {
+              "weight_dict": {
+                "loss_vfl": 1,
+                "loss_bbox": 5,
+                "loss_giou": 2,
+                "loss_fgl": 0.15,
+                "loss_ddf": 1.5
+              },
+              "losses": [
+                "vfl",
+                "boxes",
+                "local"
+              ],
+              "alpha": 0.75,
+              "gamma": 2.0,
+              "reg_max": 32,
+              "matcher": {
+                "type": "HungarianMatcher",
+                "weight_dict": {
+                  "cost_class": 2,
+                  "cost_bbox": 5,
+                  "cost_giou": 2
+                },
+                "alpha": 0.25,
+                "gamma": 2.0
+              }
+            },
+            "tuning": "/workspace/checkpoints/dfine_n_coco.pth",
+            "device": "cuda:0",
+            "seed": 42
+          }
+        },
+        "optimizer": "AdamW",
+        "optimizer_param_groups": [
+          {
+            "lr": 0.0004,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0001,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0004
+          },
+          {
+            "lr": 0.0004,
+            "weight_decay": 0.0,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0004
+          },
+          {
+            "weight_decay": 0.0,
+            "lr": 0.0008,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0008
+          },
+          {
+            "lr": 0.0008,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0001,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0008
+          }
+        ],
+        "scheduler": "MultiStepLR",
+        "ending_epochs": 34,
+        "total_training_seconds": 450.373939117002,
+        "validation_map50": 0.9957567185289958,
+        "validation_map50_95": 0.9758745836388946,
+        "validation_precision": 1.0,
+        "validation_recall": 0.9848484848484849,
+        "validation_f1": 0.9923664122137404,
+        "validation_f1_peak": 0.9923664122137404,
+        "validation_f1_confidence": 0.9592539668083191,
+        "validation_tp": 65,
+        "validation_fp": 0,
+        "validation_fn": 1,
+        "test_map50": 0.9894389438943895,
+        "test_map50_95": 0.9761297556020329,
+        "test_tp": 32,
+        "test_fp": 1,
+        "test_fn": 1,
+        "test_correct_predictions_percent": 94.11764705882354,
+        "test_inference_ms_per_image": 25.604578277933697,
+        "test_average_confidence": 0.968917985757192,
+        "model_size_bytes": 15293506,
+        "parameter_count": 3731817,
+        "training_peak_vram_bytes": 5014960128,
+        "operating_confidence": 0.25,
+        "matching_iou": 0.5,
+        "nms_iou": null,
+        "ap_score_cutoff": 0.001,
+        "benchmark_precision": "fp32",
+        "benchmark_scope": "decoded RGB -> preprocessing -> GPU transfer -> inference -> postprocessing -> CPU boxes; excludes file read, model load, matching, save",
+        "benchmark_warmup": 20,
+        "benchmark_repeats": 3,
+        "benchmark_batch_size": 1
+      },
       "delta_from_baseline": {
-        "delta_map50": null,
-        "delta_precision": null,
-        "delta_recall": null,
-        "delta_f1": null,
-        "delta_correct_prediction_rate": null,
-        "delta_inference_ms_per_image": null,
-        "delta_inference_speed_percent": null
+        "delta_map50": -0.004243281471004168,
+        "delta_precision": 0.02941176470588236,
+        "delta_recall": -0.015151515151515138,
+        "delta_f1": 0.007291785348068847,
+        "delta_correct_prediction_rate": -5.882352941176464,
+        "delta_inference_ms_per_image": -2.2180341665160874,
+        "delta_inference_speed_percent": 8.662646744030212
       }
     },
     "combined": {
-      "status": "pending",
+      "status": "complete",
       "config": "configs/phase2/dfine_n/combined.yaml",
-      "metrics": null,
+      "metrics": {
+        "model": "dfine_n",
+        "framework": "dfine",
+        "checkpoint": "experiments/phase2/combined/dfine_n/best_phase2.pth",
+        "training_hyperparameters": {
+          "training": {
+            "seed": 42,
+            "input_size": [
+              704,
+              704
+            ],
+            "epochs": 100,
+            "batch_size": 16,
+            "early_stopping": true,
+            "patience": 20,
+            "workers": 2,
+            "gpu": "L4"
+          },
+          "model": {
+            "framework": "dfine",
+            "config": "experiments/phase2/combined/dfine_n/phase2_native.yaml",
+            "weights": "checkpoints/dfine_n_coco.pth"
+          },
+          "settings": {
+            "task": "detection",
+            "evaluator": {
+              "type": "CocoEvaluator",
+              "iou_types": [
+                "bbox"
+              ]
+            },
+            "num_classes": 1,
+            "remap_mscoco_category": false,
+            "train_dataloader": {
+              "type": "DataLoader",
+              "dataset": {
+                "type": "CocoDetection",
+                "img_folder": "/workspace/dataset/images/train",
+                "ann_file": "/workspace/dataset/annotations/instances_train.json",
+                "return_masks": false,
+                "transforms": {
+                  "type": "Compose",
+                  "ops": [
+                    {
+                      "type": "RandomAffine",
+                      "degrees": [
+                        -5,
+                        5
+                      ],
+                      "translate": [
+                        0.15,
+                        0.15
+                      ],
+                      "scale": [
+                        0.8,
+                        1.2
+                      ]
+                    },
+                    {
+                      "type": "RandomHorizontalFlip",
+                      "p": 0.5
+                    },
+                    {
+                      "type": "ColorJitter",
+                      "brightness": 0.2,
+                      "contrast": 0.15,
+                      "saturation": 0.15,
+                      "hue": 0.005
+                    },
+                    {
+                      "type": "SanitizeBoundingBoxes",
+                      "min_size": 1
+                    },
+                    {
+                      "type": "Resize",
+                      "size": [
+                        704,
+                        704
+                      ]
+                    },
+                    {
+                      "type": "SanitizeBoundingBoxes",
+                      "min_size": 1
+                    },
+                    {
+                      "type": "ConvertPILImage",
+                      "dtype": "float32",
+                      "scale": true
+                    },
+                    {
+                      "type": "ConvertBoxes",
+                      "fmt": "cxcywh",
+                      "normalize": true
+                    }
+                  ],
+                  "policy": {
+                    "name": "stop_epoch",
+                    "epoch": 88,
+                    "ops": [
+                      "RandomPhotometricDistort",
+                      "RandomZoomOut",
+                      "RandomIoUCrop"
+                    ]
+                  }
+                }
+              },
+              "shuffle": true,
+              "num_workers": 2,
+              "drop_last": true,
+              "collate_fn": {
+                "type": "BatchImageCollateFunction",
+                "base_size": 704,
+                "base_size_repeat": null,
+                "stop_epoch": 88,
+                "ema_restart_decay": 0.9999
+              },
+              "total_batch_size": 16
+            },
+            "val_dataloader": {
+              "type": "DataLoader",
+              "dataset": {
+                "type": "CocoDetection",
+                "img_folder": "/workspace/dataset/images/valid",
+                "ann_file": "/workspace/dataset/annotations/instances_valid.json",
+                "return_masks": false,
+                "transforms": {
+                  "type": "Compose",
+                  "ops": [
+                    {
+                      "type": "Resize",
+                      "size": [
+                        704,
+                        704
+                      ]
+                    },
+                    {
+                      "type": "ConvertPILImage",
+                      "dtype": "float32",
+                      "scale": true
+                    }
+                  ]
+                }
+              },
+              "shuffle": false,
+              "num_workers": 2,
+              "drop_last": false,
+              "collate_fn": {
+                "type": "BatchImageCollateFunction"
+              },
+              "total_batch_size": 16
+            },
+            "print_freq": 100,
+            "output_dir": "/workspace/experiments/phase2/combined/dfine_n",
+            "checkpoint_freq": 12,
+            "sync_bn": true,
+            "find_unused_parameters": false,
+            "use_amp": true,
+            "scaler": {
+              "type": "GradScaler",
+              "enabled": true
+            },
+            "use_ema": true,
+            "ema": {
+              "type": "ModelEMA",
+              "decay": 0.9999,
+              "warmups": 1000,
+              "start": 0
+            },
+            "use_wandb": false,
+            "project_name": "D-FINE",
+            "exp_name": "baseline",
+            "epochs": 100,
+            "clip_max_norm": 0.1,
+            "optimizer": {
+              "type": "AdamW",
+              "params": [
+                {
+                  "params": "^(?=.*backbone)(?!.*norm|bn).*$",
+                  "lr": 0.0004
+                },
+                {
+                  "params": "^(?=.*backbone)(?=.*norm|bn).*$",
+                  "lr": 0.0004,
+                  "weight_decay": 0.0
+                },
+                {
+                  "params": "^(?=.*(?:encoder|decoder))(?=.*(?:norm|bn|bias)).*$",
+                  "weight_decay": 0.0
+                }
+              ],
+              "lr": 0.0008,
+              "betas": [
+                0.9,
+                0.999
+              ],
+              "weight_decay": 0.0001
+            },
+            "lr_scheduler": {
+              "type": "MultiStepLR",
+              "milestones": [
+                80
+              ],
+              "gamma": 0.1
+            },
+            "lr_warmup_scheduler": {
+              "type": "LinearWarmup",
+              "warmup_duration": 100
+            },
+            "model": "DFINE",
+            "criterion": "DFINECriterion",
+            "postprocessor": "DFINEPostProcessor",
+            "use_focal_loss": true,
+            "eval_spatial_size": [
+              704,
+              704
+            ],
+            "DFINE": {
+              "backbone": "HGNetv2",
+              "encoder": "HybridEncoder",
+              "decoder": "DFINETransformer"
+            },
+            "HGNetv2": {
+              "pretrained": false,
+              "local_model_dir": "weight/hgnetv2/",
+              "name": "B0",
+              "return_idx": [
+                2,
+                3
+              ],
+              "freeze_at": -1,
+              "freeze_norm": false,
+              "use_lab": true
+            },
+            "HybridEncoder": {
+              "in_channels": [
+                512,
+                1024
+              ],
+              "feat_strides": [
+                16,
+                32
+              ],
+              "hidden_dim": 128,
+              "use_encoder_idx": [
+                1
+              ],
+              "num_encoder_layers": 1,
+              "nhead": 8,
+              "dim_feedforward": 512,
+              "dropout": 0.0,
+              "enc_act": "gelu",
+              "expansion": 0.34,
+              "depth_mult": 0.5,
+              "act": "silu"
+            },
+            "DFINETransformer": {
+              "feat_channels": [
+                128,
+                128
+              ],
+              "feat_strides": [
+                16,
+                32
+              ],
+              "hidden_dim": 128,
+              "num_levels": 2,
+              "num_layers": 3,
+              "eval_idx": -1,
+              "num_queries": 300,
+              "num_denoising": 100,
+              "label_noise_ratio": 0.5,
+              "box_noise_scale": 1.0,
+              "reg_max": 32,
+              "reg_scale": 4,
+              "layer_scale": 1,
+              "num_points": [
+                6,
+                6
+              ],
+              "cross_attn_method": "default",
+              "query_select_method": "default",
+              "dim_feedforward": 512
+            },
+            "DFINEPostProcessor": {
+              "num_top_queries": 300
+            },
+            "DFINECriterion": {
+              "weight_dict": {
+                "loss_vfl": 1,
+                "loss_bbox": 5,
+                "loss_giou": 2,
+                "loss_fgl": 0.15,
+                "loss_ddf": 1.5
+              },
+              "losses": [
+                "vfl",
+                "boxes",
+                "local"
+              ],
+              "alpha": 0.75,
+              "gamma": 2.0,
+              "reg_max": 32,
+              "matcher": {
+                "type": "HungarianMatcher",
+                "weight_dict": {
+                  "cost_class": 2,
+                  "cost_bbox": 5,
+                  "cost_giou": 2
+                },
+                "alpha": 0.25,
+                "gamma": 2.0
+              }
+            },
+            "tuning": "/workspace/checkpoints/dfine_n_coco.pth",
+            "device": "cuda:0",
+            "seed": 42
+          }
+        },
+        "optimizer": "AdamW",
+        "optimizer_param_groups": [
+          {
+            "lr": 0.0004,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0001,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0004
+          },
+          {
+            "lr": 0.0004,
+            "weight_decay": 0.0,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0004
+          },
+          {
+            "weight_decay": 0.0,
+            "lr": 0.0008,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0008
+          },
+          {
+            "lr": 0.0008,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0001,
+            "amsgrad": false,
+            "foreach": null,
+            "maximize": false,
+            "capturable": false,
+            "differentiable": false,
+            "fused": null,
+            "initial_lr": 0.0008
+          }
+        ],
+        "scheduler": "MultiStepLR",
+        "ending_epochs": 51,
+        "total_training_seconds": 665.3549638510012,
+        "validation_map50": 1.0,
+        "validation_map50_95": 0.9610501546255051,
+        "validation_precision": 0.9295774647887324,
+        "validation_recall": 1.0,
+        "validation_f1": 0.9635036496350365,
+        "validation_f1_peak": 1.0,
+        "validation_f1_confidence": 0.5225849151611328,
+        "validation_tp": 66,
+        "validation_fp": 5,
+        "validation_fn": 0,
+        "test_map50": 1.0,
+        "test_map50_95": 0.9453283062082873,
+        "test_tp": 33,
+        "test_fp": 2,
+        "test_fn": 0,
+        "test_correct_predictions_percent": 94.28571428571429,
+        "test_inference_ms_per_image": 25.508604412549637,
+        "test_average_confidence": 0.9290058331830161,
+        "model_size_bytes": 15293506,
+        "parameter_count": 3731817,
+        "training_peak_vram_bytes": 5014960128,
+        "operating_confidence": 0.25,
+        "matching_iou": 0.5,
+        "nms_iou": null,
+        "ap_score_cutoff": 0.001,
+        "benchmark_precision": "fp32",
+        "benchmark_scope": "decoded RGB -> preprocessing -> GPU transfer -> inference -> postprocessing -> CPU boxes; excludes file read, model load, matching, save",
+        "benchmark_warmup": 20,
+        "benchmark_repeats": 3,
+        "benchmark_batch_size": 1
+      },
       "delta_from_baseline": {
-        "delta_map50": null,
-        "delta_precision": null,
-        "delta_recall": null,
-        "delta_f1": null,
-        "delta_correct_prediction_rate": null,
-        "delta_inference_ms_per_image": null,
-        "delta_inference_speed_percent": null
+        "delta_map50": 0.0,
+        "delta_precision": -0.04101077050538526,
+        "delta_recall": 0.0,
+        "delta_f1": -0.021570977230635058,
+        "delta_correct_prediction_rate": -5.714285714285708,
+        "delta_inference_ms_per_image": -2.3140080319001477,
+        "delta_inference_speed_percent": 9.071480330620174
       }
     }
   }
