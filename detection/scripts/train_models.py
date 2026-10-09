@@ -63,6 +63,7 @@ def train_yolo(cfg, model, directory, info, torch):
     from ultralytics import YOLO
     common = cfg["training"]
     options = yaml.safe_load((ROOT/model["config"]).read_text())
+    contrast = options.pop("phase2_contrast", None)
     options.update(data=str(ROOT/cfg["dataset"]/"data.yaml"), seed=common["seed"],
                    imgsz=common["input_size"][0], epochs=common["epochs"], batch=common["batch_size"],
                    patience=common["patience"] if common["early_stopping"] else 0,
@@ -82,7 +83,24 @@ def train_yolo(cfg, model, directory, info, torch):
     detector.add_callback("on_train_start", started)
     detector.add_callback("on_fit_epoch_end", epoch_ended)
     info["early_stop_monitor"] = "ultralytics_validation_fitness"
-    detector.train(**options)
+    if cfg.get("phase2"):
+        import albumentations as A
+        from ultralytics.data import augment
+        original_init = augment.Albumentations.__init__
+
+        def phase2_albumentations(instance, p=1.0, transforms=None, flip_idx=None):
+            custom = ([A.RandomBrightnessContrast(brightness_limit=0,
+                        contrast_limit=contrast, p=1.0)] if contrast else [])
+            original_init(instance, p=p, transforms=custom, flip_idx=flip_idx)
+
+        augment.Albumentations.__init__ = phase2_albumentations
+        info["phase2_contrast"] = contrast
+        try:
+            detector.train(**options)
+        finally:
+            augment.Albumentations.__init__ = original_init
+    else:
+        detector.train(**options)
     info["best_checkpoint"] = "weights/best.pt"
 
 
@@ -131,6 +149,13 @@ def train_vendor(cfg, model, directory, info, torch):
     location, package = VENDORS[model["framework"]]
     sys.path.insert(0, location)
     core = importlib.import_module(f"{package}.core")
+    if cfg.get("phase2") and model["framework"] == "dfine":
+        # The pinned D-FINE image uses torchvision v2 transforms and a YAML registry.
+        # Register these only for Phase 2, leaving the Phase 1 recipe untouched.
+        import torchvision.transforms.v2 as transforms
+        importlib.import_module(f"{package}.data.transforms")
+        core.register()(transforms.RandomAffine)
+        core.register()(transforms.ColorJitter)
     module = importlib.import_module(f"{package}.solver.det_solver")
     common = cfg["training"]
     settings = copy.deepcopy(core.YAMLConfig(str(ROOT/model["config"])).yaml_cfg)
@@ -165,7 +190,8 @@ def train_vendor(cfg, model, directory, info, torch):
         record_optimizer(info, solver.model, solver.optimizer, solver.lr_scheduler)
         if improved:
             # Save the evaluated model (EMA where enabled), not a different weight track.
-            torch.save(dict(model=args[0].state_dict(), epoch=info["epochs_ending"]-1), directory/"best_phase1.pth")
+            best_name = "best_phase2.pth" if cfg.get("phase2") else "best_phase1.pth"
+            torch.save(dict(model=args[0].state_dict(), epoch=info["epochs_ending"]-1), directory/best_name)
             info["best_epoch"] = info["epochs_ending"]
         with (directory/"metrics.jsonl").open("a") as stream:
             stream.write(json.dumps(dict(epoch=info["epochs_ending"], map50_95=float(stats[0]), map50=float(stats[1])))+"\n")
@@ -184,7 +210,7 @@ def train_vendor(cfg, model, directory, info, torch):
         module.evaluate = original_evaluate
         if getattr(solver, "writer", None):
             solver.writer.close()
-    info["best_checkpoint"] = "best_phase1.pth"
+    info["best_checkpoint"] = "best_phase2.pth" if cfg.get("phase2") else "best_phase1.pth"
 
 
 def train_inside_docker(cfg, name):
