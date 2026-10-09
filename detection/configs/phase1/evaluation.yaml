@@ -1,0 +1,8 @@
+confidence: 0.25
+matching_iou: 0.50
+nms_iou: 0.70
+ap_score_cutoff: 0.001
+warmup: 20
+repeats: 3
+benchmark_batch_size: 1
+benchmark_precision: fp32
