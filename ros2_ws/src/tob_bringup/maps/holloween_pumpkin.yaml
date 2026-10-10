@@ -1,0 +1,10 @@
+# Pumpkin (감자 로봇)이 사용하는 map 파일
+# Pumpkin은 Candy Gate 영역을 진입할 수 있도록 설정되어 있습니다.
+
+image: holloween_pumpkin.pgm
+mode: trinary
+resolution: 0.050
+origin: [-5.015, -2.364, 0.0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
