@@ -23,3 +23,19 @@
 # 게임 판정 거리나 안전 정지 기준을 이 파일에 넣지 않는다.
 # [완료 기준]
 # 노드가 설정을 읽으며 잘못된 필수 설정을 시작 시 발견할 수 있다.
+
+boo_detector_node:
+  ros__parameters:
+    # 설치된 tob_perception의 share 디렉터리를 기준으로 해석한다.
+    model_path: models/yolo11n_boo.pt
+    device: 0
+    target_class_id: 0
+    confidence_threshold: 0.5
+
+    image_topic: /robot1/oakd/rgb/image_raw/compressed
+    detection_topic: /tob/perception/pumpkin_detection
+    source: boo_camera
+
+    # --debug 옵션을 지정한 경우에만 발행한다.
+    debug_image_topic: /tob/perception/debug/image/compressed
+    use_sim_time: false

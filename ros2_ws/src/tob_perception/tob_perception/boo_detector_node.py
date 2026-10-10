@@ -71,7 +71,7 @@ class BooDetectorNode(Node):
                 # Support direct source execution before package installation.
                 package_dir = Path(__file__).resolve().parents[1]
             defaults = {
-                'model_path': str(package_dir / 'models' / 'yolo11n_boo.pt'),
+                'model_path': '',
                 'image_topic': '/robot1/oakd/rgb/image_raw/compressed',
                 'detection_topic': '/tob/perception/pumpkin_detection',
                 'source': 'boo_camera',
@@ -93,9 +93,13 @@ class BooDetectorNode(Node):
                 if not isinstance(value, str) or not value.strip():
                     raise ValueError(f'{name} must be a nonempty string')
 
+            model_path = Path(parameters['model_path']).expanduser()
+            if not model_path.is_absolute():
+                model_path = package_dir / model_path
+
             self._source = parameters['source']
             self._detector = Detector(
-                model_path=parameters['model_path'],
+                model_path=str(model_path),
                 confidence_threshold=parameters['confidence_threshold'],
                 device=parameters['device'],
                 target_class_id=parameters['target_class_id'],

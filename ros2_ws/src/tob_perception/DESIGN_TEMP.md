@@ -93,7 +93,7 @@ AMR 카메라의 압축 RGB 영상을 구독하고 PT 모델로 Pumpkin을 탐�
 
 | 항목 | 값 또는 검토 상태 |
 |---|---|
-| `model_path` | 기본값: 설치된 패키지의 `models/yolo11n_boo.pt`; 다른 PT 경로 지정 가능 |
+| `model_path` | 필수 설정. `config/detectors.yaml`에서 `models/yolo11n_boo.pt` 지정. 상대 경로는 패키지 share 디렉터리 기준이며 절대 경로도 허용 |
 | `image_topic` | `/robot1/oakd/rgb/image_raw/compressed` |
 | `detection_topic` | `/tob/perception/pumpkin_detection` |
 | `source` | `boo_camera` |
