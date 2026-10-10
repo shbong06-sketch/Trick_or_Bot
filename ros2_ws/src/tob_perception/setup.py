@@ -24,6 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'boo_detector_node = tob_perception.boo_detector_node:main',
+            'webcam_detector_node = tob_perception.webcam_detector_node:main',
         ],
     },
 )
