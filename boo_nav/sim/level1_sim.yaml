@@ -1,42 +1,16 @@
-# boo_nav 시험용 레벨 파일: backend/config/level1.yaml 복사본에서 map_yaml만 옛 지도로 바꿨다.
-# 좌표(시작·사탕·탈출문)는 옛 지도 좌표계 기준이다.
+# boo_nav 시험용 레벨 파일(Gazebo 월드 생성·AMCL 초기 위치용). 팀 backend/config/level1.yaml과 별개다.
+# 지도: backend/maps/holloween_boo.yaml (술래용 지도). 좌표는 이 지도의 map 좌표계다.
+# boo_start: 옛 시뮬레이션 화면(2026-10-10 16:44)에서 사용자가 흰색 사각형으로 표시한 자리(아래 벽 쪽, 도크 위치)에 해당하는
+#   holloween_boo 지도 위치. 아래 벽(자유 칸 끝 y=-3.80)에서 0.5 m 위, 벽까지 거리 0.5 m, 위(+y)를 향한다.
+# 사탕·탈출문 표식은 넣지 않는다(아직 구현 대상이 아님).
 lv: 1
-name: 첫 번째 밤
-time_limit_s: 240
-pick_radius_m: 0.3
-video_fps: 15
-hearts: 3
-heartbeat_radius_m: 2.0
-cctv: []
-map_yaml: ../../backend/maps/past_map/holloween.yaml
-pumpkin_start:
-  x: 5.13
-  y: -1.27
-  yaw: 1.57
+name: Boo Nav2 시험용(holloween_boo 지도)
+map_yaml: ../../backend/maps/holloween_boo.yaml
 boo_start:
-  x: 0.0
-  y: 0.0
-  yaw: 0.0
-candies:
-- id: c1
-  x: 0.34
-  y: 0.37
-- id: c2
-  x: 2.09
-  y: -1.03
-- id: c3
-  x: 5.19
-  y: 1.53
-gate:
-  x: 0.93
-  y: 2.52
-  yaw: 0.0
-gate_front_m: 0.4
-gate_zone_r: 0.3
-gate_dwell_s: 3.0
-gate_enter_r: 0.15
-boo_patrol:
-- x: 0.0
-  y: 2.45
-- x: 3.0
-  y: 2.45
+  x: -3.05
+  y: -3.3
+  yaw: 1.5708
+pumpkin_start:
+  x: -2.5
+  y: 1.25
+  yaw: -1.5708

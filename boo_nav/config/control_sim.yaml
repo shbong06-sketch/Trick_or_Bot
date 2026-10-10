@@ -17,10 +17,10 @@
       require_game_state: false
       require_safety: false
       patrol_points_xy:
-      - 1.0
-      - 2.5
-      - 2.5
-      - 2.5
+      - -3.0
+      - -3.25
+      - -3.0
+      - -0.75
       suspicion_fill_s: 3.0
       suspicion_decay_s: 3.0
       lost_timeout_s: 1.0

@@ -1,0 +1,39 @@
+[WARN] [1791617924.684220979] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[WARN] [1791617924.684252567] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[INFO] [1791617924.754623822] [robot1.boo_controller]: boo_controller 시작: 순찰 지점 2개, 게임 상태 필요=True, 안전 상태 필요=True
+[INFO] [1791617926.747172097] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+[INFO] [1791617929.414255003] [robot1.boo_controller]: Nav2 목표 1 결과: SUCCEEDED
+[INFO] [1791617931.040702046] [robot1.boo_controller]: Nav2 목표 2 결과: SUCCEEDED
+[INFO] [1791617931.147295656] [robot1.boo_controller]: Nav2 목표 취소: 펌킨 발견
+[INFO] [1791617931.147986049] [robot1.boo_controller]: 상태 PATROL → SUSPECT: 펌킨 발견
+[INFO] [1791617931.169820882] [robot1.boo_controller]: Nav2 목표 3 결과: CANCELED
+[INFO] [1791617932.247195846] [robot1.boo_controller]: 상태 SUSPECT → CHASE: 의심 게이지 가득
+[INFO] [1791617933.083376905] [robot1.boo_controller]: Nav2 목표 5 결과: CANCELED
+[INFO] [1791617935.247336674] [robot1.boo_controller]: 상태 CHASE → SEARCH: 펌킨을 놓침
+[INFO] [1791617936.808153854] [robot1.boo_controller]: Nav2 목표 6 결과: SUCCEEDED
+[INFO] [1791617936.847204778] [robot1.boo_controller]: 상태 SEARCH → PATROL: 수색 종료
+[INFO] [1791617936.946951358] [robot1.boo_controller]: 상태 PATROL → IDLE: 이동 금지 또는 게임 중단
+[INFO] [1791617937.047494460] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+[INFO] [1791617937.147140443] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791617937.147532876] [robot1.boo_controller]: 상태 PATROL → IDLE: 이동 금지 또는 게임 중단
+[INFO] [1791617937.184220631] [robot1.boo_controller]: Nav2 목표 7 결과: CANCELED
+[INFO] [1791617937.247251372] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+Traceback (most recent call last):
+  File "/home/mu-01/Trick_or_Bot/ros2_ws/install/tob_control/lib/tob_control/boo_controller_node", line 33, in <module>
+    sys.exit(load_entry_point('tob-control', 'console_scripts', 'boo_controller_node')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mu-01/Trick_or_Bot/ros2_ws/build/tob_control/tob_control/boo_controller_node.py", line 275, in main
+    rclpy.spin(node)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+    executor.spin_once()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+    raise ExternalShutdownException()
+rclpy.executors.ExternalShutdownException

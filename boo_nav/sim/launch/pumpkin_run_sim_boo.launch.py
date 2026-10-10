@@ -1,8 +1,9 @@
-# boo_nav 시험용 사본: simulation/launch/pumpkin_run_sim.launch.py에서 레벨 파일 경로만 바꿨다.
-# 이유: 시뮬레이션 월드(simulation/worlds/holloween.sdf)는 옛 지도 좌표계로 만들어졌는데,
-#       원본 launch는 backend/config/level1.yaml의 map_yaml(현재 새 지도)을 AMCL에 넘긴다.
-#       이 사본은 같은 좌표계의 옛 지도(backend/maps/past_map/holloween.yaml)를 넘긴다.
-# 원본이 갱신되면 이 파일도 같은 방식으로 다시 만든다. (2026-10-10: Gazebo 실행 검증 못 함)
+# boo_nav 시험용 사본: simulation/launch/pumpkin_run_sim.launch.py에서 월드·레벨 파일 경로만 바꿨다.
+# 이유: 팀 원본이 쓰는 월드(simulation/worlds/holloween.sdf)는 옛 지도로 만든 것이라
+#       술래용 지도(backend/maps/holloween_boo.yaml)와 다르다. 이 사본은
+#       boo_nav/sim/worlds/holloween.sdf(holloween_boo 지도에서 map_to_world.py --no-markers로 생성)와
+#       boo_nav/sim/level1_sim.yaml(같은 지도, Boo 시작 위치)을 쓴다.
+# 원본 launch가 갱신되면 이 파일도 같은 방식으로 다시 만든다. (2026-10-10: 이 환경에서 Gazebo 실행 검증 못 함)
 """Pumpkin Run Gazebo 시뮬레이션: holloween 월드 + TurtleBot4 두 대 + 각자 AMCL.
 
   ros2 launch ~/cobot4_ws/simulation/launch/pumpkin_run_sim.launch.py
@@ -25,9 +26,9 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 REPO = Path(__file__).resolve().parents[3]   # boo_nav/sim/launch/ → 저장소 최상위
-WORLDS_DIR = REPO / 'simulation' / 'worlds'
+WORLDS_DIR = REPO / 'boo_nav' / 'sim' / 'worlds'   # holloween_boo 지도로 만든 월드
 WORLD = 'holloween'   # 경로가 아니라 이름이어야 한다 (TB4 브리지가 /world/<이름>/model/... 토픽을 만든다)
-LEVEL = Path(__file__).resolve().parents[1] / 'level1_sim.yaml'   # 옛 지도를 쓰는 시험용 레벨 파일
+LEVEL = REPO / 'boo_nav' / 'sim' / 'level1_sim.yaml'   # holloween_boo 지도와 시작 위치
 ROBOTS = (('robot1', 'boo_start', 'boo_model'), ('robot2', 'pumpkin_start', 'model'))
 SPAWN_GAP_S = 8.0   # 두 번째 로봇은 첫 로봇이 다 뜬 뒤에 스폰 (동시에 띄우면 브리지·컨트롤러가 꼬이기 쉽다)
 LOCALIZATION_DELAY_S = 15.0  # 로봇 노드가 다 뜬 뒤 AMCL을 띄운다. 같이 띄우면 map_server가 Configuring에서 멈추는 일이 있다
