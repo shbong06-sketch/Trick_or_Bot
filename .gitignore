@@ -74,3 +74,10 @@ ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/
 ros2_ws/**/__pycache__/
+
+
+# VS Code C/C++ cache
+.vscode/browse.vc.db*
+
+# VS Code temporary files
+.vscode/ipch/
