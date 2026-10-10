@@ -39,7 +39,6 @@ from ament_index_python.packages import (
     get_package_share_directory,
 )
 import cv2
-from cv_bridge import CvBridge
 import numpy as np
 from rcl_interfaces.msg import ParameterDescriptor
 import rclpy
@@ -52,7 +51,7 @@ from rclpy.qos import (
     ReliabilityPolicy,
 )
 from rclpy.utilities import remove_ros_args
-from sensor_msgs.msg import CompressedImage, Image
+from sensor_msgs.msg import CompressedImage
 from tob_interfaces.msg import TargetObservation
 
 from tob_perception.detector import Detector
@@ -66,7 +65,6 @@ class BooDetectorNode(Node):
         super().__init__('boo_detector_node')
         try:
             self._debug_publisher = None
-            self._debug_bridge = None
             try:
                 package_dir = Path(get_package_share_directory('tob_perception'))
             except PackageNotFoundError:
@@ -80,7 +78,7 @@ class BooDetectorNode(Node):
                 'target_class_id': 0,
                 'confidence_threshold': 0.5,
                 'device': 0,
-                'debug_image_topic': '/tob/perception/debug/image',
+                'debug_image_topic': '/tob/perception/debug/image/compressed',
             }
             parameters = {}
             for name, default in defaults.items():
@@ -115,9 +113,8 @@ class BooDetectorNode(Node):
                 self._debug_class_name = str(
                     self._detector._model.names[parameters['target_class_id']]
                 )
-                self._debug_bridge = CvBridge()
                 self._debug_publisher = self.create_publisher(
-                    Image, parameters['debug_image_topic'], qos
+                    CompressedImage, parameters['debug_image_topic'], qos
                 )
             self._subscription = self.create_subscription(
                 CompressedImage, parameters['image_topic'],
@@ -176,7 +173,7 @@ class BooDetectorNode(Node):
             self._publish_debug_image(image, observation)
 
     def _publish_debug_image(self, image, observation: TargetObservation):
-        """Publish an annotated BGR image without affecting observations."""
+        """Publish an annotated JPEG image without affecting observations."""
         try:
             annotated = image.copy()
             if observation.detected:
@@ -198,9 +195,13 @@ class BooDetectorNode(Node):
                     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1,
                     cv2.LINE_AA,
                 )
-            debug_message = self._debug_bridge.cv2_to_imgmsg(
-                annotated, encoding='bgr8', header=observation.header
-            )
+            success, encoded = cv2.imencode('.jpg', annotated)
+            if not success:
+                raise RuntimeError('Debug image JPEG encoding failed')
+            debug_message = CompressedImage()
+            debug_message.header = observation.header
+            debug_message.format = 'bgr8; jpeg compressed bgr8'
+            debug_message.data = encoded.tobytes()
             self._debug_publisher.publish(debug_message)
         except Exception as exc:
             self.get_logger().error(f'Debug image publishing failed: {exc}')
