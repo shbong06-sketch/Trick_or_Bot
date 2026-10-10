@@ -3,6 +3,7 @@
 이 문서는 사용자와 Claude가 이 저장소에서 함께 작업할 때 지키는 규칙이다.
 (2026-10-02 사용자 승인 하에 Claude가 작성)
 (2026-10-08 파이널 프로젝트 저장소 이관에 맞춰 사용자 승인 하에 §2, §3, §4, §8 수정)
+(2026-10-10 팀이 확정한 dev 브랜치 트리에 맞춰 사용자 승인 하에 §2, §3, §4, §5, §9 수정)
 
 ## 0. 이 문서의 변경 규칙
 - **이 문서(CLAUDE.md)의 내용은 사용자의 승인 없이 절대 변경하지 않는다.**
@@ -31,8 +32,10 @@
 - 커맨드를 입력할 **터미널이 바뀌는 지점마다 `---` 구분선**으로 나눈다. (2026-10-03 승인)
 
 ## 2. 실측 기록 저장소 (result_*)
-- `rokey_ws/src/`에는 **ROS 패키지만** 둔다. (2026-10-04 승인)
+- `ros2_ws/src/`에는 **ROS 패키지만** 둔다. (2026-10-04 승인, 2026-10-10 팀 트리에 맞춰 `rokey_ws` → `ros2_ws`로 변경)
+  - `rokey_ws`는 이전 워크스페이스 이름이며 더 이상 쓰지 않는다. 남은 옛 경로(`rokey_ws/maps`, 이전 미니프로젝트 패키지)는 경로 정리 때 옮긴다.
 - 작업 테마 폴더는 **저장소 최상위**에 두고(예: `wc/` 웹캠), 그 안에 다음 구조로 기록 저장소를 만든다.
+  테마 폴더 이름은 팀이 쓰는 최상위 폴더(`backend`, `frontend`, `simulation`, `tools`, `ros2_ws`, `docs`)와 겹치지 않게 짓는다.
   `<theme>`은 작업 테마명을 짧게 줄인 이름이다.
   ```
   <theme 폴더>/
@@ -42,6 +45,7 @@
   ```
 - 샘플: 이전 미니프로젝트의 `docs/ref/past_project(mP4)/wc/result_wc/{log_wc, bag_wc}` (웹캠 YOLO 테마, 지금은 log/bag을 지우고 폴더 구조만 남김)
 - rosbag(`bag_*/`)과 모델 가중치, 데이터셋 같은 대용량 파일·경로는 `.gitignore`에 추가한다. (2026-10-08 승인)
+  `.gitignore`는 팀원도 고치는 공용 파일이므로 Claude가 추가하는 규칙은 "Trick_or_Bot 추가" 블록에만 넣고, 팀원 블록(Frontend, Backend, TrickOrBot ROS 2 workspace 등)은 건드리지 않는다. (2026-10-10)
   새 대용량 경로가 생기면 Claude가 `.gitignore`에 함께 반영한다. 터미널 로그(`log_*/`)는 작으므로 추적한다.
 - 새 작업 테마를 시작하면 Claude가 이 규칙에 따라 새 기록 저장소를 만든다.
 - 터미널 로그는 `2>&1 | tee -i <log 경로>`로 기록한다. (`-i`: Ctrl+C 시 tee가 먼저 죽어 마지막 로그가 잘리는 것 방지)
@@ -50,8 +54,9 @@
 
 ## 3. Git 규칙
 - `feature/lwh` 브랜치는 **Claude에게 주어진 브랜치**다. 이 브랜치와 원격 `origin/feature/lwh`에 대해 add, commit, push, pull을 Claude가 자유롭게 수행해도 된다. (2026-10-08 승인, 기존 `feature/cl` 대체)
-- 원격 레포의 다른 브랜치(main, development, 팀원의 feature/* 등)는 **열람만** 가능하다. checkout/merge/push 등으로 변경하지 않는다.
-- pull은 사용자의 별도 지시가 없는 한 **반드시 `origin/feature/lwh`하고만** 진행한다.
+- 원격 레포의 다른 브랜치(main, development, 팀원의 feature/* 등)는 **열람만** 가능하다. checkout/push 등으로 변경하지 않는다.
+  - 예외: 사용자가 지시하면 `origin/development`를 `feature/lwh`에 merge 또는 pull할 수 있다(`git pull --no-rebase origin development`). 변경되는 쪽은 `feature/lwh`뿐이며, dev에 push하지 않는다. 충돌은 Claude가 풀되, 팀원 파일은 양쪽 내용을 보존하는 쪽으로 푼다. (2026-10-10 승인)
+- pull은 사용자의 별도 지시가 없는 한 **반드시 `origin/feature/lwh`하고만** 진행한다. (위 예외 제외)
   (`git pull origin feature/lwh`)
 - **날짜가 바뀐 뒤 첫 작업 때 반드시 `git fetch origin --prune`을 먼저 한다.** (2026-10-07 승인)
   - 사용자가 git 없이 작업하는 때도 있어 Claude에게 브랜치 정보가 전달되지 않을 수 있기 때문이다.
@@ -71,6 +76,7 @@
 - 강의 PDF: `docs/ref/lecture/to_students/` (진행 절차는 `Day5_new_v2.pdf`: Day5~10 파이널 프로젝트 일정과 평가 기준)
 - 이전 미니프로젝트(`ROKEY_mP4_A1`) 자료: `docs/ref/past_project(mP4)/`, 이전 팀 Notion 백업: `docs/ref/notion/ourteam/`
   - 물리적 환경 공간은 이전과 동일하므로 맵·좌표·실측 기록을 환경 참고용으로 읽는다. 파이널 프로젝트는 개발 주제가 다르고 팀이 2개에서 1개로 합쳐졌다.
+- 팀이 확정한 저장소 트리는 팀 Notion "패키지 구조 설명 (dev branch)"(2026-10-09)와 §9에 있다.
 - 팀 Notion(프로젝트 일정 DB, `app.notion.com/p/3ecbfdb5…`)은 Notion 커넥터로 열리지 않는다(2026-10-08 확인, 404 `object_not_found`).
   내용은 사용자가 내보내 zip으로 올리는 `docs/ref/notion/P4_Final_Project/`(zip을 풀어 둔 csv)를 읽는다. 갱신 시점이 지난 csv일 수 있으니 날짜를 확인한다.
 - **참고 자료는 `docs/ref`의 md를 먼저 읽는다.** md가 오래됐다고 판단되면(튜터님이 내용을 갱신한 경우 등)
@@ -80,6 +86,10 @@
 ## 5. 코드 작성
 - 주석·docstring·help 문자열은 되도록 **한글**로 쓴다. (2026-10-03 승인)
   고유명사와 흔히 영어로 쓰는 용어(node, topic, YOLO, CLI, SSH, log 등)는 영어 그대로 둔다.
+
+- 위치별 담당(2026-10-10): ROS 코드는 `ros2_ws/src/tob_*`, 웹은 `backend/`와 `frontend/`, 시뮬레이션은 `simulation/`이다.
+  Claude는 사용자 지시 없이 이 팀 영역의 파일을 수정하지 않는다(팀원 브랜치와의 merge 충돌을 막기 위함). Claude가 직접 쓰는 곳은 `docs/`와 §2의 테마 폴더다.
+- 팀 ROS 패키지는 한국어 주석(역할·입출력·실패 처리·완료 기준)을 단다. Claude도 같은 형식을 따른다.
 
 ## 6. 문서 작성
 - Claude가 만드는 문서의 도입부 `작성:` 항목에는 **날짜와 시간만** 쓴다. (2026-10-04 승인)
@@ -103,3 +113,16 @@
   - 어떤 파일·node·시나리오·입력(실제 카메라인지, 재생 이미지인지)에 대한 것인지, **결과가 무엇인지(수치 포함)**를 함께 적는다.
   - 문장 말투가 오락가락(예: "~됐다" 다음 "~해볼게요")하는 것은 상관없다. **구체성이 우선**이다.
   - 작업이 길어져 한동안 말이 없었다면, 지금 하고 있는 일을 구체적으로 먼저 알린 뒤 이어간다.
+
+## 9. 저장소 트리 (팀 확정, 2026-10-10)
+팀 dev 브랜치 기준이다. 상세 설명은 팀 Notion "패키지 구조 설명 (dev branch)". 이 트리가 바뀌면 사용자 승인 하에 이 절을 고친다.
+
+| 경로 | 내용 | 비고 |
+|---|---|---|
+| `backend/` | FastAPI 웹 서버(`app/`), 설정(`config/`), 지도(`maps/`), 도구(`tools/`) | 지도: `holloween_boo.*`(술래용), `holloween_pumpkin.*`(도망자용), 이전 지도는 `past/` |
+| `frontend/` | React(Vite) 웹 화면 | |
+| `ros2_ws/src/` | `tob_interfaces`, `tob_game`, `tob_perception`, `tob_localization`, `tob_control`, `tob_safety`, `tob_bringup` | 빌드 산출물 `ros2_ws/{build,install,log}`는 git 제외 |
+| `simulation/` | Gazebo 실행 파일·월드·지도 변환 도구 | |
+| `tools/` | 보조 스크립트(`calibrate_webcam.py`) | |
+| `docs/` | `project/`(BRD·SRD·SDD 정리본), `guidance/`, `prompt/`, `ref/`, 팀의 `interfaces.md` | |
+| `<theme>/result_<theme>/` | 실측 기록(§2) | |

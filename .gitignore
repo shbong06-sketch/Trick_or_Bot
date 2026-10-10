@@ -52,7 +52,7 @@ CATKIN_IGNORE
 
 # ===== Trick_or_Bot 추가 (2026-10-08) =====
 
-# ROS 2 colcon 빌드 산출물 (rokey_ws 등 워크스페이스)
+# ROS 2 colcon 빌드 산출물 (ros2_ws 등 워크스페이스)
 build/
 install/
 log/
@@ -66,7 +66,7 @@ bag_*/
 # 모델 가중치·체크포인트·영상 (용량 큼)
 *.pt
 # 패키지에 포함된 모델(5MB)은 추적한다
-!rokey_ws/src/detection_alert/models/*.pt
+!ros2_ws/src/tob_perception/models/*.pt
 *.pth
 *.onnx
 *.engine
