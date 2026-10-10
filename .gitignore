@@ -89,3 +89,8 @@ data_*/
 
 # 튜터님 강의 저장소 clone (중첩 git 저장소라 내용이 올라가지 않음). 원본: github.com/kimandreas/to_students
 docs/ref/lecture/to_students/
+
+# 팀 Notion 내보내기의 대용량 첨부(pdf, 이미지, 영상)는 추적하지 않는다 (md, csv만 추적)
+docs/ref/notion/P4_Final_Project/**/*.pdf
+docs/ref/notion/P4_Final_Project/**/*.png
+docs/ref/notion/P4_Final_Project/**/*.webm
