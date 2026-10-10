@@ -49,9 +49,9 @@
 ## 4. 공간·지도
 
 - 물리 공간은 이전 미니프로젝트와 같다. 이전 지도는 `rokey_ws/maps/past_map/map_auto_261006_1214.{pgm,yaml}`(0.05 m/px, 161×338 px, 원점 (−5.879, −15.252))로 옮겨져 있다.
-- 2026-10-08 팀이 새로 실측한 지도 `rokey_ws/maps/holloween.{pgm,yaml}`(0.05 m/px, 96×130 셀 ≈ 4.8×6.5 m, 원점 (−3.074, −0.672). 실측 그림을 반시계 90° 회전한 판, 회전 전 원본은 `past_map/holloween_before_rot.*`)를 Lv1 지도의 원본으로 쓴다(SRD KD-09, SR-013). 원점이 이전 1214 지도와 달라 이전 열쇠 좌표·웹캠 homography는 다시 만들어야 한다(SRD 부록 C-11).
+- 2026-10-08 팀이 새로 실측한 지도 `rokey_ws/maps/holloween_fix01.{pgm,yaml}`(0.05 m/px, 96×130 셀 ≈ 4.8×6.5 m, 원점 (−3.074, −0.672). 실측 그림을 반시계 90° 회전한 판, 회전 전 원본은 `past_map/holloween_before_rot.*`)를 Lv1 지도의 원본으로 쓴다(SRD KD-09, SR-013). 원점이 이전 1214 지도와 달라 이전 열쇠 좌표·웹캠 homography는 다시 만들어야 한다(SRD 부록 C-11).
 - 아레나 3 m × 3 m 안에 레벨 설계가 들어가는지 배치도로 먼저 확인한다(OI-04). 실제 판자·상자 위치는 바닥 테이프로 고정하고 사진을 `docs/project/arena/`에 남긴다 `[제안]`.
-- 레벨 1~5 설정은 [srd.md](srd.md) 부록 A. (맵 설계 원칙 7가지는 팀 Notion에서 빠졌다.)
+- 레벨 1~5 설정은 [SRD_fix01.md](SRD_fix01.md) 부록 A. (맵 설계 원칙 7가지는 팀 Notion에서 빠졌다.)
 
 ## 5. 저장소와 폴더
 
@@ -105,6 +105,8 @@ ros2 bag record -o <theme>/result_<theme>/bag_<theme>/bag_$(date +%y%m%d_%H%M%S)
 - 이미지 토픽은 용량이 크므로 가능하면 `.../compressed`를 기록한다.
 - 코드 주석·help 문자열은 한국어로 쓴다(CLAUDE.md §5).
 - 모든 노드는 namespace를 코드에 넣지 않고 실행 때 붙인다(`--ros-args -r __ns:=/robot1`). 이전 프로젝트의 규칙을 그대로 따른다.
+
+- 실물 로봇 없이 시험할 때는 Gazebo 시뮬레이션을 쓴다: `sudo apt install ros-jazzy-turtlebot4-simulator ros-jazzy-turtlebot4-navigation`, 실행은 팀 저장소 `simulation/launch/pumpkin_run_sim.launch.py` (팀 Notion "gazebo 시뮬레이션 세팅").
 
 ## 8. 정해야 할 것
 

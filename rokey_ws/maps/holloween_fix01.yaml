@@ -1,4 +1,4 @@
-image: holloween.pgm
+image: holloween_fix01.pgm
 mode: trinary
 resolution: 0.050
 origin: [-3.074, -0.672, 0]
