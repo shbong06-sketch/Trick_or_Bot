@@ -11,11 +11,16 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=[
+        'setuptools',
+        'numpy',
+        'torch',
+        'ultralytics',
+    ],
     zip_safe=True,
     maintainer='may',
     maintainer_email='maymayko9559@gmail.com',
-    description='TODO: Package description',
+    description='ROS2 package for detecting pumpkins in RGB images from Boo OAK-D camera.',
     license='Apache-2.0',
     extras_require={
         'test': [
