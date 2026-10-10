@@ -1,13 +1,13 @@
 # Phase 3 execution structure
 
-Each stage has one script. Experiments 01–03 are implemented. Each model makes its own selection using validation; later stages inherit that model's selected settings.
+Each stage has one script. Experiments 01–04 are implemented. Each model makes its own selection using validation; later stages inherit that model's selected settings.
 
 | Script | Comparison | Experiment numbers |
 | --- | --- | --- |
 | `exp01.py` | AdamW vs SGD | 001, 002 |
 | `exp02.py` | SGD LR 0.005 and 0.02 vs reused exp01 LR 0.01 | 003, 004; reuse 002 |
 | `exp03.py` | selected optimizer and LR; batch 8 vs reused batch 16 | 005; reuse 004/002 |
-| `exp04.py` | selected settings; weight decay 0.0001, 0.0005, 0.001 | assigned later |
+| `exp04.py` | weight decay 0.0001 and 0.001 vs reused 0.0005 | 006, 007; reuse 004/002 |
 | `exp05.py` | selected settings; LambdaLR vs cosine | assigned later |
 
 The same experiment number is used for both models. Training files, checkpoints, epoch logs, and validation details are stored at `experiments/phase3/<number>/<model>/`. Only summary CSVs and selection JSONs are stored in `results/phase3/`. Runs within a stage are independent; they can be dispatched on separate GPUs, or one at a time on the configured L4. `collect` selects each model independently after the required new runs have validation results.
@@ -54,3 +54,16 @@ python3 scripts/phase3/exp03.py collect            # CPU-only summary refresh
 ```
 
 `exp03_summary.csv` compares the reused batch 16 result with new batch 8 for each model; `exp03_delta.csv` is relative to that model's reused run. The cumulative CSVs add only experiment 005. Validation selects the batch size; Official Test is unused.
+
+## Experiment 04
+
+`exp04.py` requires exp03 to select batch 16 for both models. YOLO11n reuses experiment 004 (SGD, LR 0.02, momentum 0.937); YOLOv8n reuses experiment 002 (SGD, LR 0.01, momentum 0.937). Both reused runs use weight decay 0.0005. New experiments 006 and 007 use 0.0001 and 0.001, respectively, for each model. The new runs inherit the selected native settings and original pretrained weights, changing only weight decay.
+
+```bash
+python3 scripts/phase3/exp04.py list
+python3 scripts/phase3/exp04.py run-all            # print four new train/evaluate pairs
+python3 scripts/phase3/exp04.py run-all --execute  # run sequentially on the configured GPU
+python3 scripts/phase3/exp04.py collect            # CPU-only summary refresh
+```
+
+`exp04_summary.csv` includes all three weight decays. `exp04_delta.csv` compares each condition with that model's reused 0.0005 run. The cumulative CSVs add only experiments 006 and 007, with deltas against the Phase 2 baseline. Selection uses validation only; Official Test is unused.

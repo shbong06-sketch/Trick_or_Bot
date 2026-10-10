@@ -1,0 +1,20 @@
+phase: 3
+step: weight_decay
+inherited_selection: results/phase3/exp03_selection.json
+reference_weight_decay: 0.0005
+runs:
+  '006': 0.0001
+  '007': 0.001
+models:
+  yolo11n:
+    reference_experiment: '004'
+    optimizer: SGD
+    lr0: 0.02
+    momentum: 0.937
+    batch_size: 16
+  yolov8n:
+    reference_experiment: '002'
+    optimizer: SGD
+    lr0: 0.01
+    momentum: 0.937
+    batch_size: 16

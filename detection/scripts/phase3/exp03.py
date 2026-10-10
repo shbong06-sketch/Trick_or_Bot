@@ -184,6 +184,7 @@ def collect():
                    "optimizer": expected["optimizer"], "lr0": expected["lr0"],
                    "momentum": expected["momentum"],
                    "batch_size": plan["reference_batch_size"] if reused else plan["new_batch_size"],
+                   "weight_decay": 0.0005,
                    "status": status, "selected": number == winner,
                    "inherited_from": parent["inherited_from"] if reused else inherited_from,
                    "config": inherited_from if reused else

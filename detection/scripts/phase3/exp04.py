@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Phase 3 experiment 02: compare two new LRs with exp01's SGD run."""
+"""Phase 3 experiment 04: compare two new weight decays with the selected 0.0005 run."""
 import argparse
 import copy
 import json
@@ -11,20 +11,21 @@ from pathlib import Path
 import yaml
 
 import exp01
+import exp03
 import train_models
 
 ROOT = exp01.ROOT
-SPEC_PATH = ROOT / "configs/phase3/exp02.yaml"
+SPEC_PATH = ROOT / "configs/phase3/exp04.yaml"
 EXPERIMENTS = ROOT / "experiments/phase3"
 RESULTS = ROOT / "results/phase3"
 
 
 def spec():
     plan = yaml.safe_load(SPEC_PATH.read_text())
-    if (plan["step"] != "learning_rate" or plan["reference_experiment"] != "002"
-            or plan["optimizer"] != "SGD" or plan["baseline_lr"] != 0.01
-            or plan["runs"] != {"003": 0.005, "004": 0.02}):
-        raise ValueError(f"Unexpected exp02 design: {SPEC_PATH}")
+    if (plan["step"] != "weight_decay" or plan["reference_weight_decay"] != 0.0005
+            or plan["runs"] != {"006": 0.0001, "007": 0.001}
+            or set(plan["models"]) != {"yolo11n", "yolov8n"}):
+        raise ValueError(f"Unexpected exp04 design: {SPEC_PATH}")
     return plan
 
 
@@ -34,45 +35,50 @@ def run_dir(model, experiment):
 
 def reference(model):
     plan = spec()
-    if model not in plan["models"]:
+    expected = plan["models"].get(model)
+    if expected is None:
         raise ValueError(f"Unknown model: {model}")
-    selection = json.loads((ROOT / plan["inherited_selection"]).read_text())[model]
-    number = plan["reference_experiment"]
-    if (selection["status"] != "complete" or selection["selected_experiment"] != number
-            or selection["optimizer"] != plan["optimizer"]
-            or not math.isclose(selection["lr0"], plan["baseline_lr"])):
-        raise ValueError(f"exp01 did not select the expected SGD baseline for {model}")
-    metrics = exp01.measured(model, number)
-    if metrics is None:
-        raise ValueError(f"Missing exp01 validation result for {model} {number}")
-    folder = ROOT / f"experiments/phase3/{number}/{model}"
-    applied = yaml.safe_load((folder / "exp01_config.yaml").read_text())
-    native = yaml.safe_load((folder / "native.yaml").read_text())
-    if (applied["native"] != native or native["optimizer"] != plan["optimizer"]
-            or not math.isclose(native["lr0"], plan["baseline_lr"])):
-        raise ValueError(f"exp01 applied settings disagree with the selected reference: {folder}")
-    return applied, metrics
+    selected = json.loads((ROOT / plan["inherited_selection"]).read_text())[model]
+    number = expected["reference_experiment"]
+    if (selected["status"] != "complete" or selected["selected_experiment"] != number
+            or selected["optimizer"] != expected["optimizer"]
+            or not math.isclose(selected["lr0"], expected["lr0"])
+            or selected["batch_size"] != expected["batch_size"]):
+        raise ValueError(f"exp03 selection disagrees with exp04 plan for {model}")
+    applied, metrics, inherited_from = exp03.reference(model)
+    if Path(inherited_from).parent != Path(f"experiments/phase3/{number}/{model}"):
+        raise ValueError(f"Unexpected selected exp03 source for {model}: {inherited_from}")
+    native = yaml.safe_load((ROOT / f"experiments/phase3/{number}/{model}/native.yaml").read_text())
+    if (applied["native"] != native or native["optimizer"] != expected["optimizer"]
+            or not math.isclose(native["lr0"], expected["lr0"])
+            or not math.isclose(native["momentum"], expected["momentum"])
+            or not math.isclose(native["weight_decay"], plan["reference_weight_decay"])
+            or applied["training"]["batch_size"] != expected["batch_size"]
+            or native["nbs"] != expected["batch_size"]):
+        raise ValueError(f"Selected 0.0005 settings disagree with exp04 plan: {inherited_from}")
+    return applied, metrics, inherited_from
 
 
 def prepare(model, experiment):
     plan = spec()
     if model not in plan["models"] or experiment not in plan["runs"]:
         raise ValueError(f"Unknown model or new run: {model} {experiment}")
-    parent, _ = reference(model)
+    parent, _, inherited_from = reference(model)
     cfg = yaml.safe_load((ROOT / "configs/phase1/common.yaml").read_text())
-    if cfg["training"] != parent["training"] or cfg["models"][model]["weights"] != parent["pretrained_weights"]:
-        raise ValueError(f"Phase 1 fixed settings differ from exp01 for {model}")
+    if (cfg["training"] != parent["training"]
+            or cfg["models"][model]["weights"] != parent["pretrained_weights"]):
+        raise ValueError(f"Fixed Phase 1 settings differ from selected run: {model}")
     cfg["models"] = {model: cfg["models"][model]}
     cfg["output_dir"] = f"experiments/phase3/{experiment}"
     native = copy.deepcopy(parent["native"])
-    native["lr0"] = plan["runs"][experiment]
+    native["weight_decay"] = plan["runs"][experiment]
     directory = run_dir(model, experiment)
     directory.mkdir(parents=True, exist_ok=True)
-    applied = {"experiment": experiment, "model": model, "step": "learning_rate",
-               "inherited_from": f"experiments/phase3/002/{model}/exp01_config.yaml",
-               "training": cfg["training"], "pretrained_weights": parent["pretrained_weights"],
+    applied = {"experiment": experiment, "model": model, "step": "weight_decay",
+               "inherited_from": inherited_from, "training": cfg["training"],
+               "pretrained_weights": parent["pretrained_weights"],
                "evaluation": parent["evaluation"], "native": native}
-    for filename, value in (("exp02_config.yaml", applied), ("native.yaml", native)):
+    for filename, value in (("exp04_config.yaml", applied), ("native.yaml", native)):
         path = directory / filename
         if path.is_file() and yaml.safe_load(path.read_text()) != value:
             raise ValueError(f"Existing run has different settings: {path}")
@@ -84,7 +90,7 @@ def prepare(model, experiment):
 def docker_command(task, model, experiment):
     return ["docker", "compose", "-f", str(ROOT / "docker/yolo/docker-compose.yaml"),
             "run", "--rm", "--no-deps", "-T", "yolo-trainer", "python", "-u",
-            "/workspace/scripts/phase3/exp02.py", task, "--model", model,
+            "/workspace/scripts/phase3/exp04.py", task, "--model", model,
             "--experiment", experiment, "--inside-docker"]
 
 
@@ -97,14 +103,17 @@ def measured(model, experiment):
     info = json.loads(info_path.read_text())
     if info.get("status") != "complete" or info.get("model") != model:
         raise ValueError(f"Incomplete training record: {info_path}")
-    parent, _ = reference(model)
-    applied = yaml.safe_load((directory / "exp02_config.yaml").read_text())
+    parent, _, inherited_from = reference(model)
+    applied = yaml.safe_load((directory / "exp04_config.yaml").read_text())
     expected_native = copy.deepcopy(parent["native"])
-    expected_native["lr0"] = spec()["runs"][experiment]
+    expected_native["weight_decay"] = spec()["runs"][experiment]
     if (applied["model"] != model or applied["experiment"] != experiment
-            or applied["native"] != expected_native or applied["training"] != info["training"]
+            or applied["inherited_from"] != inherited_from
+            or applied["native"] != expected_native
+            or yaml.safe_load((directory / "native.yaml").read_text()) != expected_native
+            or applied["training"] != parent["training"] or info["training"] != parent["training"]
             or applied["pretrained_weights"] != parent["pretrained_weights"]):
-        raise ValueError(f"Run did not inherit exp01 settings with only LR changed: {directory}")
+        raise ValueError(f"Run did not inherit selected settings with only weight decay changed: {directory}")
     validation = json.loads(metrics_path.read_text())
     protocol = yaml.safe_load((ROOT / parent["evaluation"]).read_text())
     for key in ("confidence", "matching_iou", "nms_iou", "ap_score_cutoff"):
@@ -125,8 +134,8 @@ def run_all(execute):
     plan = spec()
     combinations = [(model, number) for model in plan["models"] for number in plan["runs"]]
     for model in plan["models"]:
-        reference(model)
-    print("Reuse exp01 experiment 002 (SGD, lr0=0.01) for both models", flush=True)
+        _, _, inherited_from = reference(model)
+        print(f"Reuse {model} weight decay 0.0005: {inherited_from}", flush=True)
     for index, (model, number) in enumerate(combinations, 1):
         print(f"[{index}/{len(combinations)}] {model} experiment {number}", flush=True)
         for task in ("train", "evaluate"):
@@ -138,44 +147,45 @@ def run_all(execute):
     if execute:
         collect()
     else:
-        print("python3 scripts/phase3/exp02.py collect")
+        print("python3 scripts/phase3/exp04.py collect")
 
 
 def collect():
     plan = spec()
     stage_rows, stage_deltas, global_rows, global_deltas, selection = [], [], [], [], {}
     RESULTS.mkdir(parents=True, exist_ok=True)
-    for model in plan["models"]:
-        parent, reference_value = reference(model)
+    for model, expected in plan["models"].items():
+        parent, reference_value, inherited_from = reference(model)
         baseline = exp01.baseline_metrics(model)
-        measurements = {number: measured(model, number) for number in plan["runs"]}
-        all_values = {plan["reference_experiment"]: reference_value, **measurements}
-        complete = all(value is not None for value in measurements.values())
+        new_values = {number: measured(model, number) for number in plan["runs"]}
+        all_values = {expected["reference_experiment"]: reference_value, **new_values}
+        complete = all(value is not None for value in new_values.values())
         winner = max(all_values, key=lambda number: exp01.rank(all_values[number])) if complete else None
         selection[model] = {"status": "complete" if complete else "pending",
-                            "selected_experiment": winner, "optimizer": plan["optimizer"],
-                            "lr0": (plan["baseline_lr"] if winner == "002" else plan["runs"].get(winner))}
+                            "selected_experiment": winner, "optimizer": expected["optimizer"],
+                            "lr0": expected["lr0"], "momentum": expected["momentum"],
+                            "batch_size": expected["batch_size"],
+                            "weight_decay": (plan["reference_weight_decay"] if winner == expected["reference_experiment"]
+                                             else plan["runs"].get(winner))}
         for number, value in all_values.items():
-            reused = number == plan["reference_experiment"]
-            directory = (ROOT / f"experiments/phase3/002/{model}") if reused else run_dir(model, number)
+            reused = number == expected["reference_experiment"]
+            directory = (ROOT / inherited_from).parent if reused else run_dir(model, number)
             info_path = directory / "run_info.json"
             recorded = json.loads(info_path.read_text()).get("status") if info_path.is_file() else None
-            status = ("reused_exp01" if reused else "complete" if value else
+            status = ("reused_exp03" if reused else "complete" if value else
                       "awaiting_validation" if recorded == "complete" else
                       "failed" if recorded == "failed" else "pending")
-            lr = plan["baseline_lr"] if reused else plan["runs"][number]
-            row = {"experiment": number, "model": model, "step": "learning_rate",
-                   "optimizer": plan["optimizer"], "lr0": lr,
-                   "momentum": parent["native"]["momentum"], "batch_size": 16,
-                   "weight_decay": 0.0005, "status": status,
-                   "selected": number == winner,
-                   "inherited_from": parent["inherited_from"] if reused else
-                   f"experiments/phase3/002/{model}/exp01_config.yaml",
-                   "config": str((directory / ("exp01_config.yaml" if reused else "exp02_config.yaml")).relative_to(ROOT)),
-                   **(value or {})}
+            weight_decay = plan["reference_weight_decay"] if reused else plan["runs"][number]
+            row = {"experiment": number, "model": model, "step": "weight_decay",
+                   "optimizer": expected["optimizer"], "lr0": expected["lr0"],
+                   "momentum": expected["momentum"], "batch_size": expected["batch_size"],
+                   "weight_decay": weight_decay, "status": status, "selected": number == winner,
+                   "inherited_from": parent["inherited_from"] if reused else inherited_from,
+                   "config": inherited_from if reused else
+                   str((directory / "exp04_config.yaml").relative_to(ROOT)), **(value or {})}
             stage_rows.append(row)
             relative = {"experiment": number, "model": model, "status": status,
-                        "reference_experiment": "002"}
+                        "reference_experiment": expected["reference_experiment"]}
             if value:
                 relative.update({"delta_" + key: value[key] - reference_value[key]
                                  for key in (*exp01.METRICS, *exp01.TIMING)})
@@ -188,13 +198,13 @@ def collect():
                     absolute.update({"delta_" + key: value[key] - baseline[key]
                                      for key in (*exp01.METRICS, *exp01.TIMING)})
                 global_deltas.append(absolute)
-    exp01.write_csv(RESULTS / "exp02_summary.csv", exp01.FIELDS, stage_rows)
+    exp01.write_csv(RESULTS / "exp04_summary.csv", exp01.FIELDS, stage_rows)
     relative_fields = ("experiment", "model", "status", "reference_experiment",
                        *("delta_" + key for key in (*exp01.METRICS, *exp01.TIMING)))
-    exp01.write_csv(RESULTS / "exp02_delta.csv", relative_fields, stage_deltas)
+    exp01.write_csv(RESULTS / "exp04_delta.csv", relative_fields, stage_deltas)
     exp01.merge_csv(RESULTS / "hyperparameter_summary.csv", exp01.FIELDS, global_rows, set(plan["runs"]))
     exp01.merge_csv(RESULTS / "hyperparameter_delta.csv", exp01.DELTA_FIELDS, global_deltas, set(plan["runs"]))
-    (RESULTS / "exp02_selection.json").write_text(json.dumps(selection, indent=2) + "\n")
+    (RESULTS / "exp04_selection.json").write_text(json.dumps(selection, indent=2) + "\n")
 
 
 def main():
@@ -206,11 +216,11 @@ def main():
     parser.add_argument("--inside-docker", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     if args.task == "list":
-        for model in spec()["models"]:
+        for model, expected in spec()["models"].items():
             reference(model)
-            print(model, "002", "SGD", 0.01, "reused")
-            for number, lr in spec()["runs"].items():
-                print(model, number, "SGD", lr, "new")
+            print(model, expected["reference_experiment"], 0.0005, "reused")
+            for number, weight_decay in spec()["runs"].items():
+                print(model, number, weight_decay, "new")
         return
     if args.task == "collect":
         collect()
