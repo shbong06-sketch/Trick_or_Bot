@@ -1,0 +1,918 @@
+[INFO] [launch]: All log files can be found below /home/mu-01/.ros/log/2026-10-10-17-40-18-463474-mu-01-197860
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [controller_server-1]: process started with pid [197865]
+[INFO] [smoother_server-2]: process started with pid [197866]
+[INFO] [planner_server-3]: process started with pid [197867]
+[INFO] [route_server-4]: process started with pid [197868]
+[INFO] [behavior_server-5]: process started with pid [197869]
+[INFO] [bt_navigator-6]: process started with pid [197870]
+[INFO] [waypoint_follower-7]: process started with pid [197871]
+[INFO] [velocity_smoother-8]: process started with pid [197872]
+[INFO] [collision_monitor-9]: process started with pid [197873]
+[INFO] [opennav_docking-10]: process started with pid [197874]
+[INFO] [lifecycle_manager-11]: process started with pid [197875]
+[INFO] [boo_controller_node-12]: process started with pid [197876]
+[planner_server-3] [WARN] [1791621618.643069899] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[planner_server-3] [WARN] [1791621618.643083133] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[velocity_smoother-8] [WARN] [1791621618.643578149] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[velocity_smoother-8] [WARN] [1791621618.643597010] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[lifecycle_manager-11] [WARN] [1791621618.644324633] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[lifecycle_manager-11] [WARN] [1791621618.644616846] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[controller_server-1] [WARN] [1791621618.647520448] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[controller_server-1] [WARN] [1791621618.647539449] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[waypoint_follower-7] [WARN] [1791621618.647890246] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[waypoint_follower-7] [WARN] [1791621618.647909471] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[route_server-4] [WARN] [1791621618.650100738] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[route_server-4] [WARN] [1791621618.650127199] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[bt_navigator-6] [WARN] [1791621618.656760929] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[bt_navigator-6] [WARN] [1791621618.656791984] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[opennav_docking-10] [WARN] [1791621618.657731804] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[opennav_docking-10] [WARN] [1791621618.657760940] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[collision_monitor-9] [WARN] [1791621618.665028803] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[collision_monitor-9] [WARN] [1791621618.665055832] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[smoother_server-2] [WARN] [1791621618.665281735] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[smoother_server-2] [WARN] [1791621618.665301958] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[behavior_server-5] [WARN] [1791621618.666231835] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[behavior_server-5] [WARN] [1791621618.666245271] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[lifecycle_manager-11] [INFO] [1791621618.766087315] [robot1.lifecycle_manager_navigation]: Creating
+[lifecycle_manager-11] [INFO] [1791621618.782157483] [robot1.lifecycle_manager_navigation]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[lifecycle_manager-11] [INFO] [1791621620.818428639] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[planner_server-3] [INFO] [1791621620.980439129] [robot1.planner_server]: 
+[planner_server-3] 	planner_server lifecycle node launched. 
+[planner_server-3] 	Waiting on external lifecycle transitions to activate
+[planner_server-3] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[planner_server-3] [INFO] [1791621620.984556007] [robot1.planner_server]: Creating
+[controller_server-1] [INFO] [1791621621.008356451] [robot1.controller_server]: 
+[controller_server-1] 	controller_server lifecycle node launched. 
+[controller_server-1] 	Waiting on external lifecycle transitions to activate
+[controller_server-1] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[controller_server-1] [INFO] [1791621621.097341673] [robot1.controller_server]: Creating controller server
+[collision_monitor-9] [INFO] [1791621621.557145454] [robot1.collision_monitor]: 
+[collision_monitor-9] 	collision_monitor lifecycle node launched. 
+[collision_monitor-9] 	Waiting on external lifecycle transitions to activate
+[collision_monitor-9] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[bt_navigator-6] [INFO] [1791621621.654837741] [robot1.bt_navigator]: 
+[bt_navigator-6] 	bt_navigator lifecycle node launched. 
+[bt_navigator-6] 	Waiting on external lifecycle transitions to activate
+[bt_navigator-6] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[bt_navigator-6] [INFO] [1791621621.702739897] [robot1.bt_navigator]: Creating
+[boo_controller_node-12] [WARN] [1791621622.156379314] [rcl]: ROS_LOCALHOST_ONLY is deprecated but still honored if it is enabled. Use ROS_AUTOMATIC_DISCOVERY_RANGE and ROS_STATIC_PEERS instead.
+[boo_controller_node-12] [WARN] [1791621622.156426340] [rcl]: 'localhost_only' is disabled, 'automatic_discovery_range' and 'static_peers' will be used.
+[velocity_smoother-8] [INFO] [1791621622.682963999] [robot1.velocity_smoother]: 
+[velocity_smoother-8] 	velocity_smoother lifecycle node launched. 
+[velocity_smoother-8] 	Waiting on external lifecycle transitions to activate
+[velocity_smoother-8] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[lifecycle_manager-11] [INFO] [1791621622.818976036] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[smoother_server-2] [INFO] [1791621624.142182846] [robot1.smoother_server]: 
+[smoother_server-2] 	smoother_server lifecycle node launched. 
+[smoother_server-2] 	Waiting on external lifecycle transitions to activate
+[smoother_server-2] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[smoother_server-2] [INFO] [1791621624.145055664] [robot1.smoother_server]: Creating smoother server
+[planner_server-3] [INFO] [1791621624.632023038] [robot1.global_costmap.global_costmap]: 
+[planner_server-3] 	global_costmap lifecycle node launched. 
+[planner_server-3] 	Waiting on external lifecycle transitions to activate
+[planner_server-3] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[planner_server-3] [INFO] [1791621624.632912564] [robot1.global_costmap.global_costmap]: Creating Costmap
+[lifecycle_manager-11] [INFO] [1791621624.819230928] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[lifecycle_manager-11] [INFO] [1791621626.819630004] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[opennav_docking-10] [INFO] [1791621626.936371348] [robot1.docking_server]: 
+[opennav_docking-10] 	docking_server lifecycle node launched. 
+[opennav_docking-10] 	Waiting on external lifecycle transitions to activate
+[opennav_docking-10] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[opennav_docking-10] [INFO] [1791621626.936540655] [robot1.docking_server]: Creating docking_server
+[route_server-4] [INFO] [1791621628.796083042] [robot1.route_server]: 
+[route_server-4] 	route_server lifecycle node launched. 
+[route_server-4] 	Waiting on external lifecycle transitions to activate
+[route_server-4] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[lifecycle_manager-11] [INFO] [1791621628.827538847] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[waypoint_follower-7] [INFO] [1791621628.907315533] [robot1.waypoint_follower]: 
+[waypoint_follower-7] 	waypoint_follower lifecycle node launched. 
+[waypoint_follower-7] 	Waiting on external lifecycle transitions to activate
+[waypoint_follower-7] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[waypoint_follower-7] [INFO] [1791621628.925895875] [robot1.waypoint_follower]: Creating
+[boo_controller_node-12] [INFO] [1791621630.197601440] [robot1.boo_controller]: boo_controller 시작: 순찰 지점 2개, 게임 상태 필요=False, ��전 상태 필요=False
+[lifecycle_manager-11] [INFO] [1791621630.827888372] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[controller_server-1] [INFO] [1791621632.714245818] [robot1.local_costmap.local_costmap]: 
+[controller_server-1] 	local_costmap lifecycle node launched. 
+[controller_server-1] 	Waiting on external lifecycle transitions to activate
+[controller_server-1] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[controller_server-1] [INFO] [1791621632.719460525] [robot1.local_costmap.local_costmap]: Creating Costmap
+[lifecycle_manager-11] [INFO] [1791621632.829863735] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[lifecycle_manager-11] [INFO] [1791621634.838163966] [robot1.lifecycle_manager_navigation]: Waiting for service controller_server/get_state...
+[behavior_server-5] [INFO] [1791621635.236495848] [robot1.behavior_server]: 
+[behavior_server-5] 	behavior_server lifecycle node launched. 
+[behavior_server-5] 	Waiting on external lifecycle transitions to activate
+[behavior_server-5] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[lifecycle_manager-11] [INFO] [1791621640.467960641] [robot1.lifecycle_manager_navigation]: [34m[1mStarting managed nodes bringup...[0m[0m
+[lifecycle_manager-11] [INFO] [1791621640.469027076] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring controller_server[0m[0m
+[controller_server-1] [INFO] [1791621640.492308441] [robot1.controller_server]: Configuring controller interface
+[controller_server-1] [INFO] [1791621640.492366460] [robot1.controller_server]: getting progress checker plugins..
+[controller_server-1] [INFO] [1791621640.517637739] [robot1.controller_server]: getting goal checker plugins..
+[controller_server-1] [INFO] [1791621640.527854562] [robot1.controller_server]: Controller frequency set to 20.0000Hz
+[controller_server-1] [INFO] [1791621640.527983710] [robot1.local_costmap.local_costmap]: Configuring
+[controller_server-1] [INFO] [1791621641.008853885] [robot1.local_costmap.local_costmap]: Using plugin "static_layer"
+[controller_server-1] [INFO] [1791621641.044621039] [robot1.local_costmap.local_costmap]: Subscribing to the map topic (/robot1/map) with transient local durability
+[controller_server-1] [INFO] [1791621641.093747192] [robot1.local_costmap.local_costmap]: Initialized plugin "static_layer"
+[controller_server-1] [INFO] [1791621641.093818689] [robot1.local_costmap.local_costmap]: Using plugin "voxel_layer"
+[controller_server-1] [INFO] [1791621641.118108102] [robot1.local_costmap.local_costmap]: Subscribed to Topics: scan
+[controller_server-1] [INFO] [1791621641.819725552] [robot1.local_costmap.local_costmap]: Initialized plugin "voxel_layer"
+[controller_server-1] [INFO] [1791621641.819787250] [robot1.local_costmap.local_costmap]: Using plugin "inflation_layer"
+[controller_server-1] [INFO] [1791621641.865242964] [robot1.local_costmap.local_costmap]: Initialized plugin "inflation_layer"
+[controller_server-1] [INFO] [1791621642.571266006] [robot1.local_costmap.local_costmap]: StaticLayer: Resizing static layer to 92 X 129 at 0.050000 m/pix
+[controller_server-1] [INFO] [1791621642.573627258] [robot1.controller_server]: Created progress_checker : progress_checker of type nav2_controller::SimpleProgressChecker
+[controller_server-1] [INFO] [1791621642.584856805] [robot1.controller_server]: Controller Server has progress_checker  progress checkers available.
+[controller_server-1] [INFO] [1791621642.589154194] [robot1.controller_server]: Created goal checker : general_goal_checker of type nav2_controller::SimpleGoalChecker
+[controller_server-1] [INFO] [1791621642.610109283] [robot1.controller_server]: Controller Server has general_goal_checker  goal checkers available.
+[controller_server-1] [INFO] [1791621642.619499637] [robot1.controller_server]: Created controller : FollowPath of type dwb_core::DWBLocalPlanner
+[controller_server-1] [INFO] [1791621642.635987603] [robot1.controller_server]: Setting transform_tolerance to 0.100000
+[controller_server-1] [INFO] [1791621642.767605533] [robot1.controller_server]: Using critic "RotateToGoal" (dwb_critics::RotateToGoalCritic)
+[controller_server-1] [INFO] [1791621642.772174116] [robot1.controller_server]: Critic plugin initialized
+[controller_server-1] [INFO] [1791621642.772441774] [robot1.controller_server]: Using critic "Oscillation" (dwb_critics::OscillationCritic)
+[controller_server-1] [INFO] [1791621642.773234987] [robot1.controller_server]: Critic plugin initialized
+[controller_server-1] [INFO] [1791621642.773446800] [robot1.controller_server]: Using critic "BaseObstacle" (dwb_critics::BaseObstacleCritic)
+[controller_server-1] [INFO] [1791621642.773791947] [robot1.controller_server]: Critic plugin initialized
+[controller_server-1] [INFO] [1791621642.773964124] [robot1.controller_server]: Using critic "GoalAlign" (dwb_critics::GoalAlignCritic)
+[controller_server-1] [INFO] [1791621642.779590505] [robot1.controller_server]: Critic plugin initialized
+[controller_server-1] [INFO] [1791621642.783427481] [robot1.controller_server]: Using critic "PathAlign" (dwb_critics::PathAlignCritic)
+[controller_server-1] [INFO] [1791621642.784698498] [robot1.controller_server]: Critic plugin initialized
+[controller_server-1] [INFO] [1791621642.785072973] [robot1.controller_server]: Using critic "PathDist" (dwb_critics::PathDistCritic)
+[controller_server-1] [INFO] [1791621642.785645677] [robot1.controller_server]: Critic plugin initialized
+[controller_server-1] [INFO] [1791621642.785869182] [robot1.controller_server]: Using critic "GoalDist" (dwb_critics::GoalDistCritic)
+[controller_server-1] [INFO] [1791621642.786346639] [robot1.controller_server]: Critic plugin initialized
+[controller_server-1] [INFO] [1791621642.786376152] [robot1.controller_server]: Controller Server has FollowPath  controllers available.
+[lifecycle_manager-11] [INFO] [1791621642.891742293] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring smoother_server[0m[0m
+[smoother_server-2] [INFO] [1791621642.892546833] [robot1.smoother_server]: Configuring smoother server
+[smoother_server-2] [INFO] [1791621642.971928242] [robot1.smoother_server]: Created smoother : simple_smoother of type nav2_smoother::SimpleSmoother
+[smoother_server-2] [INFO] [1791621642.982841640] [robot1.smoother_server]: Smoother Server has simple_smoother  smoothers available.
+[lifecycle_manager-11] [INFO] [1791621643.047027441] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring planner_server[0m[0m
+[planner_server-3] [INFO] [1791621643.052162816] [robot1.planner_server]: Configuring
+[planner_server-3] [INFO] [1791621643.052221874] [robot1.global_costmap.global_costmap]: Configuring
+[planner_server-3] [INFO] [1791621643.255755015] [robot1.global_costmap.global_costmap]: Using plugin "static_layer"
+[planner_server-3] [INFO] [1791621643.291764678] [robot1.global_costmap.global_costmap]: Subscribing to the map topic (/robot1/map) with transient local durability
+[planner_server-3] [INFO] [1791621643.309185539] [robot1.global_costmap.global_costmap]: Initialized plugin "static_layer"
+[planner_server-3] [INFO] [1791621643.309351080] [robot1.global_costmap.global_costmap]: Using plugin "obstacle_layer"
+[planner_server-3] [INFO] [1791621643.337571557] [robot1.global_costmap.global_costmap]: Subscribed to Topics: scan
+[planner_server-3] [INFO] [1791621643.449842953] [robot1.global_costmap.global_costmap]: Initialized plugin "obstacle_layer"
+[planner_server-3] [INFO] [1791621643.449910800] [robot1.global_costmap.global_costmap]: Using plugin "inflation_layer"
+[planner_server-3] [INFO] [1791621643.501598255] [robot1.global_costmap.global_costmap]: Initialized plugin "inflation_layer"
+[planner_server-3] [INFO] [1791621643.932872337] [robot1.global_costmap.global_costmap]: StaticLayer: Resizing costmap to 92 X 129 at 0.050000 m/pix
+[planner_server-3] [INFO] [1791621643.932878078] [robot1.planner_server]: Created global planner plugin GridBased of type nav2_navfn_planner::NavfnPlanner
+[planner_server-3] [INFO] [1791621643.933506997] [robot1.planner_server]: Configuring plugin GridBased of type NavfnPlanner
+[planner_server-3] [INFO] [1791621643.952709552] [robot1.planner_server]: Planner Server has GridBased  planners available.
+[lifecycle_manager-11] [INFO] [1791621644.278382248] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring route_server[0m[0m
+[route_server-4] [INFO] [1791621644.288277039] [robot1.route_server]: Configuring
+[route_server-4] [INFO] [1791621644.846664971] [robot1.route_server]: Created GraphFileLoader GeoJsonGraphFileLoader of type nav2_route::GeoJsonGraphFileLoader
+[route_server-4] [INFO] [1791621644.846736206] [robot1.route_server]: Configuring geojson graph file loader
+[route_server-4] [INFO] [1791621644.846745340] [robot1.route_server]: No graph file provided to load yet.
+[route_server-4] [INFO] [1791621644.870813817] [robot1.route_server]: Created edge cost function plugin DistanceScorer of type nav2_route::DistanceScorer
+[route_server-4] [INFO] [1791621644.870880699] [robot1.route_server]: Configuring distance scorer.
+[route_server-4] [INFO] [1791621644.874078297] [robot1.route_server]: Created edge cost function plugin DynamicEdgesScorer of type nav2_route::DynamicEdgesScorer
+[route_server-4] [INFO] [1791621644.874127033] [robot1.route_server]: Configuring adjust edges scorer.
+[route_server-4] [INFO] [1791621644.893441170] [robot1.route_server]: Created route operation AdjustSpeedLimit of type nav2_route::AdjustSpeedLimit
+[route_server-4] [INFO] [1791621644.893501790] [robot1.route_server]: Configuring Adjust speed limit operation.
+[route_server-4] [INFO] [1791621644.905822592] [robot1.route_server]: Created route operation ReroutingService of type nav2_route::ReroutingService
+[route_server-4] [INFO] [1791621644.905879127] [robot1.route_server]: Configuring Rerouting service operation.
+[boo_controller_node-12] [INFO] [1791621644.967571936] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+[lifecycle_manager-11] [INFO] [1791621644.972743426] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring behavior_server[0m[0m
+[behavior_server-5] [INFO] [1791621644.975795682] [robot1.behavior_server]: Configuring
+[behavior_server-5] [INFO] [1791621645.080661465] [robot1.behavior_server]: Creating behavior plugin spin of type nav2_behaviors::Spin
+[behavior_server-5] [INFO] [1791621645.088551818] [robot1.behavior_server]: Creating behavior plugin backup of type nav2_behaviors::BackUp
+[behavior_server-5] [INFO] [1791621645.101733990] [robot1.behavior_server]: Creating behavior plugin drive_on_heading of type nav2_behaviors::DriveOnHeading
+[behavior_server-5] [INFO] [1791621645.114836208] [robot1.behavior_server]: Creating behavior plugin assisted_teleop of type nav2_behaviors::AssistedTeleop
+[behavior_server-5] [INFO] [1791621645.131116898] [robot1.behavior_server]: Creating behavior plugin wait of type nav2_behaviors::Wait
+[behavior_server-5] [INFO] [1791621645.166651047] [robot1.behavior_server]: Configuring spin
+[behavior_server-5] [INFO] [1791621645.220247444] [robot1.behavior_server]: Configuring backup
+[behavior_server-5] [INFO] [1791621645.261131570] [robot1.behavior_server]: Configuring drive_on_heading
+[behavior_server-5] [INFO] [1791621645.322074426] [robot1.behavior_server]: Configuring assisted_teleop
+[behavior_server-5] [INFO] [1791621645.396626729] [robot1.behavior_server]: Configuring wait
+[lifecycle_manager-11] [INFO] [1791621645.454538744] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring velocity_smoother[0m[0m
+[velocity_smoother-8] [INFO] [1791621645.458449768] [robot1.velocity_smoother]: Configuring velocity smoother
+[lifecycle_manager-11] [INFO] [1791621645.519445738] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring collision_monitor[0m[0m
+[collision_monitor-9] [INFO] [1791621645.521917093] [robot1.collision_monitor]: Configuring
+[collision_monitor-9] [INFO] [1791621645.570609148] [collision_monitor]: [scan]: Creating Scan
+[collision_monitor-9] [INFO] [1791621645.582933686] [collision_monitor]: [FootprintApproach]: Creating Polygon
+[collision_monitor-9] [INFO] [1791621645.584104347] [collision_monitor]: [FootprintApproach]: Polygon points are not defined. Using dynamic subscription instead.
+[collision_monitor-9] [INFO] [1791621645.587701791] [collision_monitor]: [FootprintApproach]: Making footprint subscriber on local_costmap/published_footprint topic
+[lifecycle_manager-11] [INFO] [1791621645.648631337] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring bt_navigator[0m[0m
+[bt_navigator-6] [INFO] [1791621645.649602248] [robot1.bt_navigator]: Configuring
+[bt_navigator-6] [INFO] [1791621645.687686532] [robot1.bt_navigator]: Creating navigator id navigate_to_pose of type nav2_bt_navigator::NavigateToPoseNavigator
+[bt_navigator-6] [INFO] [1791621645.955045627] [robot1.bt_navigator]: Creating navigator id navigate_through_poses of type nav2_bt_navigator::NavigateThroughPosesNavigator
+[lifecycle_manager-11] [INFO] [1791621646.118724414] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring waypoint_follower[0m[0m
+[waypoint_follower-7] [INFO] [1791621646.120121187] [robot1.waypoint_follower]: Configuring
+[waypoint_follower-7] [INFO] [1791621646.242688816] [robot1.waypoint_follower]: Created waypoint_task_executor : wait_at_waypoint of type nav2_waypoint_follower::WaitAtWaypoint
+[lifecycle_manager-11] [INFO] [1791621646.248244682] [robot1.lifecycle_manager_navigation]: [34m[1mConfiguring docking_server[0m[0m
+[opennav_docking-10] [INFO] [1791621646.249225471] [robot1.docking_server]: Configuring docking_server
+[opennav_docking-10] [INFO] [1791621646.249284367] [robot1.docking_server]: Controller frequency set to 50.0000Hz
+[opennav_docking-10] [INFO] [1791621646.364189411] [robot1.docking_server]: Created charging dock plugin simple_charging_dock of type opennav_docking::SimpleChargingDock
+[opennav_docking-10] [WARN] [1791621646.401752886] [robot1.docking_server]: Dock database filepath nor dock parameters set. Docking actions can only be executed specifying the dock pose via the action request. Or update the dock database via the reload_database service.
+[opennav_docking-10] [INFO] [1791621646.403604736] [robot1.docking_server]: Docking Server has 1 dock types and 0 dock instances available.
+[lifecycle_manager-11] [INFO] [1791621646.421783020] [robot1.lifecycle_manager_navigation]: [34m[1mActivating controller_server[0m[0m
+[controller_server-1] [INFO] [1791621646.423143574] [robot1.controller_server]: Activating
+[controller_server-1] [INFO] [1791621646.423194058] [robot1.local_costmap.local_costmap]: Activating
+[controller_server-1] [INFO] [1791621646.423201711] [robot1.local_costmap.local_costmap]: Checking transform
+[controller_server-1] [INFO] [1791621646.423440668] [robot1.local_costmap.local_costmap]: start
+[controller_server-1] [INFO] [1791621646.665853651] [robot1.controller_server]: Creating bond (controller_server) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621646.891385016] [robot1.lifecycle_manager_navigation]: Server controller_server connected with bond.
+[lifecycle_manager-11] [INFO] [1791621646.891465392] [robot1.lifecycle_manager_navigation]: [34m[1mActivating smoother_server[0m[0m
+[smoother_server-2] [INFO] [1791621646.893003296] [robot1.smoother_server]: Activating
+[smoother_server-2] [INFO] [1791621646.893051447] [robot1.smoother_server]: Creating bond (smoother_server) to lifecycle manager.
+[bt_navigator-6] [INFO] [1791621646.912733696] [robot1.bt_navigator]: Action server is inactive. Rejecting the goal.
+[boo_controller_node-12] [INFO] [1791621646.917142586] [robot1.boo_controller]: Nav2 목표 1 결과: REJECTED
+[lifecycle_manager-11] [INFO] [1791621647.008107237] [robot1.lifecycle_manager_navigation]: Server smoother_server connected with bond.
+[lifecycle_manager-11] [INFO] [1791621647.008181566] [robot1.lifecycle_manager_navigation]: [34m[1mActivating planner_server[0m[0m
+[planner_server-3] [INFO] [1791621647.009621838] [robot1.planner_server]: Activating
+[planner_server-3] [INFO] [1791621647.009672875] [robot1.global_costmap.global_costmap]: Activating
+[planner_server-3] [INFO] [1791621647.009681048] [robot1.global_costmap.global_costmap]: Checking transform
+[planner_server-3] [INFO] [1791621647.009775166] [robot1.global_costmap.global_costmap]: Timed out waiting for transform from base_link to map to become available, tf error: Lookup would require extrapolation into the past.  Requested time 111.900000 but the earliest data is at time 112.504000, when looking up transform from frame [base_link] to frame [map]
+[planner_server-3] [INFO] [1791621647.509819141] [robot1.global_costmap.global_costmap]: Timed out waiting for transform from base_link to map to become available, tf error: Lookup would require extrapolation into the past.  Requested time 112.206000 but the earliest data is at time 112.504000, when looking up transform from frame [base_link] to frame [map]
+[planner_server-3] [INFO] [1791621648.009787718] [robot1.global_costmap.global_costmap]: Timed out waiting for transform from base_link to map to become available, tf error: Lookup would require extrapolation into the past.  Requested time 112.386000 but the earliest data is at time 112.504000, when looking up transform from frame [base_link] to frame [map]
+[bt_navigator-6] [INFO] [1791621648.013591996] [robot1.bt_navigator]: Action server is inactive. Rejecting the goal.
+[boo_controller_node-12] [INFO] [1791621648.014488979] [robot1.boo_controller]: Nav2 목표 2 결과: REJECTED
+[planner_server-3] [INFO] [1791621648.509928565] [robot1.global_costmap.global_costmap]: start
+[bt_navigator-6] [INFO] [1791621648.753053197] [robot1.bt_navigator]: Action server is inactive. Rejecting the goal.
+[boo_controller_node-12] [INFO] [1791621648.753696062] [robot1.boo_controller]: Nav2 목표 3 결과: REJECTED
+[planner_server-3] [INFO] [1791621649.518212353] [robot1.planner_server]: Activating plugin GridBased of type NavfnPlanner
+[planner_server-3] [INFO] [1791621649.525538043] [robot1.planner_server]: Creating bond (planner_server) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621649.645445684] [robot1.lifecycle_manager_navigation]: Server planner_server connected with bond.
+[lifecycle_manager-11] [INFO] [1791621649.645494537] [robot1.lifecycle_manager_navigation]: [34m[1mActivating route_server[0m[0m
+[route_server-4] [INFO] [1791621649.646323085] [robot1.route_server]: Activating
+[route_server-4] [INFO] [1791621649.646458334] [robot1.route_server]: Creating bond (route_server) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621649.758613631] [robot1.lifecycle_manager_navigation]: Server route_server connected with bond.
+[lifecycle_manager-11] [INFO] [1791621649.758660228] [robot1.lifecycle_manager_navigation]: [34m[1mActivating behavior_server[0m[0m
+[behavior_server-5] [INFO] [1791621649.759540537] [robot1.behavior_server]: Activating
+[behavior_server-5] [INFO] [1791621649.759578126] [robot1.behavior_server]: Activating spin
+[behavior_server-5] [INFO] [1791621649.759592977] [robot1.behavior_server]: Activating backup
+[behavior_server-5] [INFO] [1791621649.759604128] [robot1.behavior_server]: Activating drive_on_heading
+[behavior_server-5] [INFO] [1791621649.759617216] [robot1.behavior_server]: Activating assisted_teleop
+[behavior_server-5] [INFO] [1791621649.759630541] [robot1.behavior_server]: Activating wait
+[behavior_server-5] [INFO] [1791621649.759660197] [robot1.behavior_server]: Creating bond (behavior_server) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621649.879301177] [robot1.lifecycle_manager_navigation]: Server behavior_server connected with bond.
+[lifecycle_manager-11] [INFO] [1791621649.879361487] [robot1.lifecycle_manager_navigation]: [34m[1mActivating velocity_smoother[0m[0m
+[velocity_smoother-8] [INFO] [1791621649.880671907] [robot1.velocity_smoother]: Activating
+[velocity_smoother-8] [INFO] [1791621649.880746240] [robot1.velocity_smoother]: Creating bond (velocity_smoother) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621650.000862555] [robot1.lifecycle_manager_navigation]: Server velocity_smoother connected with bond.
+[lifecycle_manager-11] [INFO] [1791621650.000926574] [robot1.lifecycle_manager_navigation]: [34m[1mActivating collision_monitor[0m[0m
+[collision_monitor-9] [INFO] [1791621650.001994827] [robot1.collision_monitor]: Activating
+[collision_monitor-9] [INFO] [1791621650.002037528] [robot1.collision_monitor]: Creating bond (collision_monitor) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621650.117158158] [robot1.lifecycle_manager_navigation]: Server collision_monitor connected with bond.
+[lifecycle_manager-11] [INFO] [1791621650.117224301] [robot1.lifecycle_manager_navigation]: [34m[1mActivating bt_navigator[0m[0m
+[bt_navigator-6] [INFO] [1791621650.118724558] [robot1.bt_navigator]: Activating
+[bt_navigator-6] [INFO] [1791621650.536177021] [robot1.bt_navigator]: Creating bond (bt_navigator) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621650.649420343] [robot1.lifecycle_manager_navigation]: Server bt_navigator connected with bond.
+[lifecycle_manager-11] [INFO] [1791621650.649471014] [robot1.lifecycle_manager_navigation]: [34m[1mActivating waypoint_follower[0m[0m
+[waypoint_follower-7] [INFO] [1791621650.650753603] [robot1.waypoint_follower]: Activating
+[waypoint_follower-7] [INFO] [1791621650.650798355] [robot1.waypoint_follower]: Creating bond (waypoint_follower) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621650.763359689] [robot1.lifecycle_manager_navigation]: Server waypoint_follower connected with bond.
+[lifecycle_manager-11] [INFO] [1791621650.763409841] [robot1.lifecycle_manager_navigation]: [34m[1mActivating docking_server[0m[0m
+[opennav_docking-10] [INFO] [1791621650.764925814] [robot1.docking_server]: Activating docking_server
+[opennav_docking-10] [INFO] [1791621650.806548107] [robot1.docking_server]: Creating bond (docking_server) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791621650.917254327] [robot1.lifecycle_manager_navigation]: Server docking_server connected with bond.
+[lifecycle_manager-11] [INFO] [1791621650.917296906] [robot1.lifecycle_manager_navigation]: [34m[1mManaged nodes are active[0m[0m
+[lifecycle_manager-11] [INFO] [1791621650.917302916] [robot1.lifecycle_manager_navigation]: [34m[1mCreating bond timer...[0m[0m
+[bt_navigator-6] [INFO] [1791621656.483384298] [robot1.bt_navigator]: Begin navigating from current location (-3.05, -3.59) to (-3.00, -0.75)
+[controller_server-1] [INFO] [1791621656.504564844] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [WARN] [1791621656.504618684] [robot1.controller_server]: No goal checker was specified in parameter 'current_goal_checker'. Server will use only plugin loaded general_goal_checker . This warning will appear once.
+[controller_server-1] [WARN] [1791621656.504633959] [robot1.controller_server]: No progress checker was specified in parameter 'current_progress_checker'. Server will use only plugin loaded progress_checker . This warning will appear once.
+[controller_server-1] [INFO] [1791621657.554863320] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621658.604848503] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621659.604870050] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621660.654862215] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621661.654844197] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621662.704838060] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621663.704843581] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621664.754850605] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621665.754834011] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621666.804851092] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621667.804860272] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621668.804836429] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621669.854842708] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621670.854841059] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621671.904854034] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621672.904844260] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621673.954836638] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621674.954849077] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621676.004844648] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621677.004837675] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621678.054844922] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621679.054838280] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621680.104845410] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621681.104840157] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621682.154849805] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621683.154836527] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621684.204839298] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621685.204846105] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621686.254859231] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621687.254838944] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621688.304845145] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621689.304852064] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621690.354847346] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621691.354844125] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621692.404839083] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621693.404833400] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621694.454841604] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621695.454845499] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621695.854908125] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791621695.883916112] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791621695.884438108] [robot1.boo_controller]: Nav2 목표 4 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791621695.967770170] [robot1.bt_navigator]: Begin navigating from current location (-2.99, -0.97) to (-3.00, -3.25)
+[controller_server-1] [INFO] [1791621695.988562234] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621697.039197746] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621698.038862925] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621699.088846545] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621700.138857153] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621701.138850311] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621702.188849373] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621703.188852380] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621704.188804126] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621705.238849413] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621706.238844514] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621707.288872288] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621708.339034957] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621709.338896243] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621710.388848568] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621711.388849677] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621712.438848964] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621713.438872653] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621714.488854864] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621715.488848923] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621716.538861901] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621717.538936394] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621718.588852842] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621719.588861522] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621720.638848672] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621721.638849913] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621722.638848963] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621723.688905021] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621724.688859650] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621725.038892671] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791621725.068129948] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791621725.069355775] [robot1.boo_controller]: Nav2 목표 5 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791621725.183059436] [robot1.bt_navigator]: Begin navigating from current location (-3.05, -3.02) to (-3.00, -0.75)
+[controller_server-1] [INFO] [1791621725.194088966] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621726.244379632] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621727.294339430] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621728.294379361] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621729.344375283] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621730.344393537] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621731.394375873] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621732.394365613] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621733.444366614] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621734.444386931] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621735.494365590] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621736.494386968] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621737.544371757] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621738.544365688] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621739.544366060] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621740.594378519] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621741.644558332] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621742.644373646] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621743.644363957] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621744.694375850] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621745.694363489] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621746.744375016] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621747.794374415] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621748.794367413] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621749.844383428] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621750.844369562] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621751.894389085] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621752.894376426] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621753.944380016] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621754.944378840] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621755.494441683] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791621755.523440572] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791621755.524210296] [robot1.boo_controller]: Nav2 목표 6 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791621755.529824439] [robot1.bt_navigator]: Begin navigating from current location (-2.97, -0.99) to (-3.00, -3.25)
+[controller_server-1] [INFO] [1791621755.550446074] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621756.600713912] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621757.650697957] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621758.650716092] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621759.650698309] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621760.700704868] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621761.700695241] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621762.750704929] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621763.750707409] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621764.750799054] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621765.800699527] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621766.850697184] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621767.850695238] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621768.900702982] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621769.900712469] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621770.950695561] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621771.950698446] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621773.000693447] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621774.000696464] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621774.466878939] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791621774.524757516] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [WARN] [1791621775.003960444] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791621775.066129717] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [INFO] [1791621775.066206686] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621775.253454576] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791621775.455693102] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791621776.056109271] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621776.118712280] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791621776.585385635] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [WARN] [1791621776.749882876] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [INFO] [1791621777.100345431] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621777.800004913] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [INFO] [1791621778.104525275] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621778.328853549] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [WARN] [1791621778.380339506] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [INFO] [1791621779.130502852] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621780.180911897] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621781.180502692] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621782.180496075] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621783.231170943] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621784.280502347] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621785.280512831] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621786.330517705] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621787.330517999] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621788.380489858] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621789.380487788] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621790.430512714] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621791.430489168] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621792.180543512] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791621792.203034835] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791621792.203806517] [robot1.boo_controller]: Nav2 목표 7 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791621792.287393701] [robot1.bt_navigator]: Begin navigating from current location (-3.06, -3.02) to (-3.00, -0.75)
+[controller_server-1] [INFO] [1791621792.308074040] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621793.358301098] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621794.408300454] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621795.408386137] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621796.458327661] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621797.458299628] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621798.508292608] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621799.508297079] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621800.558306058] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621801.558307519] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621802.608423220] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621803.608306812] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621804.658297125] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621805.658297941] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621806.708310504] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621807.708835924] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621808.758426995] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621809.758298386] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621810.808299733] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621811.808300813] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621812.858310649] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621813.858298594] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621814.908304000] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621815.908294420] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621816.958310674] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621817.958308268] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621819.008299623] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621820.008317363] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621821.008299025] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621822.058303143] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621822.758368498] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791621822.788116355] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791621822.788750789] [robot1.boo_controller]: Nav2 목표 8 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791621822.932707237] [robot1.bt_navigator]: Begin navigating from current location (-3.00, -0.99) to (-3.00, -3.25)
+[controller_server-1] [INFO] [1791621822.953389358] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621824.003667650] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621825.053686083] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621826.053665507] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621827.053664002] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621828.103675956] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621829.153684008] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621830.153676700] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621831.203669220] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621832.203672560] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621833.253818737] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621834.253675732] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621835.303675066] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621836.303674019] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621837.353689465] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621838.353677677] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621839.403755419] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621840.403668906] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621841.453680887] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621842.453673804] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621843.503667745] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621844.503680287] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621845.553671049] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621846.553675277] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621847.553676984] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621848.603670271] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621849.603667399] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621850.653669121] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621851.653667815] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621852.703673761] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621853.703676031] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621854.753678516] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621855.303726879] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791621855.333058362] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791621855.334000970] [robot1.boo_controller]: Nav2 목표 9 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791621855.343947434] [robot1.bt_navigator]: Begin navigating from current location (-3.06, -3.01) to (-3.00, -0.75)
+[controller_server-1] [INFO] [1791621855.364695043] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621856.414927093] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621857.464933342] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621858.464939383] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621859.464942317] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621860.514927902] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621861.565040253] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621862.564934840] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621863.564941756] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621864.614937818] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621865.614932422] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621866.664929100] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621867.664926143] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621868.714940853] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621869.714931040] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621870.764959085] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621871.764953674] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621872.814960032] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621873.814927089] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621874.864936726] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621875.864927718] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621876.914929152] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621877.914952891] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621878.964925321] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621879.964928150] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621880.964935198] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621882.014932424] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621883.014935471] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621884.064929517] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621885.064927696] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621886.064925619] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621886.414985192] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791621886.444335858] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791621886.444827150] [robot1.boo_controller]: Nav2 목표 10 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791621886.473381323] [robot1.bt_navigator]: Begin navigating from current location (-3.00, -0.99) to (-3.00, -3.25)
+[controller_server-1] [INFO] [1791621886.484223150] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621887.534446880] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621888.584424675] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621889.584422766] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621890.634445043] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621891.634442575] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621892.684423501] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621893.684419196] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621894.734427052] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621895.734418180] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621896.784420537] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621897.784427241] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621898.834442913] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621899.834434225] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621900.884593494] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621901.884438187] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621902.884434100] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621903.934616277] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621904.934533209] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621905.407617670] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791621905.722735639] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791621905.978886327] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621906.448734089] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 83.3333 Hz.
+[controller_server-1] [INFO] [1791621906.998886751] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621907.553692936] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 166.6667 Hz.
+[controller_server-1] [INFO] [1791621908.010091799] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621908.075731855] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791621908.144858787] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791621908.202119157] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791621909.052366187] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621909.329820159] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 83.3333 Hz.
+[controller_server-1] [INFO] [1791621910.089092223] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621910.397499915] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791621911.097661672] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621912.097674608] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791621912.459000340] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 83.3333 Hz.
+[boo_controller_node-12] [INFO] [1791621912.769063508] [robot1.boo_controller]: Nav2 목표 취소: 펌킨 발견
+[boo_controller_node-12] [INFO] [1791621912.769912317] [robot1.boo_controller]: 상태 PATROL → SUSPECT: 펌킨 발견
+[bt_navigator-6] [ERROR] [1791621912.790719515] [robot1.bt_navigator_navigate_to_pose_rclcpp_node]: Failed to get result for follow_path in node halt!
+[bt_navigator-6] [INFO] [1791621912.790926527] [robot1.bt_navigator]: [navigate_to_pose] [ActionServer] Client requested to cancel the goal. Cancelling.
+[bt_navigator-6] [INFO] [1791621912.791193543] [robot1.bt_navigator]: Goal canceled
+[boo_controller_node-12] [INFO] [1791621912.792520815] [robot1.boo_controller]: Nav2 목표 11 결과: CANCELED
+[controller_server-1] [INFO] [1791621912.809151760] [robot1.controller_server]: Cancellation was successful. Stopping the robot.
+[controller_server-1] [INFO] [1791621912.809223156] [robot1.controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[bt_navigator-6] [INFO] [1791621917.934374468] [robot1.bt_navigator]: Begin navigating from current location (-2.96, -2.07) to (-2.75, -0.50)
+[boo_controller_node-12] [INFO] [1791621917.934576207] [robot1.boo_controller]: 상태 SUSPECT → CHASE: 의심 게이지 가득
+[controller_server-1] [INFO] [1791621917.955009056] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621919.005539366] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621920.055462020] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621921.055483043] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621922.105326465] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621923.105318126] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621924.155304381] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621925.155840461] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621926.155341610] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621927.205338654] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621928.205325410] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621929.255352568] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621930.255312338] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621931.305315880] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621932.305308028] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621933.355306858] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621934.355322048] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621935.405307688] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621936.405313831] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621937.455338212] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621938.455349988] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621939.505310175] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621940.505307957] [robot1.controller_server]: Passing new path to controller.
+[bt_navigator-6] [ERROR] [1791621940.854829925] [robot1.bt_navigator_navigate_to_pose_rclcpp_node]: Failed to get result for follow_path in node halt!
+[bt_navigator-6] [INFO] [1791621940.854988757] [robot1.bt_navigator]: [navigate_to_pose] [ActionServer] Client requested to cancel the goal. Cancelling.
+[bt_navigator-6] [INFO] [1791621940.855130781] [robot1.bt_navigator]: Goal canceled
+[controller_server-1] [INFO] [1791621940.855314468] [robot1.controller_server]: Cancellation was successful. Stopping the robot.
+[controller_server-1] [INFO] [1791621940.855351882] [robot1.controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[boo_controller_node-12] [INFO] [1791621940.856252798] [robot1.boo_controller]: Nav2 목표 12 결과: CANCELED
+[boo_controller_node-12] [INFO] [1791621981.908562892] [robot1.boo_controller]: 상태 CHASE → SEARCH: 펌킨을 놓침
+[boo_controller_node-12] [INFO] [1791621982.051105827] [robot1.boo_controller]: 상태 SEARCH → PATROL: 수색 종료
+[bt_navigator-6] [INFO] [1791621982.193720292] [robot1.bt_navigator]: Begin navigating from current location (-2.94, -0.82) to (-3.00, -3.25)
+[controller_server-1] [INFO] [1791621982.214574942] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791621983.264836494] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621984.314832523] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621985.314834046] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621986.364829226] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621987.364828631] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621988.414826668] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621989.414830707] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621990.464835026] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621991.464842938] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621992.514837492] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621993.514845974] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621994.564826358] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621995.564842787] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621996.614829047] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621997.614825615] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621998.664836730] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791621999.664824700] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622000.714828775] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622001.714829629] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622002.764835344] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622003.764840485] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622004.814831412] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622005.814854705] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622006.864830023] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622007.864834046] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622008.914823213] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622009.914827004] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622010.964842073] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622011.964835181] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622013.065226798] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791622013.375978070] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791622014.076123352] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622015.126126030] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622016.126133509] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622017.126107497] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791622017.712683300] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is 83.3333 Hz.
+[controller_server-1] [INFO] [1791622018.164243347] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791622018.538039268] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622018.649469819] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791622018.850095522] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791622018.925281710] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791622018.929991877] [robot1.boo_controller]: Nav2 목표 13 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791622019.748452288] [robot1.bt_navigator]: Begin navigating from current location (-3.02, -3.01) to (-3.00, -0.75)
+[controller_server-1] [INFO] [1791622019.755579178] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791622020.807263487] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622021.807284647] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622022.857439563] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622023.857388182] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622024.907251759] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622025.907514447] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622026.957247118] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622027.957280336] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622029.007251295] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622030.007249039] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622031.007247665] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622032.057247278] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622033.057250657] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622034.107247574] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622035.107251165] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622036.157266276] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622037.157250068] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622038.207248072] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622039.207257196] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622040.207258212] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622041.257250063] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622042.307256605] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622043.308102855] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622044.357256181] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622045.357253652] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622046.407252104] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622047.407247386] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622048.407253255] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622049.457249152] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622050.457410079] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622051.507251422] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791622052.026827069] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622052.117972483] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622052.218872983] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622052.296439255] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791622052.547002044] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791622052.751103414] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622052.808912616] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622052.962282638] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622053.198855001] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791622053.549459466] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622054.549017801] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622055.599088992] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [WARN] [1791622056.105805779] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [WARN] [1791622056.365983664] [robot1.controller_server]: Control loop missed its desired rate of 20.0000 Hz. Current loop rate is inf Hz.
+[controller_server-1] [INFO] [1791622056.617894409] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622057.666317238] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622058.666148666] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622059.366212220] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791622059.391594566] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791622059.393036425] [robot1.boo_controller]: Nav2 목표 14 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791622059.442125451] [robot1.bt_navigator]: Begin navigating from current location (-3.00, -0.99) to (-3.00, -3.25)
+[controller_server-1] [INFO] [1791622059.462975585] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791622060.513753051] [robot1.controller_server]: Passing new path to controller.
+[boo_controller_node-12] [INFO] [1791622060.963447323] [robot1.boo_controller]: Nav2 목표 취소: 펌킨 발견
+[boo_controller_node-12] [INFO] [1791622060.964259391] [robot1.boo_controller]: 상태 PATROL → SUSPECT: 펌킨 발견
+[bt_navigator-6] [ERROR] [1791622060.985292749] [robot1.bt_navigator_navigate_to_pose_rclcpp_node]: Failed to get result for follow_path in node halt!
+[bt_navigator-6] [INFO] [1791622060.985505937] [robot1.bt_navigator]: [navigate_to_pose] [ActionServer] Client requested to cancel the goal. Cancelling.
+[bt_navigator-6] [INFO] [1791622060.985703464] [robot1.bt_navigator]: Goal canceled
+[boo_controller_node-12] [INFO] [1791622060.986648619] [robot1.boo_controller]: Nav2 목표 15 결과: CANCELED
+[controller_server-1] [INFO] [1791622061.013281180] [robot1.controller_server]: Cancellation was successful. Stopping the robot.
+[controller_server-1] [INFO] [1791622061.013351930] [robot1.controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[bt_navigator-6] [INFO] [1791622066.386528475] [robot1.bt_navigator]: Begin navigating from current location (-2.98, -0.97) to (-2.75, -0.50)
+[boo_controller_node-12] [INFO] [1791622066.386653162] [robot1.boo_controller]: 상태 SUSPECT → CHASE: 의심 게이지 가득
+[controller_server-1] [INFO] [1791622066.387839259] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791622067.438040268] [robot1.controller_server]: Passing new path to controller.
+[bt_navigator-6] [ERROR] [1791622068.067226206] [robot1.bt_navigator_navigate_to_pose_rclcpp_node]: Failed to get result for follow_path in node halt!
+[bt_navigator-6] [INFO] [1791622068.067431763] [robot1.bt_navigator]: [navigate_to_pose] [ActionServer] Client requested to cancel the goal. Cancelling.
+[bt_navigator-6] [INFO] [1791622068.067613718] [robot1.bt_navigator]: Goal canceled
+[boo_controller_node-12] [INFO] [1791622068.068580820] [robot1.boo_controller]: Nav2 목표 16 결과: CANCELED
+[controller_server-1] [INFO] [1791622068.088054855] [robot1.controller_server]: Cancellation was successful. Stopping the robot.
+[controller_server-1] [INFO] [1791622068.088105712] [robot1.controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[boo_controller_node-12] [INFO] [1791622101.229148239] [robot1.boo_controller]: 상태 CHASE → SEARCH: 펌킨을 놓침
+[boo_controller_node-12] [INFO] [1791622101.352705234] [robot1.boo_controller]: 상태 SEARCH → PATROL: 수색 종료
+[bt_navigator-6] [INFO] [1791622101.470967931] [robot1.bt_navigator]: Begin navigating from current location (-2.98, -0.83) to (-3.00, -3.25)
+[controller_server-1] [INFO] [1791622101.491654836] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791622102.541906883] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622103.541895464] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622104.591923780] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622105.641909167] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622106.641904783] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622107.691897068] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622108.691923923] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622109.741902554] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622110.741897543] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622111.791898610] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622112.791924530] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622113.841899263] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622114.841905793] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622115.891918376] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622116.891908237] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622117.891901158] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622118.941901438] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622119.941901246] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622120.941910754] [robot1.controller_server]: Passing new path to controller.
+[planner_server-3] [INFO] [1791622121.302605151] [robot1.global_costmap.global_costmap]: Message Filter dropping message: frame 'robot1/turtlebot4/rplidar_link/rplidar' at time 420.066 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[controller_server-1] [INFO] [1791622121.991898587] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622122.991903165] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622123.991890190] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622125.041901673] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622126.041898635] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622127.091907068] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622128.091873015] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622129.141905768] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622130.191957719] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622131.191902344] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622132.191911026] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622133.241899630] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622134.241927789] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622135.291902108] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622136.291916654] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622136.491945049] [robot1.controller_server]: Reached the goal!
+[bt_navigator-6] [INFO] [1791622136.521522048] [robot1.bt_navigator]: Goal succeeded
+[boo_controller_node-12] [INFO] [1791622136.522232128] [robot1.boo_controller]: Nav2 목표 17 결과: SUCCEEDED
+[bt_navigator-6] [INFO] [1791622136.538201587] [robot1.bt_navigator]: Begin navigating from current location (-3.05, -3.01) to (-3.00, -0.75)
+[controller_server-1] [INFO] [1791622136.559042509] [robot1.controller_server]: Received a goal, begin computing control effort.
+[controller_server-1] [INFO] [1791622137.609334198] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622138.609321703] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622139.659312406] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622140.659307823] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622141.709315128] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622142.709314047] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622143.759311356] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622144.759327257] [robot1.controller_server]: Passing new path to controller.
+[controller_server-1] [INFO] [1791622145.809307532] [robot1.controller_server]: Passing new path to controller.
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[velocity_smoother-8] [INFO] [1791622146.265908053] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[velocity_smoother-8] [INFO] [1791622146.265997157] [robot1.velocity_smoother]: Running Nav2 LifecycleNode rcl preshutdown (velocity_smoother)
+[velocity_smoother-8] [INFO] [1791622146.266047709] [robot1.velocity_smoother]: Deactivating
+[velocity_smoother-8] [INFO] [1791622146.266062595] [robot1.velocity_smoother]: Destroying bond (velocity_smoother) to lifecycle manager.
+[route_server-4] [INFO] [1791622146.265908111] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[route_server-4] [INFO] [1791622146.266010750] [robot1.route_server]: Running Nav2 LifecycleNode rcl preshutdown (route_server)
+[route_server-4] [INFO] [1791622146.266056781] [robot1.route_server]: Deactivating
+[route_server-4] [INFO] [1791622146.266070676] [robot1.route_server]: Destroying bond (route_server) to lifecycle manager.
+[planner_server-3] [INFO] [1791622146.265937932] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[planner_server-3] [INFO] [1791622146.265996567] [robot1.planner_server]: Running Nav2 LifecycleNode rcl preshutdown (planner_server)
+[planner_server-3] [INFO] [1791622146.266048830] [robot1.planner_server]: Deactivating
+[planner_server-3] [INFO] [1791622146.266070872] [robot1.global_costmap.global_costmap]: Deactivating
+[collision_monitor-9] [INFO] [1791622146.265921207] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[collision_monitor-9] [INFO] [1791622146.266061938] [robot1.collision_monitor]: Running Nav2 LifecycleNode rcl preshutdown (collision_monitor)
+[collision_monitor-9] [INFO] [1791622146.266143249] [robot1.collision_monitor]: Deactivating
+[collision_monitor-9] [INFO] [1791622146.266172213] [robot1.collision_monitor]: Destroying bond (collision_monitor) to lifecycle manager.
+[behavior_server-5] [INFO] [1791622146.265925360] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[behavior_server-5] [INFO] [1791622146.266062143] [robot1.behavior_server]: Running Nav2 LifecycleNode rcl preshutdown (behavior_server)
+[behavior_server-5] [INFO] [1791622146.266143143] [robot1.behavior_server]: Deactivating
+[behavior_server-5] [INFO] [1791622146.266183306] [robot1.behavior_server]: Destroying bond (behavior_server) to lifecycle manager.
+[lifecycle_manager-11] [INFO] [1791622146.265939795] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[lifecycle_manager-11] [INFO] [1791622146.266009122] [robot1.lifecycle_manager_navigation]: Running Nav2 LifecycleManager rcl preshutdown (lifecycle_manager_navigation)
+[lifecycle_manager-11] [INFO] [1791622146.266034859] [robot1.lifecycle_manager_navigation]: [34m[1mTerminating bond timer...[0m[0m
+[bt_navigator-6] [INFO] [1791622146.266116191] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[bt_navigator-6] [INFO] [1791622146.266175382] [robot1.bt_navigator]: Running Nav2 LifecycleNode rcl preshutdown (bt_navigator)
+[bt_navigator-6] [INFO] [1791622146.266213608] [robot1.bt_navigator]: Deactivating
+[bt_navigator-6] [WARN] [1791622146.266230517] [robot1.bt_navigator]: [navigate_to_pose] [ActionServer] Requested to deactivate server but goal is still executing. Should check if action server is running before deactivating.
+[opennav_docking-10] [INFO] [1791622146.266183695] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[opennav_docking-10] [INFO] [1791622146.266293806] [robot1.docking_server]: Running Nav2 LifecycleNode rcl preshutdown (docking_server)
+[opennav_docking-10] [INFO] [1791622146.266359654] [robot1.docking_server]: Deactivating docking_server
+[smoother_server-2] [INFO] [1791622146.266281565] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[smoother_server-2] [INFO] [1791622146.266374700] [robot1.smoother_server]: Running Nav2 LifecycleNode rcl preshutdown (smoother_server)
+[smoother_server-2] [INFO] [1791622146.266451717] [robot1.smoother_server]: Deactivating
+[smoother_server-2] [INFO] [1791622146.266477047] [robot1.smoother_server]: Destroying bond (smoother_server) to lifecycle manager.
+[controller_server-1] [INFO] [1791622146.266522788] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[controller_server-1] [INFO] [1791622146.266650144] [robot1.controller_server]: Running Nav2 LifecycleNode rcl preshutdown (controller_server)
+[controller_server-1] [INFO] [1791622146.266732439] [robot1.controller_server]: Deactivating
+[controller_server-1] [WARN] [1791622146.266760976] [robot1.controller_server]: [follow_path] [ActionServer] Requested to deactivate server but goal is still executing. Should check if action server is running before deactivating.
+[waypoint_follower-7] [INFO] [1791622146.267010158] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[waypoint_follower-7] [INFO] [1791622146.267113556] [robot1.waypoint_follower]: Running Nav2 LifecycleNode rcl preshutdown (waypoint_follower)
+[waypoint_follower-7] [INFO] [1791622146.267173135] [robot1.waypoint_follower]: Deactivating
+[waypoint_follower-7] [INFO] [1791622146.267198179] [robot1.waypoint_follower]: Destroying bond (waypoint_follower) to lifecycle manager.
+[route_server-4] [INFO] [1791622146.276822975] [robot1.route_server]: Cleaning up
+[velocity_smoother-8] [INFO] [1791622146.277371648] [robot1.velocity_smoother]: Cleaning up
+[velocity_smoother-8] [INFO] [1791622146.277421762] [robot1.velocity_smoother]: Destroying bond (velocity_smoother) to lifecycle manager.
+[collision_monitor-9] [INFO] [1791622146.287561082] [robot1.collision_monitor]: Cleaning up
+[collision_monitor-9] [INFO] [1791622146.287650340] [collision_monitor]: [FootprintApproach]: Destroying Polygon
+[collision_monitor-9] [INFO] [1791622146.287667158] [collision_monitor]: [scan]: Destroying Scan
+[waypoint_follower-7] [INFO] [1791622146.287582497] [robot1.waypoint_follower]: Cleaning up
+[behavior_server-5] [INFO] [1791622146.288013036] [robot1.behavior_server]: Cleaning up
+[smoother_server-2] [INFO] [1791622146.287470346] [robot1.smoother_server]: Cleaning up
+[bt_navigator-6] [ERROR] [1791622146.290625784] [robot1.bt_navigator_navigate_to_pose_rclcpp_node]: Failed to get result for follow_path in node halt!
+[bt_navigator-6] [WARN] [1791622146.290840176] [robot1.bt_navigator]: [navigate_to_pose] [ActionServer] Aborting handle.
+[bt_navigator-6] [INFO] [1791622146.291684583] [robot1.bt_navigator]: Goal canceled
+[bt_navigator-6] [WARN] [1791622146.291724026] [robot1.bt_navigator]: [navigate_to_pose] [ActionServer] Stopping the thread per request.
+[bt_navigator-6] [INFO] [1791622146.292373812] [robot1.bt_navigator]: Destroying bond (bt_navigator) to lifecycle manager.
+[bt_navigator-6] [INFO] [1791622146.305302886] [robot1.bt_navigator]: Cleaning up
+[controller_server-1] [WARN] [1791622146.309588684] [robot1.controller_server]: [follow_path] [ActionServer] Stopping the thread per request.
+[controller_server-1] [INFO] [1791622146.310213932] [robot1.controller_server]: [follow_path] [ActionServer] Client requested to cancel the goal. Cancelling.
+[controller_server-1] [INFO] [1791622146.310826631] [robot1.local_costmap.local_costmap]: Deactivating
+[collision_monitor-9] [INFO] [1791622146.351958341] [robot1.collision_monitor]: Destroying bond (collision_monitor) to lifecycle manager.
+[opennav_docking-10] [INFO] [1791622146.369365407] [robot1.docking_server]: Destroying bond (docking_server) to lifecycle manager.
+[opennav_docking-10] [INFO] [1791622146.389800128] [robot1.docking_server]: Cleaning up docking_server
+[velocity_smoother-8] [INFO] [1791622146.392974688] [robot1.velocity_smoother]: Destroying
+[controller_server-1] [INFO] [1791622146.423834461] [robot1.controller_server]: Destroying bond (controller_server) to lifecycle manager.
+[controller_server-1] [INFO] [1791622146.449046745] [robot1.controller_server]: Cleaning up
+[controller_server-1] [INFO] [1791622146.449283347] [robot1.local_costmap.local_costmap]: Cleaning up
+[behavior_server-5] [INFO] [1791622146.477185457] [robot1.behavior_server]: Destroying bond (behavior_server) to lifecycle manager.
+[collision_monitor-9] [INFO] [1791622146.505182115] [robot1.collision_monitor]: Destroying
+[planner_server-3] [INFO] [1791622146.516317411] [robot1.planner_server]: Deactivating plugin GridBased of type NavfnPlanner
+[planner_server-3] [INFO] [1791622146.516388507] [robot1.planner_server]: Destroying bond (planner_server) to lifecycle manager.
+[smoother_server-2] [INFO] [1791622146.535517935] [robot1.smoother_server]: Destroying bond (smoother_server) to lifecycle manager.
+[planner_server-3] [INFO] [1791622146.537426720] [robot1.planner_server]: Cleaning up
+[route_server-4] [INFO] [1791622146.577416099] [robot1.route_server]: Destroying bond (route_server) to lifecycle manager.
+[waypoint_follower-7] [INFO] [1791622146.585629836] [robot1.waypoint_follower]: Destroying bond (waypoint_follower) to lifecycle manager.
+[boo_controller_node-12] Traceback (most recent call last):
+[boo_controller_node-12]   File "/home/mu-01/Trick_or_Bot/ros2_ws/install/tob_control/lib/tob_control/boo_controller_node", line 33, in <module>
+[boo_controller_node-12]     sys.exit(load_entry_point('tob-control', 'console_scripts', 'boo_controller_node')())
+[boo_controller_node-12]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[boo_controller_node-12]   File "/home/mu-01/Trick_or_Bot/ros2_ws/build/tob_control/tob_control/boo_controller_node.py", line 279, in main
+[boo_controller_node-12]     rclpy.spin(node)
+[boo_controller_node-12]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+[boo_controller_node-12]     executor.spin_once()
+[boo_controller_node-12]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+[boo_controller_node-12]     self._spin_once_impl(timeout_sec)
+[boo_controller_node-12]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 918, in _spin_once_impl
+[boo_controller_node-12]     raise handler.exception()
+[boo_controller_node-12]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/task.py", line 286, in _execute_coroutine_step
+[boo_controller_node-12]     result = coro.send(None)
+[boo_controller_node-12]              ^^^^^^^^^^^^^^^
+[boo_controller_node-12]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 584, in handler
+[boo_controller_node-12]     call_coroutine = take_from_wait_list(entity)
+[boo_controller_node-12]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[boo_controller_node-12]   File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 470, in _take_subscription
+[boo_controller_node-12]     msg_info = sub.handle.take_message(sub.msg_type, sub.raw)
+[boo_controller_node-12]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[boo_controller_node-12] RuntimeError: Unable to convert call argument '0' to Python object (#define PYBIND11_DETAILED_ERROR_MESSAGES or compile in debug mode for details)
+[opennav_docking-10] [INFO] [1791622146.744826181] [robot1.docking_server]: Destroying bond (docking_server) to lifecycle manager.
+[smoother_server-2] [INFO] [1791622146.745230370] [robot1.smoother_server]: Destroying
+[route_server-4] [INFO] [1791622146.864847058] [robot1.route_server]: Destroying
+[waypoint_follower-7] [INFO] [1791622146.911513495] [robot1.waypoint_follower]: Destroying
+[opennav_docking-10] [INFO] [1791622147.071552807] [robot1.docking_server]: Destroying
+[planner_server-3] [INFO] [1791622147.130576866] [robot1.global_costmap.global_costmap]: Cleaning up
+[INFO] [collision_monitor-9]: process has finished cleanly [pid 197873]
+[INFO] [velocity_smoother-8]: process has finished cleanly [pid 197872]
+[ERROR] [boo_controller_node-12]: process has died [pid 197876, exit code 1, cmd '/home/mu-01/Trick_or_Bot/ros2_ws/install/tob_control/lib/tob_control/boo_controller_node --ros-args -r __ns:=/robot1 --params-file /home/mu-01/Trick_or_Bot/boo_nav/config/control_sim.yaml --params-file /tmp/launch_params_x5rzxyxk'].
+[planner_server-3] [INFO] [1791622147.363271828] [robot1.planner_server]: Cleaning up plugin GridBased of type NavfnPlanner
+[planner_server-3] [INFO] [1791622147.363552566] [robot1.planner_server]: Destroying plugin GridBased of type NavfnPlanner
+[behavior_server-5] [INFO] [1791622147.451151827] [robot1.behavior_server]: Destroying
+[INFO] [smoother_server-2]: process has finished cleanly [pid 197866]
+[INFO] [waypoint_follower-7]: process has finished cleanly [pid 197871]
+[lifecycle_manager-11] [INFO] [1791622147.543165692] [robot1.lifecycle_manager_navigation]: Destroying lifecycle_manager_navigation
+[INFO] [opennav_docking-10]: process has finished cleanly [pid 197874]
+[controller_server-1] [INFO] [1791622147.593824733] [robot1.controller_server]: Destroying bond (controller_server) to lifecycle manager.
+[INFO] [route_server-4]: process has finished cleanly [pid 197868]
+[controller_server-1] [INFO] [1791622147.676388259] [robot1.local_costmap.local_costmap]: Destroying
+[planner_server-3] [INFO] [1791622147.778530818] [robot1.planner_server]: Destroying bond (planner_server) to lifecycle manager.
+[controller_server-1] [INFO] [1791622147.813441628] [robot1.controller_server]: Destroying
+[INFO] [behavior_server-5]: process has finished cleanly [pid 197869]
+[planner_server-3] [INFO] [1791622147.835275072] [robot1.global_costmap.global_costmap]: Destroying
+[INFO] [lifecycle_manager-11]: process has finished cleanly [pid 197875]
+[planner_server-3] [INFO] [1791622148.013000464] [robot1.planner_server]: Destroying
+[INFO] [controller_server-1]: process has finished cleanly [pid 197865]
+[bt_navigator-6] [INFO] [1791622148.135855801] [robot1.bt_navigator]: Completed Cleaning up
+[bt_navigator-6] [INFO] [1791622148.135922850] [robot1.bt_navigator]: Destroying bond (bt_navigator) to lifecycle manager.
+[bt_navigator-6] [INFO] [1791622148.142481389] [robot1.bt_navigator]: Destroying
+[INFO] [planner_server-3]: process has finished cleanly [pid 197867]
+[INFO] [bt_navigator-6]: process has finished cleanly [pid 197870]
