@@ -4,7 +4,7 @@
 # `pkill -f`는 쓰지 않는다: 입력한 명령 자체와 이름이 겹치면 터미널이 같이 종료된다.
 list() {
   ps -eo pid,args | awk '$2!~/^(\/bin\/bash|bash|grep|awk|ps)/' \
-    | grep -E "/opt/ros/jazzy/(lib|bin)|turtlebot4_ws/install|ros2_ws/install|gz sim|ros_gz|joint_state_publisher|ros2 launch|obs_pub.py|boo_controller_node" \
+    | grep -E "/opt/ros/jazzy/(lib|bin)|turtlebot4_ws/install|ros2_ws/install|gz sim|ros_gz|joint_state_publisher|ros2 launch|obs_pub.py|fake_detector.py|pumpkin_scenario.py|boo_controller_node" \
     | grep -v grep | awk '{print $1}'
 }
 for i in 1 2 3; do P=$(list); [ -z "$P" ] && break; kill $P 2>/dev/null; sleep 3; done

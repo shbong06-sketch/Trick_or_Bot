@@ -1,0 +1,1048 @@
+[INFO] [launch]: All log files can be found below /home/mu-01/.ros/log/2026-10-10-18-07-03-717013-mu-01-204296
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gazebo-1]: process started with pid [204355]
+[INFO] [parameter_bridge-2]: process started with pid [204356]
+[INFO] [spawn_robot1-3]: process started with pid [204357]
+[parameter_bridge-2] [INFO] [1791623223.818123027] [clock_bridge]: Creating GZ->ROS Bridge: [/clock (gz.msgs.Clock) -> /clock (rosgraph_msgs/msg/Clock)] (Lazy 0)
+[spawn_robot1-3] [INFO] [launch]: All log files can be found below /home/mu-01/.ros/log/2026-10-10-18-07-03-946650-mu-01-204357
+[spawn_robot1-3] [INFO] [launch]: Default logging verbosity is set to INFO
+[spawn_robot1-3] [INFO] [robot_state_publisher-1]: process started with pid [204403]
+[spawn_robot1-3] [INFO] [joint_state_publisher-2]: process started with pid [204404]
+[spawn_robot1-3] [INFO] [robot_state_publisher-3]: process started with pid [204405]
+[spawn_robot1-3] [INFO] [static_transform_publisher-4]: process started with pid [204406]
+[spawn_robot1-3] [INFO] [create-5]: process started with pid [204407]
+[spawn_robot1-3] [INFO] [create-6]: process started with pid [204408]
+[spawn_robot1-3] [INFO] [parameter_bridge-7]: process started with pid [204409]
+[spawn_robot1-3] [INFO] [parameter_bridge-8]: process started with pid [204429]
+[spawn_robot1-3] [INFO] [parameter_bridge-9]: process started with pid [204432]
+[spawn_robot1-3] [INFO] [parameter_bridge-10]: process started with pid [204435]
+[spawn_robot1-3] [INFO] [parameter_bridge-11]: process started with pid [204439]
+[spawn_robot1-3] [INFO] [parameter_bridge-12]: process started with pid [204442]
+[spawn_robot1-3] [INFO] [parameter_bridge-13]: process started with pid [204443]
+[spawn_robot1-3] [INFO] [parameter_bridge-14]: process started with pid [204444]
+[spawn_robot1-3] [INFO] [parameter_bridge-15]: process started with pid [204445]
+[spawn_robot1-3] [INFO] [parameter_bridge-16]: process started with pid [204446]
+[spawn_robot1-3] [INFO] [parameter_bridge-17]: process started with pid [204449]
+[spawn_robot1-3] [INFO] [parameter_bridge-18]: process started with pid [204459]
+[spawn_robot1-3] [INFO] [parameter_bridge-19]: process started with pid [204472]
+[spawn_robot1-3] [INFO] [parameter_bridge-20]: process started with pid [204473]
+[spawn_robot1-3] [INFO] [parameter_bridge-21]: process started with pid [204477]
+[spawn_robot1-3] [INFO] [parameter_bridge-22]: process started with pid [204486]
+[spawn_robot1-3] [INFO] [parameter_bridge-23]: process started with pid [204488]
+[spawn_robot1-3] [INFO] [parameter_bridge-24]: process started with pid [204525]
+[spawn_robot1-3] [INFO] [parameter_bridge-25]: process started with pid [204532]
+[spawn_robot1-3] [INFO] [parameter_bridge-26]: process started with pid [204533]
+[spawn_robot1-3] [INFO] [parameter_bridge-27]: process started with pid [204543]
+[spawn_robot1-3] [INFO] [turtlebot4_node-28]: process started with pid [204547]
+[spawn_robot1-3] [INFO] [turtlebot4_gz_hmi_node-29]: process started with pid [204550]
+[spawn_robot1-3] [INFO] [spawner-30]: process started with pid [204553]
+[spawn_robot1-3] [INFO] [static_transform_publisher-31]: process started with pid [204556]
+[spawn_robot1-3] [INFO] [static_transform_publisher-32]: process started with pid [204568]
+[spawn_robot1-3] [INFO] [hazards_vector_publisher-33]: process started with pid [204571]
+[spawn_robot1-3] [INFO] [ir_intensity_vector_publisher-34]: process started with pid [204593]
+[spawn_robot1-3] [INFO] [motion_control-35]: process started with pid [204658]
+[spawn_robot1-3] [INFO] [wheel_status_publisher-36]: process started with pid [204660]
+[spawn_robot1-3] [INFO] [mock_publisher-37]: process started with pid [204670]
+[spawn_robot1-3] [INFO] [robot_state-38]: process started with pid [204695]
+[spawn_robot1-3] [INFO] [kidnap_estimator_publisher-39]: process started with pid [204699]
+[spawn_robot1-3] [INFO] [ui_mgr-40]: process started with pid [204707]
+[spawn_robot1-3] [INFO] [pose_republisher_node-41]: process started with pid [204709]
+[spawn_robot1-3] [INFO] [sensors_node-42]: process started with pid [204713]
+[spawn_robot1-3] [INFO] [interface_buttons_node-43]: process started with pid [204722]
+[spawn_robot1-3] [INFO] [static_transform_publisher-44]: process started with pid [204724]
+[spawn_robot1-3] [INFO] [static_transform_publisher-45]: process started with pid [204742]
+[spawn_robot1-3] [robot_state_publisher-1] [WARN] [1791623224.365264043] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[spawn_robot1-3] [robot_state_publisher-1] [INFO] [1791623224.365540208] [robot1.robot_state_publisher]: Robot initialized
+[spawn_robot1-3] [robot_state_publisher-3] [WARN] [1791623224.371938853] [kdl_parser]: The root link std_dock_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[spawn_robot1-3] [robot_state_publisher-3] [INFO] [1791623224.372098775] [robot1.dock_state_publisher]: Robot initialized
+[spawn_robot1-3] [static_transform_publisher-4] [WARN] [1791623224.320410039] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot1-3] [static_transform_publisher-4] [INFO] [1791623224.333918705] [robot1.tf_odom_std_dock_link_publisher]: Spinning until stopped - publishing transform
+[spawn_robot1-3] [static_transform_publisher-4] translation: ('0.157000', '0.000000', '0.000000')
+[spawn_robot1-3] [static_transform_publisher-4] rotation: ('0.000000', '0.000000', '1.000000', '0.000000')
+[spawn_robot1-3] [static_transform_publisher-4] from 'odom' to 'std_dock_link'
+[spawn_robot1-3] [create-6] [INFO] [1791623224.377170275] [robot1.ros_gz_sim]: Requesting list of world names.
+[spawn_robot1-3] [parameter_bridge-7] [INFO] [1791623224.391737736] [robot1.cmd_vel_bridge]: Creating GZ->ROS Bridge: [robot1/cmd_vel (gz.msgs.Twist) -> robot1/cmd_vel (geometry_msgs/msg/TwistStamped)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-7] [INFO] [1791623224.399215748] [robot1.cmd_vel_bridge]: Creating ROS->GZ Bridge: [/model/robot1/turtlebot4/cmd_vel (geometry_msgs/msg/TwistStamped) -> /model/robot1/turtlebot4/cmd_vel (gz.msgs.Twist)] (Lazy 0)
+[spawn_robot1-3] [create-5] [INFO] [1791623224.422895901] [robot1.ros_gz_sim]: Requesting list of world names.
+[spawn_robot1-3] [parameter_bridge-15] [INFO] [1791623224.423836292] [robot1.ir_intensity_front_center_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_center_left/sensor/ir_intensity_front_center_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_center_left/sensor/ir_intensity_front_center_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [static_transform_publisher-44] [WARN] [1791623224.459041876] []: Old-style arguments are deprecated; see --help for new-style arguments
+[gazebo-1] [1;32m[Msg] [0m[1;32mGazebo Sim Server v[0m[1;32m8.15.0[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mLoading SDF world file[[0m[1;32m/home/mu-01/Trick_or_Bot/boo_nav/sim/worlds/holloween.sdf[0m[1;32m].[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing entity system service on [[0m[1;32m/[0m[1;32mentity/system/add[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mCreate[0m[1;32m service on [[0m[1;32m/world/holloween/create_multiple[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mCreate[0m[1;32m service on [[0m[1;32m/world/holloween/create_multiple/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mRemove[0m[1;32m service on [[0m[1;32m/world/holloween/remove[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mRemove[0m[1;32m service on [[0m[1;32m/world/holloween/remove/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/holloween/set_pose[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/holloween/set_pose/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/holloween/set_pose_vector[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPose[0m[1;32m service on [[0m[1;32m/world/holloween/set_pose_vector/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mLight configuration[0m[1;32m service on [[0m[1;32m/world/holloween/light_config[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mLight configuration[0m[1;32m service on [[0m[1;32m/world/holloween/light_config/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPhysics[0m[1;32m service on [[0m[1;32m/world/holloween/set_physics[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPhysics[0m[1;32m service on [[0m[1;32m/world/holloween/set_physics/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mSphericalCoordinates[0m[1;32m service on [[0m[1;32m/world/holloween/set_spherical_coordinates[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mSphericalCoordinates[0m[1;32m service on [[0m[1;32m/world/holloween/set_spherical_coordinates/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mEnable collision[0m[1;32m service on [[0m[1;32m/world/holloween/enable_collision[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mEnable collision[0m[1;32m service on [[0m[1;32m/world/holloween/enable_collision/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mDisable collision[0m[1;32m service on [[0m[1;32m/world/holloween/disable_collision[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mDisable collision[0m[1;32m service on [[0m[1;32m/world/holloween/disable_collision/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/holloween/visual_config[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/holloween/visual_config/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/holloween/wheel_slip[0m[1;32m] (async)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mMaterial[0m[1;32m service on [[0m[1;32m/world/holloween/wheel_slip/blocking[0m[1;32m] (blocking)[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mLoaded level [[0m[1;32mdefault[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing world controls on [[0m[1;32m/world/holloween[0m[1;32m/control], [[0m[1;32m/world/holloween[0m[1;32m/control/state] and [[0m[1;32m/world/holloween[0m[1;32m/playback/control][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing GUI information on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mgui/info[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mWorld [[0m[1;32mholloween[0m[1;32m] initialized with [[0m[1;32m1ms[0m[1;32m] physics profile.[0m[1;32m[0m
+[spawn_robot1-3] [static_transform_publisher-31] [WARN] [1791623224.462294445] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot1-3] [static_transform_publisher-32] [WARN] [1791623224.465899500] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot1-3] [static_transform_publisher-45] [WARN] [1791623224.468164826] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot1-3] [parameter_bridge-23] [INFO] [1791623224.484590587] [robot1.hmi_display_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/display/raw (std_msgs/msg/String) -> robot1/hmi/display/raw (gz.msgs.StringMsg)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-23] [INFO] [1791623224.489583196] [robot1.hmi_display_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/display/selected (std_msgs/msg/Int32) -> robot1/hmi/display/selected (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-12] [INFO] [1791623224.498561694] [robot1.cliff_front_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_front_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_front_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-18] [INFO] [1791623224.514950136] [robot1.ir_intensity_front_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_right/sensor/ir_intensity_front_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_right/sensor/ir_intensity_front_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-10] [INFO] [1791623224.531455585] [robot1.bumper_contact_bridge]: Creating GZ->ROS Bridge: [robot1/bumper_contact (gz.msgs.Contacts) -> robot1/bumper_contact (ros_gz_interfaces/msg/Contacts)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-17] [INFO] [1791623224.568477003] [robot1.ir_intensity_front_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_left/sensor/ir_intensity_front_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_left/sensor/ir_intensity_front_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-13] [INFO] [1791623224.574216276] [robot1.cliff_side_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_side_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_side_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [static_transform_publisher-45] [INFO] [1791623224.574894436] [robot1.camera_stf]: Spinning until stopped - publishing transform
+[spawn_robot1-3] [static_transform_publisher-45] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot1-3] [static_transform_publisher-45] rotation: ('0.499952', '-0.500000', '0.500000', '0.500048')
+[spawn_robot1-3] [static_transform_publisher-45] from 'oakd_rgb_camera_optical_frame' to 'robot1/turtlebot4/oakd_rgb_camera_frame/rgbd_camera'
+[spawn_robot1-3] [parameter_bridge-11] [INFO] [1791623224.577975525] [robot1.cliff_front_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_front_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_front_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-20] [INFO] [1791623224.578110581] [robot1.ir_intensity_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/ir_intensity_right/sensor/ir_intensity_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/ir_intensity_right/sensor/ir_intensity_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-9] [INFO] [1791623224.595261691] [robot1.odom_base_tf_bridge]: Creating GZ->ROS Bridge: [/model/robot1/turtlebot4/tf (gz.msgs.Pose_V) -> /model/robot1/turtlebot4/tf (tf2_msgs/msg/TFMessage)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-19] [INFO] [1791623224.597792724] [robot1.ir_intensity_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/ir_intensity_left/sensor/ir_intensity_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/ir_intensity_left/sensor/ir_intensity_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-16] [INFO] [1791623224.599746687] [robot1.ir_intensity_front_center_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_center_right/sensor/ir_intensity_front_center_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/ir_intensity_front_center_right/sensor/ir_intensity_front_center_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [turtlebot4_node-28] [INFO] [1791623224.601480692] [robot1.turtlebot4_node]: Init Turtlebot4 Node Main
+[spawn_robot1-3] [create-6] [INFO] [1791623224.643525076] [robot1.ros_gz_sim]: Waiting messages on topic [standard_dock_description].
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623224.657416654] [robot1.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/led/power (std_msgs/msg/Int32) -> robot1/hmi/led/power (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623224.664876164] [robot1.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/led/motors (std_msgs/msg/Int32) -> robot1/hmi/led/motors (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623224.679761130] [robot1.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/led/comms (std_msgs/msg/Int32) -> robot1/hmi/led/comms (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623224.687814891] [robot1.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/led/wifi (std_msgs/msg/Int32) -> robot1/hmi/led/wifi (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.688442658] [robot1.ir_intensity_vector_publisher]: Advertised topic: ir_intensity
+[spawn_robot1-3] [kidnap_estimator_publisher-39] [INFO] [1791623224.694918118] [robot1.kidnap_estimator_publisher]: Advertised topic: kidnap_status
+[spawn_robot1-3] [kidnap_estimator_publisher-39] [INFO] [1791623224.702183528] [robot1.kidnap_estimator_publisher]: Subscription to topic: hazard_detection
+[spawn_robot1-3] [parameter_bridge-24] [INFO] [1791623224.703628707] [robot1.hmi_buttons_msg_bridge]: Creating GZ->ROS Bridge: [robot1/hmi/buttons (gz.msgs.Int32) -> robot1/hmi/buttons (std_msgs/msg/Int32)] (Lazy 0)
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.710539736] [robot1.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_center_left
+[spawn_robot1-3] [parameter_bridge-22] [INFO] [1791623224.712195393] [robot1.buttons_msg_bridge]: Creating GZ->ROS Bridge: [robot1/create3_buttons (gz.msgs.Int32) -> robot1/create3_buttons (std_msgs/msg/Int32)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623224.713289292] [robot1.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/led/battery (std_msgs/msg/Int32) -> robot1/hmi/led/battery (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.717242258] [robot1.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_center_right
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.718312592] [robot1.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_left
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.719821749] [robot1.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_right
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.722273421] [robot1.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_left
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623224.724470571] [robot1.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/led/user1 (std_msgs/msg/Int32) -> robot1/hmi/led/user1 (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.726755628] [robot1.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_right
+[spawn_robot1-3] [create-6] [INFO] [1791623224.731753489] [robot1.ros_gz_sim]: Entity creation successful.
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623224.736922466] [robot1.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot1/hmi/led/user2 (std_msgs/msg/Int32) -> robot1/hmi/led/user2 (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-8] [INFO] [1791623224.739623462] [robot1.pose_bridge]: Creating GZ->ROS Bridge: [/model/robot1/turtlebot4/pose (gz.msgs.Pose_V) -> /model/robot1/turtlebot4/pose (tf2_msgs/msg/TFMessage)] (Lazy 0)
+[spawn_robot1-3] [create-5] [INFO] [1791623224.740116599] [robot1.ros_gz_sim]: Waiting messages on topic [robot_description].
+[spawn_robot1-3] [ir_intensity_vector_publisher-34] [INFO] [1791623224.747099256] [robot1.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_side_left
+[spawn_robot1-3] [parameter_bridge-21] [INFO] [1791623224.759472134] [robot1.ir_intensity_side_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/ir_intensity_side_left/sensor/ir_intensity_side_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/ir_intensity_side_left/sensor/ir_intensity_side_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-8] [INFO] [1791623224.761026339] [robot1.pose_bridge]: Creating GZ->ROS Bridge: [/model/robot1/standard_dock/pose (gz.msgs.Pose_V) -> /model/robot1/standard_dock/pose (tf2_msgs/msg/TFMessage)] (Lazy 0)
+[spawn_robot1-3] [ui_mgr-40] [INFO] [1791623224.773942324] [robot1.ui_mgr]: Subscription to topic: cmd_lightring
+[spawn_robot1-3] [create-5] [INFO] [1791623224.779830756] [robot1.ros_gz_sim]: Entity creation successful.
+[spawn_robot1-3] [static_transform_publisher-32] [INFO] [1791623224.794177703] [robot1.tf_namespaced_base_link_publisher]: Spinning until stopped - publishing transform
+[spawn_robot1-3] [static_transform_publisher-32] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot1-3] [static_transform_publisher-32] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[spawn_robot1-3] [static_transform_publisher-32] from 'robot1/base_link' to 'base_link'
+[spawn_robot1-3] [robot_state-38] [INFO] [1791623224.795745991] [robot1.robot_state]: Advertised topic: battery_state
+[spawn_robot1-3] [ui_mgr-40] [INFO] [1791623224.800570193] [robot1.ui_mgr]: Subscription to topic: cmd_audio
+[spawn_robot1-3] [robot_state-38] [INFO] [1791623224.802708831] [robot1.robot_state]: Subscription to topic: dock_status
+[spawn_robot1-3] [robot_state-38] [INFO] [1791623224.803941423] [robot1.robot_state]: Advertised topic: stop_status
+[spawn_robot1-3] [parameter_bridge-26] [INFO] [1791623224.807920330] [robot1.lidar_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/rplidar_link/sensor/rplidar/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/rplidar_link/sensor/rplidar/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [robot_state-38] [INFO] [1791623224.809173261] [robot1.robot_state]: Subscription to topic: odom
+[spawn_robot1-3] [parameter_bridge-14] [INFO] [1791623224.823824746] [robot1.cliff_side_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_side_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot1/turtlebot4/link/base_link/sensor/cliff_side_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-27] [INFO] [1791623224.852917827] [robot1.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/image (gz.msgs.Image) -> /world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-27] [INFO] [1791623224.864358457] [robot1.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/depth_image (gz.msgs.Image) -> /world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[spawn_robot1-3] [parameter_bridge-27] [INFO] [1791623224.868408277] [robot1.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[spawn_robot1-3] [turtlebot4_node-28] [INFO] [1791623224.870832108] [robot1.turtlebot4_node]: Buttons Init
+[spawn_robot1-3] [parameter_bridge-27] [INFO] [1791623224.872577511] [robot1.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /world/holloween/model/robot1/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[spawn_robot1-3] [wheel_status_publisher-36] [INFO] [1791623224.876851062] [robot1.wheel_status_publisher]: Advertised topic: wheel_vels
+[spawn_robot1-3] [wheel_status_publisher-36] [INFO] [1791623224.878525536] [robot1.wheel_status_publisher]: Advertised topic: wheel_ticks
+[spawn_robot1-3] [turtlebot4_node-28] [INFO] [1791623224.882164295] [robot1.turtlebot4_node]: Init Display
+[spawn_robot1-3] [INFO] [create-6]: process has finished cleanly [pid 204408]
+[spawn_robot1-3] [turtlebot4_node-28] [INFO] [1791623224.887999974] [robot1.turtlebot4_node]: Leds Init
+[spawn_robot1-3] [mock_publisher-37] [INFO] [1791623224.895348399] [robot1.mock_publisher]: Advertised mocked topic: slip_status
+[spawn_robot1-3] [motion_control-35] [INFO] [1791623224.900462312] [robot1.motion_control]: Enabling REFLEX_BUMP
+[spawn_robot1-3] [motion_control-35] [INFO] [1791623224.900759253] [robot1.motion_control]: Enabling REFLEX_CLIFF
+[spawn_robot1-3] [motion_control-35] [INFO] [1791623224.901170212] [robot1.motion_control]: Enabling REFLEX_STUCK
+[spawn_robot1-3] [motion_control-35] [INFO] [1791623224.901322632] [robot1.motion_control]: Enabling REFLEX_WHEEL_DROP
+[spawn_robot1-3] [turtlebot4_node-28] [INFO] [1791623224.908116021] [robot1.turtlebot4_node]: Turtlebot4 standard running.
+[spawn_robot1-3] [static_transform_publisher-44] [INFO] [1791623224.948141757] [robot1.rplidar_stf]: Spinning until stopped - publishing transform
+[spawn_robot1-3] [static_transform_publisher-44] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot1-3] [static_transform_publisher-44] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[spawn_robot1-3] [static_transform_publisher-44] from 'rplidar_link' to 'robot1/turtlebot4/rplidar_link/rplidar'
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.968614349] [robot1.hazards_vector_publisher]: Advertised topic: hazard_detection
+[spawn_robot1-3] [INFO] [create-5]: process has finished cleanly [pid 204407]
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.971217312] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/bumper/event
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.972930155] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/cliff_front_left/event
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.977264731] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/cliff_front_right/event
+[spawn_robot1-3] [static_transform_publisher-31] [INFO] [1791623224.979043856] [robot1.tf_namespaced_odom_publisher]: Spinning until stopped - publishing transform
+[spawn_robot1-3] [static_transform_publisher-31] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot1-3] [static_transform_publisher-31] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[spawn_robot1-3] [static_transform_publisher-31] from 'odom' to 'robot1/odom'
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.983213504] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/cliff_side_left/event
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.987914773] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/cliff_side_right/event
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.991612166] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/wheel_drop/left_wheel/event
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.992854726] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/wheel_drop/right_wheel/event
+[spawn_robot1-3] [hazards_vector_publisher-33] [INFO] [1791623224.994143564] [robot1.hazards_vector_publisher]: Subscription to topic: _internal/backup_limit
+[spawn_robot1-3] [joint_state_publisher-2] [INFO] [1791623225.002002839] [robot1.joint_state_publisher]: Waiting for robot_description to be published on the robot_description topic...
+[spawn_robot1-3] [parameter_bridge-25] [INFO] [1791623225.109201492] [robot1.hmi_led_msg_bridge]: Passing message from ROS std_msgs/msg/Int32 to Gazebo gz.msgs.Int32 (showing msg only once per type)
+[spawn_robot1-3] [spawner-30] [INFO] [1791623225.120642345] [robot1.spawner_joint_state_broadcaster]: waiting for service /robot1/controller_manager/list_controllers to become available...
+[spawn_robot1-3] [joint_state_publisher-2] [INFO] [1791623225.175275349] [robot1.joint_state_publisher]: Got description, configuring robot
+[spawn_robot1-3] [parameter_bridge-23] [INFO] [1791623225.908761728] [robot1.hmi_display_msg_bridge]: Passing message from ROS std_msgs/msg/Int32 to Gazebo gz.msgs.Int32 (showing msg only once per type)
+[spawn_robot1-3] [parameter_bridge-23] [INFO] [1791623225.908820431] [robot1.hmi_display_msg_bridge]: Passing message from ROS std_msgs/msg/String to Gazebo gz.msgs.StringMsg (showing msg only once per type)
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing world SDF generation service on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mgenerate_world_sdf[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing world names on [[0m[1;32m/gazebo/worlds[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mResource path add service on [[0m[1;32m/gazebo/resource_paths/add[0m[1;32m].[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mResource path get service on [[0m[1;32m/gazebo/resource_paths/get[0m[1;32m].[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mResource path resolve service on [[0m[1;32m/gazebo/resource_paths/resolve[0m[1;32m].[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mResource paths published on [[0m[1;32m/gazebo/resource_paths[0m[1;32m].[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServer control service on [[0m[1;32m/server_control[0m[1;32m].[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mFound no publishers on /stats, adding root stats topic[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mFound no publishers on /clock, adding root clock topic[0m[1;32m[0m
+[gazebo-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="turtlebot4"]/joint[@name="wheel_drop_left_joint"]/physics/ode/provide_feedback:<urdf-string>:L0]: XML Element[provide_feedback], child of element[ode], not defined in SDF. Copying[provide_feedback] as children of [ode].
+[gazebo-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="turtlebot4"]/joint[@name="wheel_drop_right_joint"]/physics/ode/provide_feedback:<urdf-string>:L0]: XML Element[provide_feedback], child of element[ode], not defined in SDF. Copying[provide_feedback] as children of [ode].
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[gazebo-1] [INFO] [1791623227.222307840] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['bumper_joint'] (Entity='797') is skipped.
+[gazebo-1] [INFO] [1791623227.222432883] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_caster_joint'] (Entity='798') is skipped.
+[gazebo-1] [INFO] [1791623227.222437982] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_left_bottom_weight_block_joint'] (Entity='799') is skipped.
+[gazebo-1] [INFO] [1791623227.222441146] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_left_top_weight_block_joint'] (Entity='800') is skipped.
+[gazebo-1] [INFO] [1791623227.222443595] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_right_bottom_weight_block_joint'] (Entity='801') is skipped.
+[gazebo-1] [INFO] [1791623227.222446194] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_right_top_weight_block_joint'] (Entity='802') is skipped.
+[gazebo-1] [INFO] [1791623227.222448584] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['imu_joint'] (Entity='803') is skipped.
+[gazebo-1] [INFO] [1791623227.222450827] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_center_left_joint'] (Entity='804') is skipped.
+[gazebo-1] [INFO] [1791623227.222453317] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_center_right_joint'] (Entity='805') is skipped.
+[gazebo-1] [INFO] [1791623227.222455542] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_left_joint'] (Entity='806') is skipped.
+[gazebo-1] [INFO] [1791623227.222457740] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_right_joint'] (Entity='807') is skipped.
+[gazebo-1] [INFO] [1791623227.222460112] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_left_joint'] (Entity='808') is skipped.
+[gazebo-1] [INFO] [1791623227.222462488] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_right_joint'] (Entity='809') is skipped.
+[gazebo-1] [INFO] [1791623227.222464910] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_side_left_joint'] (Entity='810') is skipped.
+[gazebo-1] [INFO] [1791623227.222467078] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_omni_joint'] (Entity='811') is skipped.
+[gazebo-1] [INFO] [1791623227.222469421] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['mouse_joint'] (Entity='812') is skipped.
+[gazebo-1] [INFO] [1791623227.222471435] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_left_tower_standoff_joint'] (Entity='813') is skipped.
+[gazebo-1] [INFO] [1791623227.222473874] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_right_tower_standoff_joint'] (Entity='814') is skipped.
+[gazebo-1] [INFO] [1791623227.222475985] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_camera_bracket_joint'] (Entity='815') is skipped.
+[gazebo-1] [INFO] [1791623227.222478040] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_joint'] (Entity='816') is skipped.
+[gazebo-1] [INFO] [1791623227.222480210] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_imu_joint'] (Entity='817') is skipped.
+[gazebo-1] [INFO] [1791623227.222482575] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_left_camera_joint'] (Entity='818') is skipped.
+[gazebo-1] [INFO] [1791623227.222484880] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_left_camera_optical_joint'] (Entity='819') is skipped.
+[gazebo-1] [INFO] [1791623227.222487125] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_rgb_camera_joint'] (Entity='820') is skipped.
+[gazebo-1] [INFO] [1791623227.222489717] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_rgb_camera_optical_joint'] (Entity='821') is skipped.
+[gazebo-1] [INFO] [1791623227.222491797] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_right_camera_joint'] (Entity='822') is skipped.
+[gazebo-1] [INFO] [1791623227.222493959] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_right_camera_optical_joint'] (Entity='823') is skipped.
+[gazebo-1] [INFO] [1791623227.222496536] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['rear_left_tower_standoff_joint'] (Entity='824') is skipped.
+[gazebo-1] [INFO] [1791623227.222498992] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['rear_right_tower_standoff_joint'] (Entity='825') is skipped.
+[gazebo-1] [INFO] [1791623227.222534586] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['rplidar_joint'] (Entity='826') is skipped.
+[gazebo-1] [INFO] [1791623227.222537771] [robot1.gz_ros_control]: [gz_ros2_control] Fixed joint ['tower_sensor_plate_joint'] (Entity='827') is skipped.
+[gazebo-1] [INFO] [1791623227.223467107] [robot1.gz_ros_control]: Loading controller_manager
+[gazebo-1] [INFO] [1791623227.245161637] [robot1.controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gazebo-1] [WARN] [1791623227.245192973] [robot1.controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gazebo-1] [INFO] [1791623227.253719394] [robot1.controller_manager]: Subscribing to '/robot1/robot_description' topic for robot description.
+[gazebo-1] [WARN] [1791623227.253782389] [robot1.gz_ros_control]: Waiting RM to load and initialize hardware...
+[gazebo-1] [WARN] [1791623228.253969909] [robot1.controller_manager]: Waiting for data on 'robot_description' topic to finish initialization
+[gazebo-1] [INFO] [1791623229.000768622] [robot1.controller_manager]: Received robot description from topic.
+[gazebo-1] [INFO] [1791623229.000895229] [robot1.controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gazebo-1] [INFO] [1791623229.007541589] [robot1.gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gazebo-1] [INFO] [1791623229.007598847] [robot1.gz_ros_control]: Loading joint: left_wheel_joint
+[gazebo-1] [INFO] [1791623229.007603920] [robot1.gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1791623229.007608769] [robot1.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623229.007611744] [robot1.gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1791623229.007618214] [robot1.gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1791623229.007620320] [robot1.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623229.007853477] [robot1.gz_ros_control]: Loading sensor: imu
+[gazebo-1] [INFO] [1791623229.007858895] [robot1.gz_ros_control]: 	State:
+[gazebo-1] [WARN] [1791623229.007861504] [robot1.gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gazebo-1] [INFO] [1791623229.008007742] [robot1.controller_manager]: Initialize hardware 'left_wheel_controller' 
+[gazebo-1] [WARN] [1791623229.008021523] [robot1.controller_manager.hardware_component.system.left_wheel_controller]: Executor is not available during hardware component initialization for 'left_wheel_controller'. Skipping node creation!
+[gazebo-1] [INFO] [1791623229.008063664] [robot1.controller_manager]: Successful initialization of hardware 'left_wheel_controller'
+[gazebo-1] [INFO] [1791623229.008120717] [robot1.gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gazebo-1] [INFO] [1791623229.008129411] [robot1.gz_ros_control]: Loading joint: right_wheel_joint
+[gazebo-1] [INFO] [1791623229.008131833] [robot1.gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1791623229.008133999] [robot1.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623229.008136186] [robot1.gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1791623229.008138586] [robot1.gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1791623229.008142041] [robot1.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623229.008149223] [robot1.gz_ros_control]: Loading sensor: imu
+[gazebo-1] [INFO] [1791623229.008151513] [robot1.gz_ros_control]: 	State:
+[gazebo-1] [WARN] [1791623229.008153346] [robot1.gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gazebo-1] [INFO] [1791623229.008164258] [robot1.controller_manager]: Initialize hardware 'right_wheel_controller' 
+[gazebo-1] [WARN] [1791623229.008167443] [robot1.controller_manager.hardware_component.system.right_wheel_controller]: Executor is not available during hardware component initialization for 'right_wheel_controller'. Skipping node creation!
+[gazebo-1] [INFO] [1791623229.008176561] [robot1.controller_manager]: Successful initialization of hardware 'right_wheel_controller'
+[gazebo-1] [INFO] [1791623229.008224462] [robot1.controller_manager]: Activating component 'right_wheel_controller'.
+[gazebo-1] [INFO] [1791623229.008231998] [resource_manager]: 'configure' hardware 'right_wheel_controller' 
+[gazebo-1] [INFO] [1791623229.008235599] [robot1.gz_ros_control]: System Successfully configured!
+[gazebo-1] [INFO] [1791623229.008238197] [resource_manager]: Successful 'configure' of hardware 'right_wheel_controller'
+[gazebo-1] [INFO] [1791623229.008265598] [resource_manager]: 'activate' hardware 'right_wheel_controller' 
+[gazebo-1] [INFO] [1791623229.008277001] [resource_manager]: Successful 'activate' of hardware 'right_wheel_controller'
+[gazebo-1] [INFO] [1791623229.008341205] [robot1.controller_manager]: Activating component 'left_wheel_controller'.
+[gazebo-1] [INFO] [1791623229.008343878] [resource_manager]: 'configure' hardware 'left_wheel_controller' 
+[gazebo-1] [INFO] [1791623229.008345076] [robot1.gz_ros_control]: System Successfully configured!
+[gazebo-1] [INFO] [1791623229.008347204] [resource_manager]: Successful 'configure' of hardware 'left_wheel_controller'
+[gazebo-1] [INFO] [1791623229.008348605] [resource_manager]: 'activate' hardware 'left_wheel_controller' 
+[gazebo-1] [INFO] [1791623229.008350119] [resource_manager]: Successful 'activate' of hardware 'left_wheel_controller'
+[gazebo-1] [WARN] [1791623229.008357766] [robot1.controller_manager]: Component 'right_wheel_controller' does not have read or write statistics initialized, skipping registration.
+[gazebo-1] [WARN] [1791623229.008360376] [robot1.controller_manager]: Component 'left_wheel_controller' does not have read or write statistics initialized, skipping registration.
+[gazebo-1] [INFO] [1791623229.008363564] [robot1.controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[gazebo-1] [INFO] [1791623229.129517718] [robot1.controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gazebo-1] [INFO] [1791623229.129561959] [robot1.controller_manager]: Loading controller 'joint_state_broadcaster'
+[gazebo-1] [WARN] [1791623229.133742089] [robot1.controller_manager]: The use of remapping arguments to the controller_manager node is deprecated. Please use the '--controller-ros-args' argument of the spawner to pass remapping arguments to the controller node.
+[gazebo-1] [INFO] [1791623229.133778507] [robot1.controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file /home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml --ros-args --remap ~/odom:=odom --remap /tf:=tf --remap /tf_static:=tf_static --remap /diagnostics:=diagnostics -p use_sim_time:=true --param use_sim_time:=true 
+[spawn_robot1-3] [spawner-30] [INFO] [1791623229.179730985] [robot1.spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gazebo-1] [INFO] [1791623229.182292574] [robot1.controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gazebo-1] [INFO] [1791623229.182496784] [robot1.joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gazebo-1] [INFO] [1791623229.195480252] [robot1.controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[gazebo-1] [ERROR] [1791623229.387665714] [robot1.gz_ros_control]: Desired controller update period (0.001 s) is faster than the gazebo simulation period (0.006 s).
+[gazebo-1] [WARN] [1791623229.388929007] [robot1.controller_manager]: No clock received, using time argument instead! Check your node's clock configuration (use_sim_time parameter) and if a valid clock source is available
+[gazebo-1] [INFO] [1791623229.389177846] [robot1.controller_manager]: Successfully switched controllers!
+[gazebo-1] libEGL warning: pci id for fd 133: 10de:2820, driver (null)
+[gazebo-1] 
+[gazebo-1] pci id for fd 134: 10de:2820, driver (null)
+[gazebo-1] pci id for fd 135: 10de:2820, driver (null)
+[gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[gazebo-1] libEGL warning: pci id for fd 133: 10de:2820, driver (null)
+[gazebo-1] 
+[gazebo-1] pci id for fd 134: 10de:2820, driver (null)
+[gazebo-1] pci id for fd 135: 10de:2820, driver (null)
+[gazebo-1] libEGL warning: egl: failed to create dri2 screen
+[gazebo-1] libEGL warning: pci id for fd 133: 10de:2820, driver (null)
+[gazebo-1] 
+[spawn_robot1-3] [spawner-30] [INFO] [1791623229.698818578] [robot1.spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[gazebo-1] [1;33m[Wrn] [ColladaLoader.cc:2676] [0m[1;33mTriangle input semantic: '[0m[1;33mCOLOR[0m[1;33m' is currently[0m[1;33m not supported[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [ColladaLoader.cc:2676] [0m[1;33mTriangle input semantic: '[0m[1;33mCOLOR[0m[1;33m' is currently[0m[1;33m not supported[0m[1;33m[0m
+[spawn_robot1-3] [INFO] [spawner-30]: process has finished cleanly [pid 204553]
+[spawn_robot1-3] [INFO] [spawner-46]: process started with pid [205409]
+[spawn_robot1-3] [spawner-46] [INFO] [1791623230.138641921] [robot1.spawner_diffdrive_controller]: waiting for service /robot1/controller_manager/list_controllers to become available...
+[spawn_robot1-3] [parameter_bridge-7] [INFO] [1791623230.157950715] [robot1.cmd_vel_bridge]: Passing message from ROS geometry_msgs/msg/TwistStamped to Gazebo gz.msgs.Twist (showing msg only once per type)
+[gazebo-1] [1;32m[Msg] [0m[1;32mContact system publishing on [0m[1;32mrobot1/bumper_contact[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mLoading plugin [[0m[1;32mgz-rendering-ogre2[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing scene information on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mscene/info[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing graph information on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mscene/graph[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing full state on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mstate[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mServing full state (async) on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mstate_async[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPublishing scene information on [[0m[1;32m/world/holloween/scene/info[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPublishing entity deletions on [[0m[1;32m/world/holloween/scene/deletion[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPublishing state changes on [[0m[1;32m/world/holloween/state[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPublishing pose messages on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mpose/info[0m[1;32m][0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mPublishing dynamic pose messages on [[0m[1;32m/world/holloween[0m[1;32m/[0m[1;32mdynamic_pose/info[0m[1;32m][0m[1;32m[0m
+[spawn_robot1-3] [spawner-46] [INFO] [1791623231.161530737] [robot1.spawner_diffdrive_controller]: Setting controller param "params_file" to "['/home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml']" for diffdrive_controller
+[gazebo-1] [INFO] [1791623231.177308804] [robot1.controller_manager]: Loading controller : 'diffdrive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gazebo-1] [INFO] [1791623231.177394109] [robot1.controller_manager]: Loading controller 'diffdrive_controller'
+[gazebo-1] [WARN] [1791623231.187129999] [robot1.controller_manager]: The use of remapping arguments to the controller_manager node is deprecated. Please use the '--controller-ros-args' argument of the spawner to pass remapping arguments to the controller node.
+[gazebo-1] [INFO] [1791623231.187203799] [robot1.controller_manager]: Controller 'diffdrive_controller' node arguments: --ros-args --params-file /home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml --ros-args --remap ~/odom:=odom --remap /tf:=tf --remap /tf_static:=tf_static --remap /diagnostics:=diagnostics -p use_sim_time:=true --params-file /home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml --param use_sim_time:=true 
+[spawn_robot1-3] [spawner-46] [INFO] [1791623231.250439771] [robot1.spawner_diffdrive_controller]: Loaded diffdrive_controller
+[gazebo-1] [INFO] [1791623231.254129562] [robot1.controller_manager]: Configuring controller: 'diffdrive_controller'
+[gazebo-1] [WARN] [1791623231.254360489] [robot1.diffdrive_controller]: [deprecated] has_jerk_limits parameter is deprecated, instead set the respective limits to NAN
+[gazebo-1] [WARN] [1791623231.254390844] [robot1.diffdrive_controller]: [deprecated] has_jerk_limits parameter is deprecated, instead set the respective limits to NAN
+[gazebo-1] [WARN] [1791623231.265714603] [robot1.diffdrive_controller]: Can't accept new commands. subscriber is inactive
+[gazebo-1] [INFO] [1791623231.270121076] [robot1.controller_manager]: Activating controllers: [ diffdrive_controller ]
+[gazebo-1] [INFO] [1791623231.272515682] [robot1.controller_manager]: Successfully switched controllers!
+[spawn_robot1-3] [spawner-46] [INFO] [1791623231.278714024] [robot1.spawner_diffdrive_controller]: Configured and activated diffdrive_controller
+[spawn_robot1-3] [INFO] [spawner-46]: process has finished cleanly [pid 205409]
+[gazebo-1] [WARN] [1791623231.715604593] [robot1.diffdrive_controller]: Received TwistStamped with zero timestamp, setting it to current time, this message will only be shown once
+[INFO] [spawn_robot2-4]: process started with pid [205429]
+[INFO] [republish-5]: process started with pid [205430]
+[republish-5] [INFO] [1791623231.803416188] [robot2.oakd_compress]: The 'in_transport' parameter is set to: raw
+[republish-5] [INFO] [1791623231.803523437] [robot2.oakd_compress]: The 'out_transport' parameter is set to: compressed
+[spawn_robot2-4] [INFO] [launch]: All log files can be found below /home/mu-01/.ros/log/2026-10-10-18-07-12-079623-mu-01-205429
+[spawn_robot2-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[gazebo-1] [WARN] [1791623232.335498139] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[spawn_robot2-4] [INFO] [robot_state_publisher-1]: process started with pid [205450]
+[spawn_robot2-4] [INFO] [joint_state_publisher-2]: process started with pid [205451]
+[spawn_robot2-4] [INFO] [robot_state_publisher-3]: process started with pid [205452]
+[spawn_robot2-4] [INFO] [static_transform_publisher-4]: process started with pid [205453]
+[spawn_robot2-4] [INFO] [create-5]: process started with pid [205454]
+[spawn_robot2-4] [INFO] [create-6]: process started with pid [205455]
+[spawn_robot2-4] [INFO] [parameter_bridge-7]: process started with pid [205456]
+[spawn_robot2-4] [INFO] [parameter_bridge-8]: process started with pid [205469]
+[spawn_robot2-4] [INFO] [parameter_bridge-9]: process started with pid [205470]
+[spawn_robot2-4] [INFO] [parameter_bridge-10]: process started with pid [205471]
+[spawn_robot2-4] [INFO] [parameter_bridge-11]: process started with pid [205472]
+[spawn_robot2-4] [INFO] [parameter_bridge-12]: process started with pid [205473]
+[spawn_robot2-4] [INFO] [parameter_bridge-13]: process started with pid [205474]
+[spawn_robot2-4] [INFO] [parameter_bridge-14]: process started with pid [205475]
+[spawn_robot2-4] [INFO] [parameter_bridge-15]: process started with pid [205477]
+[spawn_robot2-4] [INFO] [parameter_bridge-16]: process started with pid [205481]
+[spawn_robot2-4] [INFO] [parameter_bridge-17]: process started with pid [205484]
+[spawn_robot2-4] [INFO] [parameter_bridge-18]: process started with pid [205487]
+[spawn_robot2-4] [INFO] [parameter_bridge-19]: process started with pid [205490]
+[spawn_robot2-4] [INFO] [parameter_bridge-20]: process started with pid [205492]
+[spawn_robot2-4] [INFO] [parameter_bridge-21]: process started with pid [205498]
+[spawn_robot2-4] [INFO] [parameter_bridge-22]: process started with pid [205501]
+[spawn_robot2-4] [INFO] [parameter_bridge-23]: process started with pid [205505]
+[spawn_robot2-4] [INFO] [parameter_bridge-24]: process started with pid [205541]
+[spawn_robot2-4] [INFO] [parameter_bridge-25]: process started with pid [205548]
+[spawn_robot2-4] [INFO] [parameter_bridge-26]: process started with pid [205553]
+[spawn_robot2-4] [INFO] [parameter_bridge-27]: process started with pid [205556]
+[spawn_robot2-4] [INFO] [turtlebot4_node-28]: process started with pid [205557]
+[spawn_robot2-4] [INFO] [turtlebot4_gz_hmi_node-29]: process started with pid [205562]
+[spawn_robot2-4] [INFO] [spawner-30]: process started with pid [205567]
+[spawn_robot2-4] [INFO] [static_transform_publisher-31]: process started with pid [205568]
+[spawn_robot2-4] [INFO] [static_transform_publisher-32]: process started with pid [205569]
+[spawn_robot2-4] [INFO] [hazards_vector_publisher-33]: process started with pid [205578]
+[spawn_robot2-4] [INFO] [ir_intensity_vector_publisher-34]: process started with pid [205581]
+[spawn_robot2-4] [INFO] [motion_control-35]: process started with pid [205584]
+[spawn_robot2-4] [INFO] [wheel_status_publisher-36]: process started with pid [205593]
+[spawn_robot2-4] [INFO] [mock_publisher-37]: process started with pid [205594]
+[spawn_robot2-4] [INFO] [robot_state-38]: process started with pid [205596]
+[spawn_robot2-4] [INFO] [kidnap_estimator_publisher-39]: process started with pid [205606]
+[spawn_robot2-4] [INFO] [ui_mgr-40]: process started with pid [205608]
+[spawn_robot2-4] [INFO] [pose_republisher_node-41]: process started with pid [205611]
+[spawn_robot2-4] [INFO] [sensors_node-42]: process started with pid [205618]
+[spawn_robot2-4] [INFO] [interface_buttons_node-43]: process started with pid [205648]
+[spawn_robot2-4] [INFO] [static_transform_publisher-44]: process started with pid [205656]
+[spawn_robot2-4] [INFO] [static_transform_publisher-45]: process started with pid [205669]
+[spawn_robot2-4] [static_transform_publisher-4] [WARN] [1791623232.527724021] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot2-4] [static_transform_publisher-31] [WARN] [1791623232.642639795] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot2-4] [static_transform_publisher-32] [WARN] [1791623232.674875901] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot2-4] [static_transform_publisher-45] [WARN] [1791623232.719459983] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot2-4] [static_transform_publisher-44] [WARN] [1791623232.753299686] []: Old-style arguments are deprecated; see --help for new-style arguments
+[spawn_robot2-4] [create-5] [INFO] [1791623233.399020801] [robot2.ros_gz_sim]: Requesting list of world names.
+[spawn_robot2-4] [robot_state_publisher-3] [WARN] [1791623233.645646478] [kdl_parser]: The root link std_dock_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[spawn_robot2-4] [robot_state_publisher-3] [INFO] [1791623233.645796144] [robot2.dock_state_publisher]: Robot initialized
+[spawn_robot2-4] [create-5] [INFO] [1791623233.738716605] [robot2.ros_gz_sim]: Waiting messages on topic [robot_description].
+[spawn_robot2-4] [static_transform_publisher-4] [INFO] [1791623233.755539304] [robot2.tf_odom_std_dock_link_publisher]: Spinning until stopped - publishing transform
+[spawn_robot2-4] [static_transform_publisher-4] translation: ('0.157000', '0.000000', '0.000000')
+[spawn_robot2-4] [static_transform_publisher-4] rotation: ('0.000000', '0.000000', '1.000000', '0.000000')
+[spawn_robot2-4] [static_transform_publisher-4] from 'odom' to 'std_dock_link'
+[gazebo-1] [WARN] [1791623233.786512593] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 2.0520000000) because it is older than the current time by 0.5100000000 seconds, which exceeds the allowed timeout (0.5000)
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623234.072068284] [robot2.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/led/power (std_msgs/msg/Int32) -> robot2/hmi/led/power (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623234.108985904] [robot2.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/led/motors (std_msgs/msg/Int32) -> robot2/hmi/led/motors (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-24] [INFO] [1791623234.204037206] [robot2.hmi_buttons_msg_bridge]: Creating GZ->ROS Bridge: [robot2/hmi/buttons (gz.msgs.Int32) -> robot2/hmi/buttons (std_msgs/msg/Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623234.233508337] [robot2.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/led/comms (std_msgs/msg/Int32) -> robot2/hmi/led/comms (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623234.246984784] [robot2.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/led/wifi (std_msgs/msg/Int32) -> robot2/hmi/led/wifi (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623234.254775747] [robot2.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/led/battery (std_msgs/msg/Int32) -> robot2/hmi/led/battery (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623234.298630854] [robot2.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/led/user1 (std_msgs/msg/Int32) -> robot2/hmi/led/user1 (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623234.320094953] [robot2.hmi_led_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/led/user2 (std_msgs/msg/Int32) -> robot2/hmi/led/user2 (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-17] [INFO] [1791623234.354508015] [robot2.ir_intensity_front_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_left/sensor/ir_intensity_front_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_left/sensor/ir_intensity_front_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-15] [INFO] [1791623234.428855695] [robot2.ir_intensity_front_center_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_center_left/sensor/ir_intensity_front_center_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_center_left/sensor/ir_intensity_front_center_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [create-6] [INFO] [1791623234.458861636] [robot2.ros_gz_sim]: Requesting list of world names.
+[spawn_robot2-4] [parameter_bridge-23] [INFO] [1791623234.565294349] [robot2.hmi_display_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/display/raw (std_msgs/msg/String) -> robot2/hmi/display/raw (gz.msgs.StringMsg)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-18] [INFO] [1791623234.570552960] [robot2.ir_intensity_front_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_right/sensor/ir_intensity_front_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_right/sensor/ir_intensity_front_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-23] [INFO] [1791623234.571508512] [robot2.hmi_display_msg_bridge]: Creating ROS->GZ Bridge: [robot2/hmi/display/selected (std_msgs/msg/Int32) -> robot2/hmi/display/selected (gz.msgs.Int32)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-12] [INFO] [1791623234.573937825] [robot2.cliff_front_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_front_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_front_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-14] [INFO] [1791623234.601026902] [robot2.cliff_side_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_side_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_side_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [robot_state_publisher-1] [WARN] [1791623234.756600120] [kdl_parser]: The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.  As a workaround, you can add an extra dummy link to your URDF.
+[spawn_robot2-4] [robot_state_publisher-1] [INFO] [1791623234.756896288] [robot2.robot_state_publisher]: Robot initialized
+[spawn_robot2-4] [parameter_bridge-27] [INFO] [1791623234.763731729] [robot2.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/image (gz.msgs.Image) -> /world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/image (sensor_msgs/msg/Image)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-27] [INFO] [1791623234.771506531] [robot2.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/depth_image (gz.msgs.Image) -> /world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/depth_image (sensor_msgs/msg/Image)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-27] [INFO] [1791623234.778938632] [robot2.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/points (gz.msgs.PointCloudPacked) -> /world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/points (sensor_msgs/msg/PointCloud2)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-27] [INFO] [1791623234.784084427] [robot2.camera_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/camera_info (gz.msgs.CameraInfo) -> /world/holloween/model/robot2/turtlebot4/link/oakd_rgb_camera_frame/sensor/rgbd_camera/camera_info (sensor_msgs/msg/CameraInfo)] (Lazy 0)
+[spawn_robot2-4] [create-6] [INFO] [1791623234.817334249] [robot2.ros_gz_sim]: Waiting messages on topic [standard_dock_description].
+[spawn_robot2-4] [parameter_bridge-21] [INFO] [1791623234.824953208] [robot2.ir_intensity_side_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/ir_intensity_side_left/sensor/ir_intensity_side_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/ir_intensity_side_left/sensor/ir_intensity_side_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [create-5] [INFO] [1791623234.837146511] [robot2.ros_gz_sim]: Waiting messages on topic [robot_description].
+[spawn_robot2-4] [wheel_status_publisher-36] [INFO] [1791623234.853854905] [robot2.wheel_status_publisher]: Advertised topic: wheel_vels
+[spawn_robot2-4] [wheel_status_publisher-36] [INFO] [1791623234.856443492] [robot2.wheel_status_publisher]: Advertised topic: wheel_ticks
+[spawn_robot2-4] [parameter_bridge-10] [INFO] [1791623234.862142190] [robot2.bumper_contact_bridge]: Creating GZ->ROS Bridge: [robot2/bumper_contact (gz.msgs.Contacts) -> robot2/bumper_contact (ros_gz_interfaces/msg/Contacts)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-8] [INFO] [1791623234.886377054] [robot2.pose_bridge]: Creating GZ->ROS Bridge: [/model/robot2/turtlebot4/pose (gz.msgs.Pose_V) -> /model/robot2/turtlebot4/pose (tf2_msgs/msg/TFMessage)] (Lazy 0)
+[spawn_robot2-4] [static_transform_publisher-31] [INFO] [1791623234.887521233] [robot2.tf_namespaced_odom_publisher]: Spinning until stopped - publishing transform
+[spawn_robot2-4] [static_transform_publisher-31] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot2-4] [static_transform_publisher-31] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[spawn_robot2-4] [static_transform_publisher-31] from 'odom' to 'robot2/odom'
+[spawn_robot2-4] [parameter_bridge-8] [INFO] [1791623234.891455092] [robot2.pose_bridge]: Creating GZ->ROS Bridge: [/model/robot2/standard_dock/pose (gz.msgs.Pose_V) -> /model/robot2/standard_dock/pose (tf2_msgs/msg/TFMessage)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-19] [INFO] [1791623234.893724210] [robot2.ir_intensity_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/ir_intensity_left/sensor/ir_intensity_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/ir_intensity_left/sensor/ir_intensity_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [static_transform_publisher-45] [INFO] [1791623234.898525581] [robot2.camera_stf]: Spinning until stopped - publishing transform
+[spawn_robot2-4] [static_transform_publisher-45] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot2-4] [static_transform_publisher-45] rotation: ('0.499952', '-0.500000', '0.500000', '0.500048')
+[spawn_robot2-4] [static_transform_publisher-45] from 'oakd_rgb_camera_optical_frame' to 'robot2/turtlebot4/oakd_rgb_camera_frame/rgbd_camera'
+[spawn_robot2-4] [parameter_bridge-26] [INFO] [1791623234.899881510] [robot2.lidar_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/rplidar_link/sensor/rplidar/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/rplidar_link/sensor/rplidar/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.903172073] [robot2.ir_intensity_vector_publisher]: Advertised topic: ir_intensity
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.905732959] [robot2.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_center_left
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.907303346] [robot2.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_center_right
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.909433169] [robot2.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_left
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.911072463] [robot2.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_front_right
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.912622609] [robot2.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_left
+[spawn_robot2-4] [static_transform_publisher-44] [INFO] [1791623234.913070462] [robot2.rplidar_stf]: Spinning until stopped - publishing transform
+[spawn_robot2-4] [static_transform_publisher-44] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot2-4] [static_transform_publisher-44] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[spawn_robot2-4] [static_transform_publisher-44] from 'rplidar_link' to 'robot2/turtlebot4/rplidar_link/rplidar'
+[spawn_robot2-4] [parameter_bridge-11] [INFO] [1791623234.914465492] [robot2.cliff_front_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_front_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_front_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.915931794] [robot2.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_right
+[spawn_robot2-4] [ir_intensity_vector_publisher-34] [INFO] [1791623234.921962563] [robot2.ir_intensity_vector_publisher]: Subscription to topic: _internal/ir_intensity_side_left
+[spawn_robot2-4] [turtlebot4_node-28] [INFO] [1791623234.951502250] [robot2.turtlebot4_node]: Init Turtlebot4 Node Main
+[spawn_robot2-4] [turtlebot4_node-28] [INFO] [1791623235.037450446] [robot2.turtlebot4_node]: Buttons Init
+[spawn_robot2-4] [turtlebot4_node-28] [INFO] [1791623235.041380455] [robot2.turtlebot4_node]: Init Display
+[spawn_robot2-4] [turtlebot4_node-28] [INFO] [1791623235.044896269] [robot2.turtlebot4_node]: Leds Init
+[spawn_robot2-4] [turtlebot4_node-28] [INFO] [1791623235.058097391] [robot2.turtlebot4_node]: Turtlebot4 standard running.
+[spawn_robot2-4] [parameter_bridge-22] [INFO] [1791623235.199145259] [robot2.buttons_msg_bridge]: Creating GZ->ROS Bridge: [robot2/create3_buttons (gz.msgs.Int32) -> robot2/create3_buttons (std_msgs/msg/Int32)] (Lazy 0)
+[spawn_robot2-4] [robot_state-38] [INFO] [1791623235.217749635] [robot2.robot_state]: Advertised topic: battery_state
+[spawn_robot2-4] [parameter_bridge-20] [INFO] [1791623235.224213001] [robot2.ir_intensity_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/ir_intensity_right/sensor/ir_intensity_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/ir_intensity_right/sensor/ir_intensity_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [parameter_bridge-7] [INFO] [1791623235.268984018] [robot2.cmd_vel_bridge]: Creating GZ->ROS Bridge: [robot2/cmd_vel (gz.msgs.Twist) -> robot2/cmd_vel (geometry_msgs/msg/TwistStamped)] (Lazy 0)
+[spawn_robot2-4] [robot_state-38] [INFO] [1791623235.327696181] [robot2.robot_state]: Subscription to topic: dock_status
+[spawn_robot2-4] [robot_state-38] [INFO] [1791623235.344290480] [robot2.robot_state]: Advertised topic: stop_status
+[spawn_robot2-4] [robot_state-38] [INFO] [1791623235.370628563] [robot2.robot_state]: Subscription to topic: odom
+[spawn_robot2-4] [ui_mgr-40] [INFO] [1791623235.404852374] [robot2.ui_mgr]: Subscription to topic: cmd_lightring
+[spawn_robot2-4] [parameter_bridge-7] [INFO] [1791623235.429260953] [robot2.cmd_vel_bridge]: Creating ROS->GZ Bridge: [/model/robot2/turtlebot4/cmd_vel (geometry_msgs/msg/TwistStamped) -> /model/robot2/turtlebot4/cmd_vel (gz.msgs.Twist)] (Lazy 0)
+[spawn_robot2-4] [ui_mgr-40] [INFO] [1791623235.441264003] [robot2.ui_mgr]: Subscription to topic: cmd_audio
+[gazebo-1] [WARN] [1791623235.458295106] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623235.484803540] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 2.5800000000) because it is older than the current time by 0.5100000000 seconds, which exceeds the allowed timeout (0.5000)
+[spawn_robot2-4] [create-6] [INFO] [1791623235.817656642] [robot2.ros_gz_sim]: Waiting messages on topic [standard_dock_description].
+[spawn_robot2-4] [create-5] [INFO] [1791623235.837969413] [robot2.ros_gz_sim]: Waiting messages on topic [robot_description].
+[spawn_robot2-4] [spawner-30] [INFO] [1791623236.235064583] [robot2.spawner_joint_state_broadcaster]: waiting for service /robot2/controller_manager/list_controllers to become available...
+[spawn_robot2-4] [parameter_bridge-13] [INFO] [1791623236.316249314] [robot2.cliff_side_left_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_side_left/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/base_link/sensor/cliff_side_left/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [static_transform_publisher-32] [INFO] [1791623236.344619877] [robot2.tf_namespaced_base_link_publisher]: Spinning until stopped - publishing transform
+[spawn_robot2-4] [static_transform_publisher-32] translation: ('0.000000', '0.000000', '0.000000')
+[spawn_robot2-4] [static_transform_publisher-32] rotation: ('0.000000', '0.000000', '0.000000', '1.000000')
+[spawn_robot2-4] [static_transform_publisher-32] from 'robot2/base_link' to 'base_link'
+[spawn_robot2-4] [parameter_bridge-9] [INFO] [1791623236.411360527] [robot2.odom_base_tf_bridge]: Creating GZ->ROS Bridge: [/model/robot2/turtlebot4/tf (gz.msgs.Pose_V) -> /model/robot2/turtlebot4/tf (tf2_msgs/msg/TFMessage)] (Lazy 0)
+[spawn_robot2-4] [create-6] [INFO] [1791623236.822659644] [robot2.ros_gz_sim]: Waiting messages on topic [standard_dock_description].
+[spawn_robot2-4] [parameter_bridge-16] [INFO] [1791623236.874532077] [robot2.ir_intensity_front_center_right_bridge]: Creating GZ->ROS Bridge: [/world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_center_right/sensor/ir_intensity_front_center_right/scan (gz.msgs.LaserScan) -> /world/holloween/model/robot2/turtlebot4/link/ir_intensity_front_center_right/sensor/ir_intensity_front_center_right/scan (sensor_msgs/msg/LaserScan)] (Lazy 0)
+[spawn_robot2-4] [create-5] [INFO] [1791623236.892909396] [robot2.ros_gz_sim]: Entity creation successful.
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.020745242] [robot2.hazards_vector_publisher]: Advertised topic: hazard_detection
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.043263306] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/bumper/event
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.062356747] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/cliff_front_left/event
+[spawn_robot2-4] [kidnap_estimator_publisher-39] [INFO] [1791623237.077630300] [robot2.kidnap_estimator_publisher]: Advertised topic: kidnap_status
+[spawn_robot2-4] [kidnap_estimator_publisher-39] [INFO] [1791623237.112971760] [robot2.kidnap_estimator_publisher]: Subscription to topic: hazard_detection
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.115556772] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/cliff_front_right/event
+[spawn_robot2-4] [joint_state_publisher-2] [INFO] [1791623237.163612826] [robot2.joint_state_publisher]: Waiting for robot_description to be published on the robot_description topic...
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.168087108] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/cliff_side_left/event
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.210889570] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/cliff_side_right/event
+[spawn_robot2-4] [mock_publisher-37] [INFO] [1791623237.217836617] [robot2.mock_publisher]: Advertised mocked topic: slip_status
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.272049701] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/wheel_drop/left_wheel/event
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.329376387] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/wheel_drop/right_wheel/event
+[spawn_robot2-4] [hazards_vector_publisher-33] [INFO] [1791623237.390007925] [robot2.hazards_vector_publisher]: Subscription to topic: _internal/backup_limit
+[spawn_robot2-4] [parameter_bridge-25] [INFO] [1791623237.551986908] [robot2.hmi_led_msg_bridge]: Passing message from ROS std_msgs/msg/Int32 to Gazebo gz.msgs.Int32 (showing msg only once per type)
+[gazebo-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="turtlebot4"]/joint[@name="wheel_drop_left_joint"]/physics/ode/provide_feedback:<urdf-string>:L0]: XML Element[provide_feedback], child of element[ode], not defined in SDF. Copying[provide_feedback] as children of [ode].
+[gazebo-1] [1;33mWarning [Utils.cc:132][0m [/sdf/model[@name="turtlebot4"]/joint[@name="wheel_drop_right_joint"]/physics/ode/provide_feedback:<urdf-string>:L0]: XML Element[provide_feedback], child of element[ode], not defined in SDF. Copying[provide_feedback] as children of [ode].
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:933] [0m[1;33mGazebo does not support Ogre material scripts. See [0m[1;33mhttps://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials [0m[1;33mfor details.[0m[1;33m[0m
+[gazebo-1] [1;33m[Wrn] [SdfEntityCreator.cc:949] [0m[1;33mUsing an internal gazebo.material to parse [0m[1;33mGazebo/DarkGrey[0m[1;33m[0m
+[spawn_robot2-4] [create-6] [INFO] [1791623237.823227516] [robot2.ros_gz_sim]: Waiting messages on topic [standard_dock_description].
+[spawn_robot2-4] [create-6] [INFO] [1791623238.823597123] [robot2.ros_gz_sim]: Waiting messages on topic [standard_dock_description].
+[spawn_robot2-4] [INFO] [create-5]: process has finished cleanly [pid 205454]
+[spawn_robot2-4] [create-6] [INFO] [1791623239.831386699] [robot2.ros_gz_sim]: Entity creation successful.
+[spawn_robot2-4] [joint_state_publisher-2] [INFO] [1791623240.053547460] [robot2.joint_state_publisher]: Got description, configuring robot
+[spawn_robot2-4] [motion_control-35] [INFO] [1791623240.667163008] [robot2.motion_control]: Enabling REFLEX_BUMP
+[spawn_robot2-4] [motion_control-35] [INFO] [1791623240.796252731] [robot2.motion_control]: Enabling REFLEX_CLIFF
+[spawn_robot2-4] [motion_control-35] [INFO] [1791623240.951672515] [robot2.motion_control]: Enabling REFLEX_STUCK
+[spawn_robot2-4] [motion_control-35] [INFO] [1791623240.963677530] [robot2.motion_control]: Enabling REFLEX_WHEEL_DROP
+[spawn_robot2-4] [INFO] [create-6]: process has finished cleanly [pid 205455]
+[spawn_robot2-4] [parameter_bridge-23] [INFO] [1791623241.977864607] [robot2.hmi_display_msg_bridge]: Passing message from ROS std_msgs/msg/String to Gazebo gz.msgs.StringMsg (showing msg only once per type)
+[spawn_robot2-4] [parameter_bridge-23] [INFO] [1791623241.979682725] [robot2.hmi_display_msg_bridge]: Passing message from ROS std_msgs/msg/Int32 to Gazebo gz.msgs.Int32 (showing msg only once per type)
+[gazebo-1] [INFO] [1791623242.387437176] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['bumper_joint'] (Entity='915') is skipped.
+[gazebo-1] [INFO] [1791623242.387501415] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_caster_joint'] (Entity='916') is skipped.
+[gazebo-1] [INFO] [1791623242.387508534] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_left_bottom_weight_block_joint'] (Entity='917') is skipped.
+[gazebo-1] [INFO] [1791623242.387514409] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_left_top_weight_block_joint'] (Entity='918') is skipped.
+[gazebo-1] [INFO] [1791623242.387518804] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_right_bottom_weight_block_joint'] (Entity='919') is skipped.
+[gazebo-1] [INFO] [1791623242.387523309] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_right_top_weight_block_joint'] (Entity='920') is skipped.
+[gazebo-1] [INFO] [1791623242.387527515] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['imu_joint'] (Entity='921') is skipped.
+[gazebo-1] [INFO] [1791623242.387532102] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_center_left_joint'] (Entity='922') is skipped.
+[gazebo-1] [INFO] [1791623242.387537541] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_center_right_joint'] (Entity='923') is skipped.
+[gazebo-1] [INFO] [1791623242.387542925] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_left_joint'] (Entity='924') is skipped.
+[gazebo-1] [INFO] [1791623242.387548247] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_front_right_joint'] (Entity='925') is skipped.
+[gazebo-1] [INFO] [1791623242.387553558] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_left_joint'] (Entity='926') is skipped.
+[gazebo-1] [INFO] [1791623242.387558110] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_right_joint'] (Entity='927') is skipped.
+[gazebo-1] [INFO] [1791623242.387562995] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_intensity_side_left_joint'] (Entity='928') is skipped.
+[gazebo-1] [INFO] [1791623242.387567895] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['ir_omni_joint'] (Entity='929') is skipped.
+[gazebo-1] [INFO] [1791623242.387573278] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['mouse_joint'] (Entity='930') is skipped.
+[gazebo-1] [INFO] [1791623242.387577959] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_left_tower_standoff_joint'] (Entity='931') is skipped.
+[gazebo-1] [INFO] [1791623242.387582952] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['front_right_tower_standoff_joint'] (Entity='932') is skipped.
+[gazebo-1] [INFO] [1791623242.387588041] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_camera_bracket_joint'] (Entity='933') is skipped.
+[gazebo-1] [INFO] [1791623242.387592599] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_joint'] (Entity='934') is skipped.
+[gazebo-1] [INFO] [1791623242.387683388] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_imu_joint'] (Entity='935') is skipped.
+[gazebo-1] [INFO] [1791623242.387688632] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_left_camera_joint'] (Entity='936') is skipped.
+[gazebo-1] [INFO] [1791623242.387694299] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_left_camera_optical_joint'] (Entity='937') is skipped.
+[gazebo-1] [INFO] [1791623242.387699531] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_rgb_camera_joint'] (Entity='938') is skipped.
+[gazebo-1] [INFO] [1791623242.387704305] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_rgb_camera_optical_joint'] (Entity='939') is skipped.
+[gazebo-1] [INFO] [1791623242.387724725] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_right_camera_joint'] (Entity='940') is skipped.
+[gazebo-1] [INFO] [1791623242.387729513] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['oakd_right_camera_optical_joint'] (Entity='941') is skipped.
+[gazebo-1] [INFO] [1791623242.387733783] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['rear_left_tower_standoff_joint'] (Entity='942') is skipped.
+[gazebo-1] [INFO] [1791623242.387737922] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['rear_right_tower_standoff_joint'] (Entity='943') is skipped.
+[gazebo-1] [INFO] [1791623242.387947079] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['rplidar_joint'] (Entity='944') is skipped.
+[gazebo-1] [INFO] [1791623242.387961511] [robot2.gz_ros_control]: [gz_ros2_control] Fixed joint ['tower_sensor_plate_joint'] (Entity='945') is skipped.
+[gazebo-1] [INFO] [1791623242.396101282] [robot2.gz_ros_control]: Loading controller_manager
+[gazebo-1] [INFO] [1791623242.638654357] [robot2.controller_manager]: Using ROS clock for triggering controller manager cycles.
+[gazebo-1] [WARN] [1791623242.638714858] [robot2.controller_manager]: The resource manager is not yet initialized, will wait for the robot description to initialize it..
+[gazebo-1] [INFO] [1791623242.655414061] [robot2.controller_manager]: Subscribing to '/robot2/robot_description' topic for robot description.
+[gazebo-1] [WARN] [1791623242.655507034] [robot2.gz_ros_control]: Waiting RM to load and initialize hardware...
+[gazebo-1] [INFO] [1791623242.669249352] [robot2.controller_manager]: Received robot description from topic.
+[gazebo-1] [INFO] [1791623242.669367711] [robot2.controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[gazebo-1] [INFO] [1791623242.672901658] [robot2.gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gazebo-1] [INFO] [1791623242.673015652] [robot2.gz_ros_control]: Loading joint: left_wheel_joint
+[gazebo-1] [INFO] [1791623242.673021792] [robot2.gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1791623242.673025416] [robot2.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623242.673028250] [robot2.gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1791623242.673032026] [robot2.gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1791623242.673034415] [robot2.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623242.673057634] [robot2.gz_ros_control]: Loading sensor: imu
+[gazebo-1] [INFO] [1791623242.673064527] [robot2.gz_ros_control]: 	State:
+[gazebo-1] [WARN] [1791623242.673067831] [robot2.gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gazebo-1] [INFO] [1791623242.673071051] [robot2.gz_ros_control]: Loading sensor: imu
+[gazebo-1] [INFO] [1791623242.673073349] [robot2.gz_ros_control]: 	State:
+[gazebo-1] [WARN] [1791623242.673075233] [robot2.gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gazebo-1] [INFO] [1791623242.673110656] [robot2.controller_manager]: Initialize hardware 'left_wheel_controller' 
+[gazebo-1] [WARN] [1791623242.673119565] [robot2.controller_manager.hardware_component.system.left_wheel_controller]: Executor is not available during hardware component initialization for 'left_wheel_controller'. Skipping node creation!
+[gazebo-1] [INFO] [1791623242.673140996] [robot2.controller_manager]: Successful initialization of hardware 'left_wheel_controller'
+[gazebo-1] [INFO] [1791623242.673193171] [robot2.gz_ros_control]: The position_proportional_gain has been set to: 0.1
+[gazebo-1] [INFO] [1791623242.673219812] [robot2.gz_ros_control]: Loading joint: right_wheel_joint
+[gazebo-1] [INFO] [1791623242.673224954] [robot2.gz_ros_control]: 	State:
+[gazebo-1] [INFO] [1791623242.673228280] [robot2.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623242.673231046] [robot2.gz_ros_control]: 		 position
+[gazebo-1] [INFO] [1791623242.673233579] [robot2.gz_ros_control]: 	Command:
+[gazebo-1] [INFO] [1791623242.673235633] [robot2.gz_ros_control]: 		 velocity
+[gazebo-1] [INFO] [1791623242.673250083] [robot2.gz_ros_control]: Loading sensor: imu
+[gazebo-1] [INFO] [1791623242.673253536] [robot2.gz_ros_control]: 	State:
+[gazebo-1] [WARN] [1791623242.673256769] [robot2.gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gazebo-1] [INFO] [1791623242.673260546] [robot2.gz_ros_control]: Loading sensor: imu
+[gazebo-1] [INFO] [1791623242.673263894] [robot2.gz_ros_control]: 	State:
+[gazebo-1] [WARN] [1791623242.673267288] [robot2.gz_ros_control]: IMU sensor 'imu' not found in hardware_info, skipping.
+[gazebo-1] [INFO] [1791623242.673282748] [robot2.controller_manager]: Initialize hardware 'right_wheel_controller' 
+[gazebo-1] [WARN] [1791623242.673288932] [robot2.controller_manager.hardware_component.system.right_wheel_controller]: Executor is not available during hardware component initialization for 'right_wheel_controller'. Skipping node creation!
+[gazebo-1] [INFO] [1791623242.673300008] [robot2.controller_manager]: Successful initialization of hardware 'right_wheel_controller'
+[gazebo-1] [INFO] [1791623242.673321166] [robot2.controller_manager]: Activating component 'right_wheel_controller'.
+[gazebo-1] [INFO] [1791623242.673345573] [resource_manager]: 'configure' hardware 'right_wheel_controller' 
+[gazebo-1] [INFO] [1791623242.673348288] [robot2.gz_ros_control]: System Successfully configured!
+[gazebo-1] [INFO] [1791623242.673352525] [resource_manager]: Successful 'configure' of hardware 'right_wheel_controller'
+[gazebo-1] [INFO] [1791623242.673356406] [resource_manager]: 'activate' hardware 'right_wheel_controller' 
+[gazebo-1] [INFO] [1791623242.673359477] [resource_manager]: Successful 'activate' of hardware 'right_wheel_controller'
+[gazebo-1] [INFO] [1791623242.673380678] [robot2.controller_manager]: Activating component 'left_wheel_controller'.
+[gazebo-1] [INFO] [1791623242.673384099] [resource_manager]: 'configure' hardware 'left_wheel_controller' 
+[gazebo-1] [INFO] [1791623242.673385833] [robot2.gz_ros_control]: System Successfully configured!
+[gazebo-1] [INFO] [1791623242.673389250] [resource_manager]: Successful 'configure' of hardware 'left_wheel_controller'
+[gazebo-1] [INFO] [1791623242.673391360] [resource_manager]: 'activate' hardware 'left_wheel_controller' 
+[gazebo-1] [INFO] [1791623242.673393129] [resource_manager]: Successful 'activate' of hardware 'left_wheel_controller'
+[gazebo-1] [WARN] [1791623242.673409769] [robot2.controller_manager]: Component 'right_wheel_controller' does not have read or write statistics initialized, skipping registration.
+[gazebo-1] [WARN] [1791623242.673413666] [robot2.controller_manager]: Component 'left_wheel_controller' does not have read or write statistics initialized, skipping registration.
+[gazebo-1] [INFO] [1791623242.673418283] [robot2.controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[gazebo-1] [INFO] [1791623242.766770603] [robot2.controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[gazebo-1] [INFO] [1791623242.766817100] [robot2.controller_manager]: Loading controller 'joint_state_broadcaster'
+[gazebo-1] [WARN] [1791623242.768185770] [robot2.controller_manager]: The use of remapping arguments to the controller_manager node is deprecated. Please use the '--controller-ros-args' argument of the spawner to pass remapping arguments to the controller node.
+[gazebo-1] [INFO] [1791623242.768225797] [robot2.controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file /home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml --ros-args --remap ~/odom:=odom --remap /tf:=tf --remap /tf_static:=tf_static --remap /diagnostics:=diagnostics -p use_sim_time:=true --param use_sim_time:=true 
+[spawn_robot2-4] [spawner-30] [INFO] [1791623242.843966642] [robot2.spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[gazebo-1] [INFO] [1791623242.854357221] [robot2.controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[gazebo-1] [INFO] [1791623242.854523157] [robot2.joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[gazebo-1] [INFO] [1791623242.870602412] [robot2.controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[spawn_robot2-4] [parameter_bridge-7] [INFO] [1791623244.698834892] [robot2.cmd_vel_bridge]: Passing message from ROS geometry_msgs/msg/TwistStamped to Gazebo gz.msgs.Twist (showing msg only once per type)
+[gazebo-1] [ERROR] [1791623244.722582428] [robot2.gz_ros_control]: Desired controller update period (0.001 s) is faster than the gazebo simulation period (0.006 s).
+[gazebo-1] [INFO] [1791623244.725590009] [robot2.controller_manager]: Successfully switched controllers!
+[spawn_robot2-4] [spawner-30] [INFO] [1791623244.766766684] [robot2.spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[spawn_robot2-4] [INFO] [spawner-30]: process has finished cleanly [pid 205567]
+[spawn_robot2-4] [INFO] [spawner-46]: process started with pid [206359]
+[spawn_robot2-4] [spawner-46] [INFO] [1791623245.273150203] [robot2.spawner_diffdrive_controller]: waiting for service /robot2/controller_manager/list_controllers to become available...
+[gazebo-1] [1;32m[Msg] [0m[1;32mContact system publishing on [0m[1;32mrobot2/bumper_contact[0m[1;32m[0m
+[gazebo-1] [1;32m[Msg] [0m[1;32mContact system publishing on [0m[1;32mrobot2/bumper_contact[0m[1;32m[0m
+[gazebo-1] [WARN] [1791623247.657743010] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[spawn_robot2-4] [spawner-46] [INFO] [1791623249.314414279] [robot2.spawner_diffdrive_controller]: Setting controller param "params_file" to "['/home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml']" for diffdrive_controller
+[gazebo-1] [INFO] [1791623249.323788443] [robot2.controller_manager]: Loading controller : 'diffdrive_controller' of type 'diff_drive_controller/DiffDriveController'
+[gazebo-1] [INFO] [1791623249.323876655] [robot2.controller_manager]: Loading controller 'diffdrive_controller'
+[gazebo-1] [WARN] [1791623249.326984714] [robot2.controller_manager]: The use of remapping arguments to the controller_manager node is deprecated. Please use the '--controller-ros-args' argument of the spawner to pass remapping arguments to the controller node.
+[gazebo-1] [INFO] [1791623249.327065725] [robot2.controller_manager]: Controller 'diffdrive_controller' node arguments: --ros-args --params-file /home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml --ros-args --remap ~/odom:=odom --remap /tf:=tf --remap /tf_static:=tf_static --remap /diagnostics:=diagnostics -p use_sim_time:=true --params-file /home/mu-01/turtlebot4_ws/install/irobot_create_control/share/irobot_create_control/config/control.yaml --param use_sim_time:=true 
+[spawn_robot2-4] [spawner-46] [INFO] [1791623249.430527202] [robot2.spawner_diffdrive_controller]: Loaded diffdrive_controller
+[gazebo-1] [INFO] [1791623249.435232709] [robot2.controller_manager]: Configuring controller: 'diffdrive_controller'
+[gazebo-1] [WARN] [1791623249.435510807] [robot2.diffdrive_controller]: [deprecated] has_jerk_limits parameter is deprecated, instead set the respective limits to NAN
+[gazebo-1] [WARN] [1791623249.435550517] [robot2.diffdrive_controller]: [deprecated] has_jerk_limits parameter is deprecated, instead set the respective limits to NAN
+[gazebo-1] [WARN] [1791623249.442059067] [robot2.diffdrive_controller]: Can't accept new commands. subscriber is inactive
+[gazebo-1] [INFO] [1791623249.455001609] [robot2.controller_manager]: Activating controllers: [ diffdrive_controller ]
+[gazebo-1] [INFO] [1791623249.489481089] [robot2.controller_manager]: Successfully switched controllers!
+[gazebo-1] [WARN] [1791623249.502810325] [robot2.diffdrive_controller]: Command message contains NaNs. Not updating reference interfaces.
+[spawn_robot2-4] [spawner-46] [INFO] [1791623249.503930478] [robot2.spawner_diffdrive_controller]: Configured and activated diffdrive_controller
+[gazebo-1] [WARN] [1791623249.516628274] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[spawn_robot2-4] [INFO] [spawner-46]: process has finished cleanly [pid 206359]
+[gazebo-1] [WARN] [1791623251.082993457] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623252.657981875] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623254.138354967] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623255.715138809] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623257.158148800] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623258.746382531] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623260.201697349] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623261.780073215] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623263.310287080] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623264.852423943] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623266.331037243] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623267.882494551] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623269.358409996] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623270.915582518] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623272.395563536] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623273.947120800] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623275.470167181] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623277.013373571] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623278.495706244] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623280.117658176] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623281.545440119] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623283.111874163] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[INFO] [localization_robot1-6]: process started with pid [206405]
+[localization_robot1-6] [INFO] [launch]: All log files can be found below /home/mu-01/.ros/log/2026-10-10-18-08-04-005639-mu-01-206405
+[localization_robot1-6] [INFO] [launch]: Default logging verbosity is set to INFO
+[localization_robot1-6] [INFO] [map_server-1]: process started with pid [206408]
+[localization_robot1-6] [INFO] [amcl-2]: process started with pid [206409]
+[localization_robot1-6] [INFO] [lifecycle_manager-3]: process started with pid [206410]
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623284.165027779] [robot1.lifecycle_manager_localization]: Creating
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623284.173244473] [robot1.lifecycle_manager_localization]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[localization_robot1-6] [amcl-2] [INFO] [1791623284.192906960] [robot1.amcl]: 
+[localization_robot1-6] [amcl-2] 	amcl lifecycle node launched. 
+[localization_robot1-6] [amcl-2] 	Waiting on external lifecycle transitions to activate
+[localization_robot1-6] [amcl-2] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[localization_robot1-6] [map_server-1] [INFO] [1791623284.193557249] [robot1.map_server]: 
+[localization_robot1-6] [map_server-1] 	map_server lifecycle node launched. 
+[localization_robot1-6] [map_server-1] 	Waiting on external lifecycle transitions to activate
+[localization_robot1-6] [map_server-1] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[localization_robot1-6] [amcl-2] [INFO] [1791623284.193619954] [robot1.amcl]: Creating
+[localization_robot1-6] [map_server-1] [INFO] [1791623284.193713668] [robot1.map_server]: Creating
+[gazebo-1] [WARN] [1791623285.255225600] [robot2.diffdrive_controller]: Ignoring the received message (timestamp 29.0520000000) because it is older than the current time by 0.5040000000 seconds, which exceeds the allowed timeout (0.5000)
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623286.178476777] [robot1.lifecycle_manager_localization]: Waiting for service map_server/get_state...
+[gazebo-1] [WARN] [1791623286.846490965] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.318812249] [robot1.lifecycle_manager_localization]: [34m[1mStarting managed nodes bringup...[0m[0m
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.320984121] [robot1.lifecycle_manager_localization]: [34m[1mConfiguring map_server[0m[0m
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.329763103] [robot1.map_server]: Configuring
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.329889707] [map_io]: Loading yaml file: /home/mu-01/Trick_or_Bot/backend/maps/holloween_boo.yaml
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330278123] [map_io]: resolution: 0.05
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330298535] [map_io]: origin[0]: -4.859
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330304880] [map_io]: origin[1]: -4.126
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330308961] [map_io]: origin[2]: 0
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330313738] [map_io]: free_thresh: 0.196
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330317945] [map_io]: occupied_thresh: 0.65
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330324424] [map_io]: mode: trinary
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330330220] [map_io]: negate: 0
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.330577915] [map_io]: Loading image_file: /home/mu-01/Trick_or_Bot/backend/maps/holloween_boo.pgm
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.331128868] [map_io]: Read map /home/mu-01/Trick_or_Bot/backend/maps/holloween_boo.pgm: 92 X 129 map @ 0.05 m/cell
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.386737405] [robot1.lifecycle_manager_localization]: [34m[1mConfiguring amcl[0m[0m
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.387460002] [robot1.amcl]: Configuring
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.387562655] [robot1.amcl]: initTransforms
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.435180118] [robot1.amcl]: initPubSub
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.525676936] [robot1.amcl]: Subscribed to map topic.
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.548325868] [robot1.lifecycle_manager_localization]: [34m[1mActivating map_server[0m[0m
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.549293407] [robot1.map_server]: Activating
+[localization_robot1-6] [map_server-1] [INFO] [1791623287.549575225] [robot1.map_server]: Creating bond (map_server) to lifecycle manager.
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.549784897] [robot1.amcl]: Received a 92 X 129 map @ 0.050 m/pix
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.663225558] [robot1.lifecycle_manager_localization]: Server map_server connected with bond.
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.663297929] [robot1.lifecycle_manager_localization]: [34m[1mActivating amcl[0m[0m
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.663881705] [robot1.amcl]: Activating
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.663914227] [robot1.amcl]: initialPoseReceived
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.663989954] [robot1.amcl]: Setting pose (30.036000): -3.050 -3.590 1.571
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.664234422] [robot1.amcl]: Creating bond (amcl) to lifecycle manager.
+[localization_robot1-6] [amcl-2] [INFO] [1791623287.686534952] [robot1.amcl]: createLaserObject
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.776965847] [robot1.lifecycle_manager_localization]: Server amcl connected with bond.
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.777011814] [robot1.lifecycle_manager_localization]: [34m[1mManaged nodes are active[0m[0m
+[localization_robot1-6] [lifecycle_manager-3] [INFO] [1791623287.777020306] [robot1.lifecycle_manager_localization]: [34m[1mCreating bond timer...[0m[0m
+[gazebo-1] [WARN] [1791623289.515969669] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[localization_robot1-6] [amcl-2] [INFO] [1791623289.829282952] [robot1.amcl]: Message Filter dropping message: frame 'robot1/turtlebot4/rplidar_link/rplidar' at time 29.970 for reason 'the timestamp on the message is earlier than all the data in the transform cache'
+[INFO] [localization_robot2-7]: process started with pid [206486]
+[gazebo-1] [WARN] [1791623291.879004536] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[localization_robot2-7] [INFO] [launch]: All log files can be found below /home/mu-01/.ros/log/2026-10-10-18-08-12-004115-mu-01-206486
+[localization_robot2-7] [INFO] [launch]: Default logging verbosity is set to INFO
+[localization_robot2-7] [INFO] [map_server-1]: process started with pid [206491]
+[localization_robot2-7] [INFO] [amcl-2]: process started with pid [206494]
+[localization_robot2-7] [INFO] [lifecycle_manager-3]: process started with pid [206495]
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623292.192117006] [robot2.lifecycle_manager_localization]: Creating
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623292.199423715] [robot2.lifecycle_manager_localization]: [34m[1mCreating and initializing lifecycle service clients[0m[0m
+[localization_robot2-7] [amcl-2] [INFO] [1791623292.267099704] [robot2.amcl]: 
+[localization_robot2-7] [amcl-2] 	amcl lifecycle node launched. 
+[localization_robot2-7] [amcl-2] 	Waiting on external lifecycle transitions to activate
+[localization_robot2-7] [amcl-2] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[localization_robot2-7] [amcl-2] [INFO] [1791623292.268080373] [robot2.amcl]: Creating
+[localization_robot2-7] [map_server-1] [INFO] [1791623292.335748544] [robot2.map_server]: 
+[localization_robot2-7] [map_server-1] 	map_server lifecycle node launched. 
+[localization_robot2-7] [map_server-1] 	Waiting on external lifecycle transitions to activate
+[localization_robot2-7] [map_server-1] 	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[localization_robot2-7] [map_server-1] [INFO] [1791623292.335952672] [robot2.map_server]: Creating
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623294.203764278] [robot2.lifecycle_manager_localization]: Waiting for service map_server/get_state...
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.264977025] [robot2.lifecycle_manager_localization]: [34m[1mStarting managed nodes bringup...[0m[0m
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.265067002] [robot2.lifecycle_manager_localization]: [34m[1mConfiguring map_server[0m[0m
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.273581083] [robot2.map_server]: Configuring
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.273717592] [map_io]: Loading yaml file: /home/mu-01/Trick_or_Bot/backend/maps/holloween_boo.yaml
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274110439] [map_io]: resolution: 0.05
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274131196] [map_io]: origin[0]: -4.859
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274138440] [map_io]: origin[1]: -4.126
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274143199] [map_io]: origin[2]: 0
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274147918] [map_io]: free_thresh: 0.196
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274152082] [map_io]: occupied_thresh: 0.65
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274159106] [map_io]: mode: trinary
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274164791] [map_io]: negate: 0
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274407613] [map_io]: Loading image_file: /home/mu-01/Trick_or_Bot/backend/maps/holloween_boo.pgm
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.274979330] [map_io]: Read map /home/mu-01/Trick_or_Bot/backend/maps/holloween_boo.pgm: 92 X 129 map @ 0.05 m/cell
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.424209779] [robot2.lifecycle_manager_localization]: [34m[1mConfiguring amcl[0m[0m
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.428896020] [robot2.amcl]: Configuring
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.429040564] [robot2.amcl]: initTransforms
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.552716128] [robot2.amcl]: initPubSub
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.609576260] [robot2.amcl]: Subscribed to map topic.
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.631717743] [robot2.lifecycle_manager_localization]: [34m[1mActivating map_server[0m[0m
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.635132234] [robot2.map_server]: Activating
+[localization_robot2-7] [map_server-1] [INFO] [1791623295.635699654] [robot2.map_server]: Creating bond (map_server) to lifecycle manager.
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.799548112] [robot2.lifecycle_manager_localization]: Server map_server connected with bond.
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.799610490] [robot2.lifecycle_manager_localization]: [34m[1mActivating amcl[0m[0m
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.800492662] [robot2.amcl]: Activating
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.800531021] [robot2.amcl]: initialPoseReceived
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.800603906] [robot2.amcl]: Setting pose (0.000000): -1.000 1.690 -1.571
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.800912510] [robot2.amcl]: Creating bond (amcl) to lifecycle manager.
+[localization_robot2-7] [amcl-2] [INFO] [1791623295.820500571] [robot2.amcl]: Received a 92 X 129 map @ 0.050 m/pix
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.919940688] [robot2.lifecycle_manager_localization]: Server amcl connected with bond.
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.919982297] [robot2.lifecycle_manager_localization]: [34m[1mManaged nodes are active[0m[0m
+[localization_robot2-7] [lifecycle_manager-3] [INFO] [1791623295.919988337] [robot2.lifecycle_manager_localization]: [34m[1mCreating bond timer...[0m[0m
+[gazebo-1] [WARN] [1791623296.769904795] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[localization_robot2-7] [amcl-2] [INFO] [1791623297.495434438] [robot2.amcl]: createLaserObject
+[gazebo-1] [WARN] [1791623299.388776438] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623301.140030144] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623302.754018331] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623307.283677629] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623331.469617276] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623337.496971955] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623339.279994354] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623341.409641240] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623343.228116263] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623345.018770508] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623346.728769218] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623349.084955287] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623350.784194452] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623352.558197177] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623354.364897163] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623356.162083341] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623357.938411515] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623359.648778284] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623361.409111926] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623363.185945475] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623364.901660990] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623366.715043369] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623368.498885992] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623370.355670763] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623372.103078814] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623373.893887118] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623375.669099227] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623377.466536681] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623379.260957124] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623380.990061258] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623382.734924939] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623384.587469740] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623386.329750269] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623388.153854343] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623389.889372976] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623391.724413869] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623393.533280810] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623395.281321173] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623397.046886396] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623398.860252159] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623400.582099425] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623402.403196418] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623404.133935411] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623409.867421334] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623420.144409851] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623433.759886331] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623439.190105875] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623443.385997879] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623445.401107713] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623447.311125332] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623460.936657681] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623462.975953990] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623469.334746208] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623471.468288480] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623476.495009758] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623479.931996495] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623481.888985937] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623483.777142663] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623485.549912468] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623487.428266500] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623489.200253052] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623490.964680493] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623492.685415475] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623494.476387614] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623496.307846572] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623498.146235061] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623499.948667985] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623501.804920209] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623503.628293829] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623505.496211784] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623507.303928444] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623509.152907919] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623512.191971864] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623517.185008099] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623523.546360104] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623523.575832889] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.5160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.599980481] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.5400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.630450856] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.5700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.669011381] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.5940000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.757354013] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.6180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.792465437] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.6420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.825936020] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.6660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.850914322] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.6900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.929495381] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.7200000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.963373159] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.7440000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623523.999997110] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.7680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.031465746] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.7920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.096978202] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.8160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.147981832] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.8400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.179887866] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.8700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.224294652] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.8940000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.285148301] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.9180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.323861260] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.9420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.362233091] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.9660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.386480294] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 0.9900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.466638017] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.0200000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.503311491] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.0440000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.527306890] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.0680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.552440490] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.0920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.622997238] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.1160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.661501352] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.1400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.699884436] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.1700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.734066078] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.1940000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.796922514] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.2180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.837042931] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.2420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.870978507] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.2660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.900940406] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.2900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623524.969177101] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.3200000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623525.001570307] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.3440000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623525.048121956] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.3680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623525.079224185] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.3920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623525.146345416] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.4160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623525.180588366] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.4400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623525.222207872] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 122.0100000000) because it is older than the current time by 1.4700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623526.108472800] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623527.845682344] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623555.743716526] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623555.749984305] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.5100000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623555.791942204] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.5340000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623555.825084373] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.5640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623555.865406854] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.5880000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623555.945786492] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.6120000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623555.970066178] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.6360000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623555.996290186] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.6600000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.030147253] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.6840000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.113459322] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.7140000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.137265062] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.7380000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.170685509] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.7620000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.194579025] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.7860000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.255024080] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.8100000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.294844269] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.8340000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.324449871] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.8640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.348990880] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.8880000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.415544731] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.9120000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.452236652] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.9360000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.486651635] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.9600000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.525408072] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 0.9840000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.596695339] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.0140000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.621376918] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.0380000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.665465433] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.0620000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.689500536] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.0860000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.746433081] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.1100000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.771049724] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.1340000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.808593822] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.1640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.843653638] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.1880000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.906156263] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.2120000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.948222847] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.2360000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623556.971653620] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.2600000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.005871889] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.2840000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.076930216] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.3140000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.111018128] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.3380000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.147715454] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.3620000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.178749230] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.3860000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.241169995] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.4100000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.272798409] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.4340000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.311661211] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.4640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.335408351] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 140.9160000000) because it is older than the current time by 1.4880000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623557.354225951] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623646.215231692] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623646.266032748] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.5160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.290541534] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.5400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.319154134] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.5640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.359455434] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.5880000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.433068855] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.6180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.456379089] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.6420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.501841835] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.6660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.525971019] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.6900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.591324809] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.7140000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.632643601] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.7380000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.662018649] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.7680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.698321382] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.7920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.759756278] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.8160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.794472084] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.8400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.818607895] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.8640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.843445926] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.8880000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.911876052] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.9180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.935802766] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.9420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.974905564] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.9660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623646.999122806] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 0.9900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.061061537] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.0140000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.085145083] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.0380000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.131524576] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.0680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.165467346] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.0920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.232286233] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.1160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.272521191] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.1400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.296324604] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.1640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.324229267] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.1880000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.407931820] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.2180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.451344148] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.2420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.497558756] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.2660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.523149268] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.2900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.589450491] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.3140000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.626618934] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.3380000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.677184781] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.3680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.702786129] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.3920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.761531422] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.4160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.801484391] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.4400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623647.825905502] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 193.8120000000) because it is older than the current time by 1.4640000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623649.554520684] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623652.217728124] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623653.966526059] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623655.749867882] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623657.529001635] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623659.310862332] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623661.150366196] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623662.955782015] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623664.817926850] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623666.625652950] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623668.390951267] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623670.350054302] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623672.165254321] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623673.837509771] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623675.551982548] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623677.361183429] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623679.202768839] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623680.996485273] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623682.817986570] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623684.638892426] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623685.121209443] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.5160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.156866916] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.5400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.201179956] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.5700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.232182537] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.5940000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.295441909] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.6180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.314287772] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.6420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.346531702] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.6660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.377672730] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.6900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.459905293] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.7200000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.504268007] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.7440000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.537971819] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.7680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.562458643] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.7920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.629844849] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.8160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.666602409] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.8400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.696579105] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.8700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.731933203] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.8940000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.802168989] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.9180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.827252566] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.9420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.863891411] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.9660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.900776969] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 0.9900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623685.976052505] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.0200000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.000108150] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.0440000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.037564770] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.0680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.063615122] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.0920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.145051536] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.1160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.169174159] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.1400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.215509957] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.1700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.243040186] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.1940000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.321012279] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.2180000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.360123853] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.2420000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.366718919] [robot1.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623686.386106200] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.2660000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.418692759] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.2900000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.497739753] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.3200000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.532112577] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.3440000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.566403524] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.3680000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.589897525] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.3920000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.655226849] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.4160000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.694226176] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.4400000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.731820748] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.4700000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623686.772367122] [robot1.diffdrive_controller]: Ignoring the received message (timestamp 216.5100000000) because it is older than the current time by 1.4940000000 seconds, which exceeds the allowed timeout (0.5000)
+[gazebo-1] [WARN] [1791623688.267830301] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623690.101562454] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623691.886178510] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
+[gazebo-1] [WARN] [1791623693.681265789] [robot2.diffdrive_controller]: Velocity command timed out. Braking.
