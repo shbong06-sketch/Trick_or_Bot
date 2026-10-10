@@ -1,0 +1,12 @@
+[INFO] [1791621080.590867901] [robot1.boo_controller]: boo_controller 시작: 순찰 지점 2개, 게임 상태 필요=False, 안전 상태 필요=False
+[INFO] [1791621081.039264717] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+[INFO] [1791621097.507063465] [robot1.boo_controller]: Nav2 목표 1 결과: SUCCEEDED
+[INFO] [1791621137.084971639] [robot1.boo_controller]: Nav2 목표 2 결과: SUCCEEDED
+[INFO] [1791621170.898791824] [robot1.boo_controller]: Nav2 목표 취소: 펌킨 발견
+[INFO] [1791621170.899375516] [robot1.boo_controller]: 상태 PATROL → SUSPECT: 펌킨 발견
+[INFO] [1791621170.928905186] [robot1.boo_controller]: Nav2 목표 3 결과: CANCELED
+[INFO] [1791621177.571018951] [robot1.boo_controller]: 상태 SUSPECT → CHASE: 의심 게이지 가득
+[INFO] [1791621225.261005339] [robot1.boo_controller]: Nav2 목표 4 결과: CANCELED
+[INFO] [1791621283.201904247] [robot1.boo_controller]: 상태 CHASE → SEARCH: 펌킨을 놓침
+[INFO] [1791621283.366251973] [robot1.boo_controller]: 상태 SEARCH → PATROL: 수색 종료
+[INFO] [1791621293.836113417] [robot1.boo_controller]: Nav2 목표 5 결과: SUCCEEDED

@@ -36,4 +36,5 @@
       search_hold_s: 0.0           # 수색 지점에서 머무는 시간 [s]
       search_timeout_s: 15.0       # 수색 지점까지 가는 최대 시간 [s]
       max_goal_failures: 3         # 순찰 목표가 연속 실패하면 멈추는 횟수
+      failure_hold_s: 5.0          # 연속 실패로 멈춘 뒤 이 시간[s]이 지나면 실패 횟수를 지우고 다시 시도
       suspect_hold: true           # 의심 중 멈춰서 관찰

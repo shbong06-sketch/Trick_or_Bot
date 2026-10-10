@@ -31,7 +31,7 @@ WORLD = 'holloween'   # 경로가 아니라 이름이어야 한다 (TB4 브리�
 LEVEL = REPO / 'boo_nav' / 'sim' / 'level1_sim.yaml'   # holloween_boo 지도와 시작 위치
 ROBOTS = (('robot1', 'boo_start', 'boo_model'), ('robot2', 'pumpkin_start', 'model'))
 SPAWN_GAP_S = 8.0   # 두 번째 로봇은 첫 로봇이 다 뜬 뒤에 스폰 (동시에 띄우면 브리지·컨트롤러가 꼬이기 쉽다)
-LOCALIZATION_DELAY_S = 15.0  # 로봇 노드가 다 뜬 뒤 AMCL을 띄운다. 같이 띄우면 map_server가 Configuring에서 멈추는 일이 있다
+LOCALIZATION_DELAY_S = 60.0   # [boo_nav] 원본 15.0. 이 PC에서는 15초에 띄우면 localization 노드가 서로 연결되지 않았다(map_server/get_state 대기 반복)  # 로봇 노드가 다 뜬 뒤 AMCL을 띄운다. 같이 띄우면 map_server가 Configuring에서 멈추는 일이 있다
 
 
 OVERLAY = Path(os.environ.get('XDG_RUNTIME_DIR', '/tmp')) / 'pumpkin_run_overlay'

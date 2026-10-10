@@ -144,3 +144,13 @@ def test_canceled_result_is_ignored():
     fsm.step(0.1, None)
     fsm.on_nav_result(success=False, canceled=True)
     assert fsm.step(0.1, None).target == PATROL[0]
+
+
+def test_failure_stop_is_released_after_hold():
+    fsm = make(max_goal_failures=2, failure_hold_s=1.0)
+    fsm.step(0.1, None)
+    fsm.on_nav_result(success=False)
+    fsm.on_nav_result(success=False)
+    assert fsm.step(0.1, None).kind == CmdKind.STOP
+    assert run(fsm, 1.5, None).kind in (CmdKind.STOP, CmdKind.GOTO)
+    assert fsm.step(0.1, None).kind == CmdKind.GOTO   # 쉬었다가 다시 시도

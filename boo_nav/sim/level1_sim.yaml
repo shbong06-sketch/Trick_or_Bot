@@ -1,14 +1,15 @@
 # boo_nav 시험용 레벨 파일(Gazebo 월드 생성·AMCL 초기 위치용). 팀 backend/config/level1.yaml과 별개다.
 # 지도: backend/maps/holloween_boo.yaml (술래용 지도). 좌표는 이 지도의 map 좌표계다.
 # boo_start: 옛 시뮬레이션 화면(2026-10-10 16:44)에서 사용자가 흰색 사각형으로 표시한 자리(아래 벽 쪽, 도크 위치)에 해당하는
-#   holloween_boo 지도 위치. 아래 벽(자유 칸 끝 y=-3.80)에서 0.5 m 위, 벽까지 거리 0.5 m, 위(+y)를 향한다.
+#   holloween_boo 지도 위치. 도크 뒷면이 바로 뒤(아래) 벽에 닿도록 놓았다: 월드의 아래 벽 안쪽 면 y=-3.826,
+#   도크 뒷면은 로봇 중심에서 0.2305 m 뒤(도크 0.157 + 모델 반깊이 0.0735)라서 y=-3.826+0.2305+0.005≈-3.59. 위(+y)를 향한다.
 # 사탕·탈출문 표식은 넣지 않는다(아직 구현 대상이 아님).
 lv: 1
 name: Boo Nav2 시험용(holloween_boo 지도)
 map_yaml: ../../backend/maps/holloween_boo.yaml
 boo_start:
   x: -3.05
-  y: -3.3
+  y: -3.59
   yaw: 1.5708
 pumpkin_start:
   x: -2.5

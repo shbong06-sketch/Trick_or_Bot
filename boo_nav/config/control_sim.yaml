@@ -27,4 +27,5 @@
       search_hold_s: 0.0
       search_timeout_s: 15.0
       max_goal_failures: 3
+      failure_hold_s: 5.0
       suspect_hold: true

@@ -56,6 +56,7 @@ class FsmConfig:
     search_hold_s: float = 0.0        # 수색 지점에 도착해 머무는 시간
     search_timeout_s: float = 15.0    # 수색 지점까지 가는 데 쓸 최대 시간
     max_goal_failures: int = 3        # 순찰 목표가 연속 실패하면 멈추는 횟수
+    failure_hold_s: float = 5.0       # 연속 실패로 멈춘 뒤 이 시간이 지나면 실패 횟수를 지우고 다시 시도
     suspect_hold: bool = True         # 의심 중에 멈춰 서서 관찰할지
 
 
@@ -76,6 +77,7 @@ class BooFsm:
         self._arrived = False        # SEARCH의 목표에 도착했는지
         self._since_arrival = 0.0    # 도착한 뒤 흐른 시간
         self._failures = 0
+        self._fail_stop_s = 0.0      # 연속 실패로 멈춘 뒤 흐른 시간
 
     # ---- 외부 입력 ----
     def set_enabled(self, enabled: bool) -> None:
@@ -114,6 +116,8 @@ class BooFsm:
         self._state_s += dt
         if self._arrived:
             self._since_arrival += dt
+        if self._failures >= self.cfg.max_goal_failures:
+            self._fail_stop_s += dt
         if seen is not None:
             self.last_seen = seen
             self._unseen_s = 0.0
@@ -140,6 +144,9 @@ class BooFsm:
             return Command(CmdKind.STOP, reason='순찰 지점 없음')
         if self._failures >= self.cfg.max_goal_failures:
             self.reason = '순찰 목표 연속 실패'
+            if self._fail_stop_s >= self.cfg.failure_hold_s:
+                self._failures = 0    # 잠시 쉬었다가 처음부터 다시 시도한다(무한 재시도는 아님)
+                self._fail_stop_s = 0.0
             return Command(CmdKind.STOP, reason=self.reason)
         return Command(CmdKind.GOTO, self.patrol_points[self._patrol_index], '순찰')
 

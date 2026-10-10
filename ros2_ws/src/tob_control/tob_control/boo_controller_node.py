@@ -60,6 +60,7 @@ class BooControllerNode(Node):
             search_hold_s=p('search_hold_s').value,
             search_timeout_s=p('search_timeout_s').value,
             max_goal_failures=p('max_goal_failures').value,
+            failure_hold_s=p('failure_hold_s').value,
             suspect_hold=p('suspect_hold').value)
         self._fsm = BooFsm(cfg, points)
         self._nav = Nav2Client(self, p('nav2_action').value, self._frame, self._on_nav_result)
@@ -109,6 +110,7 @@ class BooControllerNode(Node):
             'search_hold_s': 0.0,
             'search_timeout_s': 15.0,
             'max_goal_failures': 3,
+            'failure_hold_s': 5.0,
             'suspect_hold': True,
         }
         for name, value in defaults.items():
@@ -191,6 +193,8 @@ class BooControllerNode(Node):
         self._publish_state(seen is not None)
 
     def _maybe_send(self, target: Point) -> None:
+        if not self._nav.server_ready():
+            return   # 서버가 준비되지 않은 상태를 이동 가능으로 취급하지 않는다(실패로도 세지 않는다)
         now = self.get_clock().now()
         moved = self._last_target is None or _dist(target, self._last_target) >= self._update_dist
         if self._hold is not None:

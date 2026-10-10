@@ -11,7 +11,7 @@ source ~/turtlebot4_ws/install/setup.bash
 source "$REPO/ros2_ws/install/setup.bash"
 # 팀 네트워크와 섞이지 않게 이 시험만 따로 둔다
 export ROS_DOMAIN_ID=77
-export ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+unset ROS_AUTOMATIC_DISCOVERY_RANGE ROS_DISCOVERY_SERVER
 unset ROS_DISCOVERY_SERVER
 
 ros2 run tob_control boo_controller_node --ros-args -r __ns:=/robot1 \
