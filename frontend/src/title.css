@@ -1,0 +1,573 @@
+.title-screen {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 30%, #512b48 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, #58240e 0%, transparent 55%),
+    linear-gradient(180deg, #080c1d 0%, #151126 60%, #0a080e 100%);
+}
+
+.title-screen::before {
+  content: "☾";
+  position: absolute;
+  top: 6%;
+  right: 15%;
+  font-size: 190px;
+  color: #ffdc91;
+  text-shadow: 0 0 70px #ff9429;
+  opacity: 0.75;
+}
+
+.title-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+}
+
+.title-pumpkin {
+  font-size: 100px;
+  filter: drop-shadow(0 0 35px #ff7518);
+  margin-bottom: 20px;
+}
+
+.game-title {
+  font-size: clamp(55px, 8vw, 120px);
+  font-weight: 1000;
+  letter-spacing: 5px;
+  color: #ff8c21;
+  text-shadow:
+    0 5px 0 #7c2f07,
+    0 12px 25px #000,
+    0 0 50px #ff6200;
+}
+
+.game-title span {
+  color: #ffe0a1;
+  font-size: 0.65em;
+}
+
+.game-subtitle {
+  font-size: 18px;
+  letter-spacing: 8px;
+  color: #d0a6a0;
+  margin: 25px 0 65px;
+}
+
+.game-start-button {
+  padding: 24px 85px;
+  font-size: 29px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #fff1d5;
+  border: 2px solid #ffb24a;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fb9128, #ae3709);
+  box-shadow: 0 10px 0 #632207, 0 0 45px #ff701866;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.game-start-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 0 #632207, 0 0 65px #ff7018;
+}
+
+/* Trick or Bot 로고 인트로 */
+
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #080808;
+}
+
+.intro-logo {
+  font-size: clamp(42px, 7vw, 110px);
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: #ff8124;
+  text-align: center;
+  text-shadow: 0 0 25px rgba(255, 100, 0, 0.5);
+  animation: introReveal 3.5s ease-in-out forwards;
+}
+
+.intro-logo span {
+  color: #fff0d0;
+  font-size: 0.65em;
+}
+
+@keyframes introReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  30% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+/* 게임 시작 화면 높이 수정 */
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.title-screen {
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.title-content {
+  box-sizing: border-box;
+}
+
+
+/* 이용 안내 화면 */
+.warning-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100dvh;
+  background: #111;
+  color: white;
+  animation: warningFade 5s ease-in-out forwards;
+}
+
+.warning-ratings {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  display: flex;
+  gap: 12px;
+}
+
+.rating-badge {
+  width: 78px;
+  height: 88px;
+  background: #335ea8;
+  border: 3px solid #eee;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.rating-badge span {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.rating-badge small {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.warning-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85%, 1000px);
+  text-align: center;
+  font-size: clamp(17px, 2vw, 30px);
+  font-weight: 600;
+  line-height: 1.8;
+  color: #f5f5f5;
+}
+
+@keyframes warningFade {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* STEP 3 — 할로윈 게임 타이틀 배경 */
+
+.title-screen {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 78% 20%,
+      rgba(130, 168, 236, 0.25),
+      transparent 24%),
+    radial-gradient(ellipse at 50% 95%,
+      rgba(255, 95, 15, 0.32),
+      transparent 55%),
+    linear-gradient(180deg,
+      #060b1e 0%,
+      #11152b 45%,
+      #271322 75%,
+      #10080e 100%);
+}
+
+/* 보름달 */
+.title-screen::before {
+  content: "";
+  position: absolute;
+  top: 9%;
+  right: 15%;
+  width: clamp(110px, 14vw, 220px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 36% 32%,
+      #ffffff,
+      #d2e7ff 45%,
+      #829bc5 85%);
+  box-shadow:
+    0 0 35px rgba(160, 205, 255, 0.65),
+    0 0 110px rgba(110, 160, 255, 0.3);
+  animation: moonGlow 5s ease-in-out infinite alternate;
+}
+
+/* 성 실루엣 */
+.title-screen::after {
+  content: "♜     ♜     ♜";
+  position: absolute;
+  bottom: -5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(130px, 22vw, 340px);
+  letter-spacing: -20px;
+  color: #05050c;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* 타이틀 UI */
+.title-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 24px;
+}
+
+.game-title {
+  color: #ff8b26;
+  text-shadow:
+    0 5px 0 #762407,
+    0 10px 20px #000,
+    0 0 40px rgba(255, 94, 0, 0.65);
+}
+
+.game-start-button {
+  position: relative;
+  z-index: 3;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game-start-button:hover {
+  transform: translateY(-5px) scale(1.04);
+}
+
+@keyframes moonGlow {
+  from {
+    box-shadow:
+      0 0 25px rgba(160, 205, 255, 0.5),
+      0 0 80px rgba(110, 160, 255, 0.2);
+  }
+  to {
+    box-shadow:
+      0 0 55px rgba(160, 205, 255, 0.8),
+      0 0 140px rgba(110, 160, 255, 0.4);
+  }
+}
+
+
+/* STEP 4 - 게임물 등급 및 내용정보 아이콘 */
+
+.warning-ratings {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.warning-ratings img {
+  width: auto;
+  height: 85px;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .warning-ratings {
+    top: 20px;
+    right: 20px;
+    gap: 8px;
+  }
+
+  .warning-ratings img {
+    height: 55px;
+  }
+}
+
+
+
+/* STEP 7 - Halloween Game Start Button */
+
+.title-screen .game-start-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  min-width: 340px;
+  padding: 22px 58px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #100a10 0%,
+      #35170d 45%,
+      #170a10 100%
+    );
+
+  border: 2px solid #e89b43;
+  border-radius: 8px;
+
+  color: #ffe4b0;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 4px;
+
+  text-shadow: 0 0 12px rgba(255, 125, 20, 0.7);
+
+  box-shadow:
+    inset 0 0 20px rgba(255, 104, 0, 0.18),
+    0 0 15px rgba(255, 105, 0, 0.35),
+    0 8px 0 #160905;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* 버튼 내부 빛 효과 */
+.title-screen .game-start-button::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+
+  top: 0;
+  left: -120%;
+
+  width: 70%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 170, 65, 0.35),
+    transparent
+  );
+
+  transform: skewX(-25deg);
+  animation: startButtonShine 4s ease-in-out infinite;
+}
+
+/* 마우스 올렸을 때 */
+.title-screen .game-start-button:hover {
+  transform: translateY(-5px) scale(1.04);
+
+  background: linear-gradient(
+    135deg,
+    #341308,
+    #78310d,
+    #341308
+  );
+
+  border-color: #ffcf72;
+
+  box-shadow:
+    inset 0 0 25px rgba(255, 150, 30, 0.35),
+    0 0 25px rgba(255, 111, 0, 0.65),
+    0 0 60px rgba(255, 85, 0, 0.25),
+    0 12px 0 #160905;
+}
+
+/* 버튼 누를 때 */
+.title-screen .game-start-button:active {
+  transform: translateY(5px) scale(0.98);
+
+  box-shadow:
+    inset 0 0 30px rgba(255, 125, 0, 0.5),
+    0 2px 0 #160905;
+}
+
+/* 은은하게 지나가는 빛 */
+@keyframes startButtonShine {
+  0%, 65% {
+    left: -120%;
+  }
+
+  100% {
+    left: 160%;
+  }
+}
+
+@media (max-width: 600px) {
+  .title-screen .game-start-button {
+    min-width: 0;
+    width: 85vw;
+    max-width: 340px;
+    padding: 20px;
+    font-size: 21px;
+    letter-spacing: 2px;
+  }
+}
+
+
+/* Trick or Bot - Gothic Manor Background */
+
+.title-screen {
+  position: relative;
+  isolation: isolate;
+
+  background:
+    url('/assets/backgrounds/mansion.png')
+    center center / cover no-repeat;
+}
+
+/* 기존 달과 성 제거 */
+.title-screen::before,
+.title-screen::after {
+  display: none;
+}
+
+/* 기존 호박 제거 */
+.title-screen .title-pumpkin {
+  display: none;
+}
+
+/* 로고와 버튼을 배경 위에 표시 */
+.title-screen .title-content {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* STEP 8 - 관리자 로그인 */
+
+.admin-login {
+  width: min(420px, 90%);
+  margin: 70px auto;
+  text-align: center;
+}
+
+.admin-login h2 {
+  color: #ffd18b;
+  margin-bottom: 30px;
+}
+
+.admin-login form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.admin-login input {
+  padding: 15px;
+  border: 1px solid #b88952;
+  border-radius: 6px;
+  background: #14111c;
+  color: white;
+  font-size: 16px;
+}
+
+.admin-login form button {
+  padding: 15px;
+  border: 1px solid #ffb34a;
+  border-radius: 6px;
+  background: linear-gradient(#da761f, #963806);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* 관리자 로그인 성공 시 상단 메뉴 */
+
+.admin-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 65px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 30px;
+  box-sizing: border-box;
+  background: rgba(12, 9, 18, 0.95);
+  border-bottom: 1px solid #b86b27;
+  color: white;
+}
+
+.admin-topbar-brand {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ff9b3d;
+}
+
+.admin-topbar nav {
+  display: flex;
+  gap: 15px;
+}
+
+.admin-topbar nav button {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.admin-topbar nav button:hover {
+  color: #ffae54;
+}
+

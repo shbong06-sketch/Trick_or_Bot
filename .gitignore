@@ -94,3 +94,35 @@ docs/ref/lecture/to_students/
 docs/ref/notion/P4_Final_Project/**/*.pdf
 docs/ref/notion/P4_Final_Project/**/*.png
 docs/ref/notion/P4_Final_Project/**/*.webm
+
+# Frontend (Node / Vite)
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+.env.local
+.env.*.local
+
+# Backup files
+*.bak
+*.bak_*
+
+# Backend (Python)
+.venv/
+__pycache__/
+
+# Backend 기록 DB
+backend/data/
+
+# TrickOrBot ROS 2 workspace
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+ros2_ws/**/__pycache__/
+
+
+# VS Code C/C++ cache
+.vscode/browse.vc.db*
+
+# VS Code temporary files
+.vscode/ipch/

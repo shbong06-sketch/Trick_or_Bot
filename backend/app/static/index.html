@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pumpkin Run</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0d0b14; color: #eee; font-family: system-ui, sans-serif; overflow: hidden; }
+    #fpv { position: relative; width: 100vw; height: 100vh; display: grid; place-items: center; }
+    #fpv .placeholder { color: #555; font-size: 1.4rem; }
+    #video { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+    /* ---- 상단 중앙: 남은 시간 + 사탕 ---- */
+    #top { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 18px;
+           padding: 6px 18px; border-radius: 14px; background: rgba(10, 6, 20, .55); backdrop-filter: blur(4px); }
+    #timer { font: 700 2.2rem/1 ui-monospace, monospace; letter-spacing: .04em; color: #fff; min-width: 4.2ch; text-align: center; }
+    #timer.warn { color: #ff5a4a; animation: blink 1s steps(2) infinite; }
+    @keyframes blink { 50% { opacity: .45; } }
+    #candies { display: flex; align-items: center; gap: 4px; }
+    #candies canvas { width: 44px; height: 44px; margin: -5px -4px; opacity: .25; filter: grayscale(1); transition: opacity .3s, filter .3s, transform .3s; }
+    #candies canvas.on { opacity: 1; filter: none; transform: scale(1.12); }
+    #candy-n { font: 700 1.2rem/1 ui-monospace, monospace; margin-left: 4px; }
+
+    /* ---- 우측 상단: 미니맵 ---- */
+    #minimap { position: absolute; top: 14px; right: 14px; width: 260px; border: 1px solid rgba(255,255,255,.18);
+               border-radius: 8px; background: rgba(10, 6, 20, .7); }
+
+    /* ---- 이후 단계용 빈 자리 (지금은 숨김) ---- */
+    #status-bar { position: absolute; left: 16px; bottom: 16px; display: flex; gap: 10px; }
+    #status-bar [data-slot] { display: none; }            /* hearts | chase | heartbeat | cctv-eye */
+    #gauge { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); display: none; }  /* 의심 게이지 */
+
+    /* ---- 우측 하단: 키 표시 ---- */
+    #keys { position: absolute; right: 16px; bottom: 16px; display: grid; grid-template-columns: repeat(3, 28px); gap: 3px; opacity: .8; }
+    #keys span { height: 28px; display: grid; place-items: center; border: 1px solid #555; border-radius: 5px;
+                 color: #888; font: 600 .8rem system-ui; background: rgba(0,0,0,.35); }
+    #keys span.on { background: #f80; color: #000; border-color: #f80; }
+
+    /* ---- 가운데 안내 ---- */
+    #overlay { position: absolute; inset: 0; display: none; place-items: center; background: rgba(5, 2, 12, .55); text-align: center; }
+    #overlay.show { display: grid; }
+    #overlay h1 { margin: 0; font-size: 3rem; color: #ffb347; text-shadow: 0 0 24px rgba(255,140,0,.6); }
+    #overlay p { margin: .6rem 0 0; color: #ddd; font-size: 1.1rem; }
+    #gatehint { position: absolute; top: 74px; left: 50%; transform: translateX(-50%); display: none; text-align: center;
+                padding: 6px 14px; border-radius: 10px; background: rgba(40, 10, 70, .7); color: #f3e8ff; font-weight: 600; }
+    #gatehint.show { display: block; }
+    #gatebar { margin-top: 5px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.15); overflow: hidden; }
+    #gatebar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #a855f7, #ffb347); }
+    #overlay.clear h1 { color: #ffe08a; text-shadow: 0 0 28px rgba(255,190,60,.8); }
+    #toast { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); padding: 8px 18px; border-radius: 10px;
+             background: rgba(120, 40, 200, .8); color: #fff; font-weight: 700; display: none; }
+    #toast.show { display: block; animation: pop .35s ease-out; }
+    @keyframes pop { from { transform: translateX(-50%) scale(.6); opacity: 0; } }
+
+    /* ---- 좌측 상단: 개발용 정보 (G로 켜고 끔) ---- */
+    #debug { position: absolute; top: 8px; left: 10px; font: 11px/1.35 monospace; color: #8a8; opacity: .85; white-space: pre; }
+    #debug .bad { color: #f66; }
+    #debug #pick { color: #fc6; }
+    body.nodebug #debug { display: none; }
+  </style>
+</head>
+<body>
+  <div id="fpv">
+    <span class="placeholder" id="placeholder">영상 기다리는 중…</span>
+    <canvas id="video"></canvas>
+
+    <div id="top">
+      <div id="timer">--:--</div>
+      <div id="candies"><span id="candy-n">0/3</span></div>
+    </div>
+    <canvas id="minimap"></canvas>
+
+    <!-- 이후 단계에서 채울 자리: 하트, 추적 여부, 두근두근, CCTV 눈 아이콘 / 의심 게이지 -->
+    <div id="status-bar">
+      <div data-slot="hearts"></div>
+      <div data-slot="chase"></div>
+      <div data-slot="heartbeat"></div>
+      <div data-slot="cctv-eye"></div>
+    </div>
+    <div id="gauge"></div>
+
+    <div id="keys"><i></i><span data-k="1">W</span><i></i><span data-k="2">A</span><span data-k="4">S</span><span data-k="8">D</span></div>
+    <div id="gatehint"><span id="gatehint-text"></span><div id="gatebar"><i id="gatebar-fill"></i></div></div>
+    <div id="toast"></div>
+    <div id="overlay"><div><h1 id="ov-title"></h1><p id="ov-sub"></p></div></div>
+
+    <div id="debug"><div id="net">연결 중…</div><div id="vstat"></div><div id="gstat"></div><div id="pick"></div><div id="info"></div></div>
+  </div>
+  <script>
+    const KEY_BITS = { KeyW: 1, KeyA: 2, KeyS: 4, KeyD: 8 };  // e.code라 한글 입력 상태에서도 동작
+    const HEARTBEAT_MS = 100;
+    const $ = id => document.getElementById(id);
+
+    let session = null;
+    let pose = null, boo = null;         // [x, y, yaw] (map), 5 Hz
+    let ws = null, seq = 0, mask = 0, heartbeat = null, rtt = null, busy = false;
+    let collected = new Set();           // 서버가 획득 판정한 사탕 id
+    const pendingGone = new Map();       // id → {ts: 서버 판정 시각, rx: 수신 시각} (브라우저 ms), 화면에서 빠지기 전
+    let game = { s: 'ready', t0: null, dur: 0, r: null, el: null };  // 서버 상태. 남은 시간은 브라우저가 계산
+    let gate = { op: null, dw: null, need: 3 };  // 탈출문: op = 열린 시각, dw = 문 앞 구역에 들어온 시각 (서버 s)
+    let occ = null;                      // 점유 격자 (Uint8Array, 셀당 1/0, 0행 = 맵 위쪽)
+    let clockOffset = null;              // 서버 시계 − 브라우저 시계 (ms)
+    const offsetSamples = [];
+    const allCollected = () => session && collected.size === session.candies.length;
+
+    fetch('/api/session?lv=1')
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(s => {
+        session = s;
+        occ = unpackOcc(s.map);
+        game.dur = s.time;
+        buildCandySlots(); buildMinimapBase(); drawMinimap(); drawHud(); drawOverlay();
+      })
+      .catch(e => { $('info').textContent = `세션 로드 실패: ${e}`; });
+
+    // ---- /ws/game ----
+    const gs = { bytes: 0, msgs: 0 };    // 게임 채널 수신량 (대역폭 확인용)
+    function connect() {
+      ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/game`);
+      ws.onopen = () => { busy = false; drawNet(); send({ t: 'ping', s: ++seq, c: performance.now() }); };
+      ws.onclose = () => {
+        stopHeartbeat();
+        mask = 0; drawKeys();
+        $('net').textContent = '연결 끊김 — 재연결 중…'; $('net').className = 'bad';
+        setTimeout(connect, 1000);
+      };
+      ws.onmessage = e => {
+        gs.bytes += e.data.length; gs.msgs++;
+        const m = JSON.parse(e.data);
+        if (m.t === 'a') {
+          const d = performance.now() - m.c;
+          rtt = rtt == null ? d : rtt * 0.8 + d * 0.2;
+          drawNet(d);
+          // 왕복이 가장 짧았던 최근 표본으로 시계 차이를 추정 (서버 시각은 왕복의 중간이라고 가정)
+          offsetSamples.push({ d, off: m.st * 1000 + d / 2 - Date.now() });
+          if (offsetSamples.length > 20) offsetSamples.shift();
+          clockOffset = offsetSamples.reduce((a, b) => (b.d < a.d ? b : a)).off;
+        }
+        else if (m.t === 'p') { if (m.a) pose = m.a; if (m.b) boo = m.b; drawMinimap(); drawHud(); }
+        else if (m.t === 'st') {
+          game = { s: m.s, t0: m.t0 ?? null, dur: m.dur, r: m.r ?? null, el: m.el ?? null };
+          drawOverlay(); drawTimer(); drawGateHint();
+        }
+        else if (m.t === 'gt') {
+          const wasOpen = gate.op != null;
+          gate = { op: m.op, dw: m.dw, need: m.need };
+          // 열린 시각을 브라우저 시계로 옮겨 애니메이션 시작점으로 쓴다 (늦게 접속했으면 이미 다 열린 상태)
+          gateOpenAt = m.op == null ? null : performance.now() - (serverNow() - m.op) * 1000;
+          if (!wasOpen && m.op != null && serverNow() - m.op < 2) showToast('🚪 문이 열렸다! 안으로 들어가자');
+          drawGateHint(); drawMinimap();
+        }
+        else if (m.t === 'busy') { busy = true; drawNet(); }
+        else if (m.t === 'own') { busy = false; drawNet(); }
+        else if (m.t === 'cds') {
+          collected = new Set(m.ids); pendingGone.clear();
+          drawCandyCount(); drawMinimap(); drawGateHint();
+        }
+        else if (m.t === 'cd') {
+          // 서버 판정 결과만 따른다. 다음에 그리는 프레임부터 이 사탕을 빼고, 사라진 시각을 잰다
+          collected.add(m.id);
+          pendingGone.set(m.id, { ts: m.ts * 1000, rx: Date.now() });
+          drawCandyCount(); drawMinimap();
+          if (allCollected()) showToast(`🎃 달빛 사탕 ${m.n}개! 탈출문 앞 원 안에서 ${gate.need}초 기다리자`);
+          drawGateHint();
+        }
+      };
+    }
+    function send(obj) {
+      if (ws && ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(obj));
+    }
+    connect();
+    setInterval(() => send({ t: 'ping', s: ++seq, c: performance.now() }), 2000);
+
+    // ---- 키 입력: 상태가 바뀔 때만 보내고, 누르는 동안 100 ms heartbeat ----
+    function setMask(next) {
+      if (next === mask) return;
+      mask = next;
+      send({ t: 'k', b: mask, s: ++seq, c: performance.now() });
+      drawKeys();
+      if (mask && !heartbeat) heartbeat = setInterval(() => send({ t: 'h', s: ++seq, c: performance.now() }), HEARTBEAT_MS);
+      if (!mask) stopHeartbeat();
+    }
+    function stopHeartbeat() { clearInterval(heartbeat); heartbeat = null; }
+
+    addEventListener('keydown', e => {
+      if (e.code === 'Enter' && !e.repeat && game.s !== 'run') { send({ t: 'start' }); return; }
+      if (e.code === 'KeyG' && !e.repeat) { document.body.classList.toggle('nodebug'); return; }
+      const bit = KEY_BITS[e.code];
+      if (!bit) return;
+      e.preventDefault();
+      if (!e.repeat) setMask(mask | bit);
+    });
+    addEventListener('keyup', e => {
+      const bit = KEY_BITS[e.code];
+      if (bit) setMask(mask & ~bit);
+    });
+    // 포커스를 잃으면 keyup이 오지 않으므로 직접 정지
+    addEventListener('blur', () => setMask(0));
+    document.addEventListener('visibilitychange', () => { if (document.hidden) setMask(0); });
+    addEventListener('pagehide', () => { setMask(0); ws && ws.close(); });
+
+    // ---- /ws/video: 44바이트 헤더 + JPEG ----
+    // u8 ver | u8 flags | u16 | u32 seq | f64 stamp | f32×7 map→광학 프레임 (x,y,z,qx,qy,qz,qw)
+    const HEADER = 44, FLAG_POSE = 1;
+    const video = $('video'), vctx = video.getContext('2d');
+    let pending = null, decoding = false;   // 디코딩 중에 온 프레임은 최신 1장만 남긴다
+    let lastFrame = null;                    // {seq, stamp, pose, w, h, k, dx, dy}
+    const vs = { frames: 0, bytes: 0, dropped: 0, lat: [], noPose: 0 };
+
+    function connectVideo() {
+      const v = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/video`);
+      v.binaryType = 'arraybuffer';
+      v.onmessage = e => {
+        vs.bytes += e.data.byteLength;
+        if (pending) vs.dropped++;
+        pending = e.data;
+        if (!decoding) decodeLatest();
+      };
+      v.onclose = () => setTimeout(connectVideo, 1000);
+    }
+    async function decodeLatest() {
+      decoding = true;
+      while (pending) {
+        const buf = pending; pending = null;
+        const dv = new DataView(buf);
+        const meta = {
+          seq: dv.getUint32(4, true),
+          stamp: dv.getFloat64(8, true),
+          pose: dv.getUint8(1) & FLAG_POSE ? Array.from({ length: 7 }, (_, i) => dv.getFloat32(16 + 4 * i, true)) : null,
+        };
+        try {
+          const bmp = await createImageBitmap(new Blob([new Uint8Array(buf, HEADER)], { type: 'image/jpeg' }));
+          drawFrame(bmp, meta);
+          bmp.close();
+        } catch (err) { console.warn('JPEG 디코딩 실패', err); }
+      }
+      decoding = false;
+    }
+    function drawFrame(bmp, meta) {
+      const dpr = devicePixelRatio || 1;
+      const W = Math.round(video.clientWidth * dpr), H = Math.round(video.clientHeight * dpr);
+      if (video.width !== W || video.height !== H) { video.width = W; video.height = H; }
+      // 비율 유지(contain): AR 좌표 변환에 같은 배율·오프셋을 쓴다
+      const k = Math.min(W / bmp.width, H / bmp.height);
+      const dw = bmp.width * k, dh = bmp.height * k, dx = (W - dw) / 2, dy = (H - dh) / 2;
+      vctx.fillStyle = '#000'; vctx.fillRect(0, 0, W, H);
+      vctx.drawImage(bmp, dx, dy, dw, dh);
+      lastFrame = { ...meta, w: bmp.width, h: bmp.height, k, dx, dy };
+      if (meta.pose && session) drawAR(lastFrame);
+      if (pendingGone.size) reportGone();
+      $('placeholder').style.display = 'none';
+      vs.frames++;
+      if (!meta.pose) vs.noPose++;
+      if (clockOffset != null) vs.lat.push(Date.now() + clockOffset - meta.stamp * 1000);
+    }
+
+    // ---- AR: 맵 좌표(바닥 z=0)를 이 프레임의 카메라 포즈로 투영 (브라우저 오버레이만) ----
+    const CANDY_R = 0.08;                 // 사탕 크기 기준 반지름 (m)
+    const GATE_W = 0.5;                   // 탈출문 폭 (m)
+    const ICON_MIN = 6, ICON_MAX = 140;   // 사탕 아이콘 반지름 한계 (canvas px)
+
+    // map 점 p → 광학 프레임 점: R^T (p − t). R은 쿼터니언 (qx,qy,qz,qw)
+    function mapToCamera(pose, p) {
+      const [tx, ty, tz, qx, qy, qz, qw] = pose;
+      const vx = p[0] - tx, vy = p[1] - ty, vz = p[2] - tz;
+      // 켤레 쿼터니언으로 회전: v' = v + 2w(u×v) + 2u×(u×v), u = −(qx,qy,qz)
+      const ux = -qx, uy = -qy, uz = -qz;
+      const cx1 = uy * vz - uz * vy, cy1 = uz * vx - ux * vz, cz1 = ux * vy - uy * vx;
+      const cx2 = uy * cz1 - uz * cy1, cy2 = uz * cx1 - ux * cz1, cz2 = ux * cy1 - uy * cx1;
+      return [vx + 2 * (qw * cx1 + cx2), vy + 2 * (qw * cy1 + cy2), vz + 2 * (qw * cz1 + cz2)];
+    }
+    // 광학 프레임 점 → 영상 픽셀. 실제 영상 크기가 camera_info와 다르면 내부 파라미터를 비율대로 맞춘다
+    function cameraToPixel(cam, frame, pc) {
+      const sx = frame.w / cam.w, sy = frame.h / cam.h;
+      return [cam.fx * sx * pc[0] / pc[2] + cam.cx * sx, cam.fy * sy * pc[1] / pc[2] + cam.cy * sy];
+    }
+    // 바닥 점 하나를 화면에 놓을 수 있으면 {X, Y, pxPerM, dist} (canvas px), 아니면 null
+    function placeOnFloor(f, x, y) {
+      if (occluded(f.pose[0], f.pose[1], x, y)) return null;           // 카메라→점 사이에 벽
+      const pc = mapToCamera(f.pose, [x, y, 0]);
+      if (pc[2] <= 0.05) return null;                                  // 카메라 뒤
+      const cam = session.cam, [u, v] = cameraToPixel(cam, f, pc);
+      if (u < 0 || u >= f.w || v < 0 || v >= f.h) return null;        // 화면 밖
+      return { X: f.dx + u * f.k, Y: f.dy + v * f.k, pxPerM: cam.fx * (f.w / cam.w) / pc[2] * f.k, dist: Math.hypot(pc[0], pc[2]) };
+    }
+    function drawAR(f) {
+      const items = [];
+      for (const cd of session.candies) {
+        if (collected.has(cd.id)) continue;                              // 서버가 획득 판정함
+        const p = placeOnFloor(f, cd.x, cd.y);
+        if (p) items.push({ kind: 'candy', id: cd.id, ...p, r: Math.min(ICON_MAX, Math.max(ICON_MIN, p.pxPerM * CANDY_R)) });
+      }
+      if (allCollected() && gate.op == null) drawGateZone(f);       // 문 앞 구역 (머무르면 열림)
+      const gp = placeOnFloor(f, session.gate.x, session.gate.y);   // 탈출문은 항상 (잠김/열림)
+      if (gp) items.push({ kind: 'gate', id: 'gate', ...gp });
+      items.sort((a, b) => b.dist - a.dist);  // 먼 것부터 그려 가까운 것이 위에 오게
+      const t = performance.now() / 1000;
+      for (const it of items) it.kind === 'gate' ? drawGate(vctx, it, t) : drawCandy(vctx, it, t);
+    }
+
+    // 문 앞 구역: 바닥에 빛나는 고리 + 머문 시간만큼 채워지는 호
+    function gateFront() {
+      const g = session.gate, yaw = g.yaw ?? 0;
+      return [g.x + g.front * Math.cos(yaw), g.y + g.front * Math.sin(yaw)];
+    }
+    function drawGateZone(f) {
+      const [fx, fy] = gateFront(), R = session.gate.zoneR, N = 40;
+      if (occluded(f.pose[0], f.pose[1], fx, fy)) return;
+      const cam = session.cam;
+      // 원 둘레를 바닥에 투영. 카메라 뒤로 넘어가는 점은 끊어 그린다
+      const pts = [];
+      for (let i = 0; i <= N; i++) {
+        const a = (session.gate.yaw ?? 0) + Math.PI + 2 * Math.PI * i / N;   // 문 반대쪽(다가오는 쪽)에서 시작
+        const pc = mapToCamera(f.pose, [fx + R * Math.cos(a), fy + R * Math.sin(a), 0]);
+        if (pc[2] <= 0.05) { pts.push(null); continue; }
+        const [u, v] = cameraToPixel(cam, f, pc);
+        pts.push([f.dx + u * f.k, f.dy + v * f.k]);
+      }
+      const stroke = (from, to, style, width) => {
+        vctx.strokeStyle = style; vctx.lineWidth = width; vctx.beginPath();
+        let pen = false;
+        for (let i = from; i <= to; i++) {
+          const p = pts[i];
+          if (!p) { pen = false; continue; }
+          pen ? vctx.lineTo(p[0], p[1]) : vctx.moveTo(p[0], p[1]);
+          pen = true;
+        }
+        vctx.stroke();
+      };
+      const dpr = devicePixelRatio || 1, pulse = 0.5 + 0.5 * Math.sin(performance.now() / 250);
+      vctx.save();
+      vctx.shadowColor = 'rgba(190,120,255,.9)'; vctx.shadowBlur = 14 * dpr;
+      stroke(0, N, `rgba(190,120,255,${0.45 + 0.35 * pulse})`, 3 * dpr);
+      const prog = dwellProgress();
+      if (prog > 0) {
+        vctx.shadowColor = 'rgba(255,190,80,.9)';
+        stroke(0, Math.round(N * prog), '#ffc56b', 7 * dpr);
+      }
+      vctx.restore();
+    }
+
+    // ---- 가림 처리: 맵 점유 격자에서 카메라→점 직선이 벽 셀을 지나는지 ----
+    function unpackOcc(m) {
+      const bits = Uint8Array.from(atob(m.occ), ch => ch.charCodeAt(0));
+      const out = new Uint8Array(m.w * m.h);
+      for (let i = 0; i < out.length; i++) out[i] = (bits[i >> 3] >> (i & 7)) & 1;
+      return out;
+    }
+    function occluded(x0, y0, x1, y1) {
+      if (!occ) return false;
+      const m = session.map;
+      const cell = (x, y) => {
+        const c = Math.floor((x - m.ox) / m.res), r = m.h - 1 - Math.floor((y - m.oy) / m.res);
+        return c < 0 || c >= m.w || r < 0 || r >= m.h ? -1 : r * m.w + c;
+      };
+      const a = cell(x0, y0), b = cell(x1, y1);
+      const n = Math.ceil(Math.hypot(x1 - x0, y1 - y0) / (m.res * 0.25)); // 1/4칸 간격 표본 (모서리 스침도 잡게)
+      for (let i = 1; i < n; i++) {
+        const k = cell(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n);
+        if (k >= 0 && k !== a && k !== b && occ[k]) return true;        // 양 끝 칸은 제외
+      }
+      return false;
+    }
+
+    // ---- 획득 측정: 서버 판정 → 수신 → 화면에서 사라짐 ----
+    function reportGone() {
+      const now = Date.now(), off = clockOffset ?? 0;
+      for (const [id, e] of pendingGone) {
+        const rx = e.rx + off - e.ts, gone = now + off - e.ts;   // 서버 시계 기준 ms
+        console.log(`[획득] ${id} 판정→수신 ${rx.toFixed(0)} ms, 판정→화면에서 사라짐 ${gone.toFixed(0)} ms`);
+        send({ t: 'cdlog', id, rx: Math.round(rx), gone: Math.round(gone) });
+        $('pick').textContent = `획득 ${id}: 판정→사라짐 ${gone.toFixed(0)} ms (수신 ${rx.toFixed(0)} ms)`;
+        $('pick').className = gone > 500 ? 'bad' : '';
+      }
+      pendingGone.clear();
+    }
+
+    // ---- 사탕 스프라이트: 한 번만 그려 두고 프레임마다 크기만 바꿔 찍는다 ----
+    const SPRITE = 256, BODY = 0.25 * SPRITE;   // 스프라이트 크기, 그 안의 몸통 반지름
+    const candySprite = (() => {
+      const c = document.createElement('canvas');
+      c.width = c.height = SPRITE;
+      const g = c.getContext('2d'), m = SPRITE / 2;
+
+      // 달빛 사탕 후광
+      const glow = g.createRadialGradient(m, m, BODY * 0.6, m, m, SPRITE * 0.5);
+      glow.addColorStop(0, 'rgba(255,214,120,.55)');
+      glow.addColorStop(1, 'rgba(255,214,120,0)');
+      g.fillStyle = glow; g.fillRect(0, 0, SPRITE, SPRITE);
+
+      // 양쪽 포장지: 몸통에서 퍼지는 부채꼴 + 주름
+      for (const s of [-1, 1]) {
+        const x0 = m + s * BODY * 0.75, x1 = m + s * BODY * 1.85;
+        const wrap = g.createLinearGradient(x0, 0, x1, 0);
+        wrap.addColorStop(0, '#c2410c'); wrap.addColorStop(0.45, '#fb923c'); wrap.addColorStop(1, '#fdba74');
+        g.fillStyle = wrap;
+        g.beginPath();
+        g.moveTo(x0, m - BODY * 0.22);
+        g.quadraticCurveTo(m + s * BODY * 1.3, m - BODY * 0.35, x1, m - BODY * 0.78);
+        g.quadraticCurveTo(m + s * BODY * 1.62, m, x1, m + BODY * 0.78);
+        g.quadraticCurveTo(m + s * BODY * 1.3, m + BODY * 0.35, x0, m + BODY * 0.22);
+        g.closePath(); g.fill();
+        g.strokeStyle = 'rgba(124,45,18,.45)'; g.lineWidth = SPRITE * 0.008;
+        for (const k of [-0.5, -0.2, 0.15, 0.45]) {
+          g.beginPath();
+          g.moveTo(m + s * BODY * 0.95, m + k * BODY * 0.35);
+          g.lineTo(m + s * BODY * 1.75, m + k * BODY * 1.5);
+          g.stroke();
+        }
+        // 매듭 (몸통과 포장지 사이 조여진 부분)
+        g.fillStyle = '#9a3412';
+        g.beginPath(); g.ellipse(m + s * BODY * 0.92, m, BODY * 0.12, BODY * 0.28, 0, 0, 7); g.fill();
+      }
+
+      // 몸통: 왼쪽 위에서 빛을 받는 구
+      const body = g.createRadialGradient(m - BODY * 0.35, m - BODY * 0.4, BODY * 0.1, m, m, BODY);
+      body.addColorStop(0, '#ffe7a3'); body.addColorStop(0.35, '#ff9f1c');
+      body.addColorStop(0.8, '#e2550f'); body.addColorStop(1, '#8a2c06');
+      g.fillStyle = body;
+      g.beginPath(); g.arc(m, m, BODY, 0, 7); g.fill();
+
+      // 소용돌이 줄무늬 (몸통 안쪽으로 잘라 그림)
+      g.save();
+      g.beginPath(); g.arc(m, m, BODY, 0, 7); g.clip();
+      g.strokeStyle = 'rgba(255,250,240,.9)'; g.lineWidth = BODY * 0.2; g.lineCap = 'round';
+      for (let k = 0; k < 3; k++) {
+        g.beginPath();
+        for (let t = 0; t <= 1.001; t += 0.04) {
+          const ang = k * 2.094 + t * 3.6, rr = BODY * (0.08 + 0.95 * t);
+          const x = m + rr * Math.cos(ang), y = m + rr * Math.sin(ang);
+          t === 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+        }
+        g.stroke();
+      }
+      // 줄무늬 위에 다시 음영을 얹어 둥글게 보이게
+      const shade = g.createRadialGradient(m - BODY * 0.3, m - BODY * 0.35, BODY * 0.2, m, m, BODY * 1.02);
+      shade.addColorStop(0, 'rgba(0,0,0,0)'); shade.addColorStop(0.7, 'rgba(60,20,0,.15)');
+      shade.addColorStop(1, 'rgba(60,20,0,.55)');
+      g.fillStyle = shade; g.fillRect(m - BODY, m - BODY, BODY * 2, BODY * 2);
+      g.restore();
+
+      // 반사광과 아래쪽 테두리 빛
+      const spec = g.createRadialGradient(m - BODY * 0.38, m - BODY * 0.45, 0, m - BODY * 0.38, m - BODY * 0.45, BODY * 0.42);
+      spec.addColorStop(0, 'rgba(255,255,255,.95)'); spec.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = spec;
+      g.beginPath(); g.ellipse(m - BODY * 0.38, m - BODY * 0.45, BODY * 0.42, BODY * 0.28, -0.6, 0, 7); g.fill();
+      g.strokeStyle = 'rgba(255,220,160,.5)'; g.lineWidth = BODY * 0.06;
+      g.beginPath(); g.arc(m, m, BODY * 0.93, 0.3, 1.9); g.stroke();
+      return c;
+    })();
+
+    // 바닥 점(X, Y)에 그림자를 깔고, 그 위에 사탕을 띄운다. r은 거리로 정한 화면상 크기(px)
+    function drawCandy(g, { id, X, Y, r, dist }, t) {
+      const phase = id.charCodeAt(id.length - 1);         // 사탕마다 움직임이 어긋나게
+      const bob = (Math.sin(t * 2.2 + phase) + 1) / 2;     // 0~1 위아래
+      const bodyR = r * 0.7;
+      const cy = Y - r * (0.9 + 0.35 * bob);               // 바닥에서 몸통 중심까지 높이
+
+      g.save();
+      // 바닥 그림자: 사탕이 높이 뜰수록 작고 옅게
+      const sw = r * (1.15 - 0.25 * bob), sh = sw * 0.32;
+      const sg = g.createRadialGradient(X, Y, 0, X, Y, sw);
+      sg.addColorStop(0, `rgba(0,0,0,${0.55 - 0.2 * bob})`); sg.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = sg;
+      g.beginPath(); g.ellipse(X, Y, sw, sh, 0, 0, 7); g.fill();
+
+      // 스프라이트를 몸통 크기에 맞춰 찍고, 살짝 흔든다
+      const k = bodyR / BODY;
+      g.translate(X, cy);
+      g.rotate(Math.sin(t * 1.3 + phase) * 0.18);
+      g.drawImage(candySprite, -SPRITE / 2 * k, -SPRITE / 2 * k, SPRITE * k, SPRITE * k);
+      g.restore();
+      arLabel(g, `${id} ${dist.toFixed(1)}m`, X, cy - bodyR * 1.9, r);
+    }
+
+    // ---- 탈출문: 처음엔 잠긴 문, 사탕을 다 모으면 양쪽 문짝이 열린다 ----
+    // 층을 나눠 한 번만 그려 두고(틀·빛·문짝 두 장), 그릴 때 열린 정도(0~1)에 맞춰 합친다
+    const GW = 256, GH = 320;                                  // 탈출문 스프라이트 크기
+    const G_IN = GW * 0.07;                                    // 틀 두께
+    const G_X0 = GW * 0.18 + G_IN, G_X1 = GW * 0.82 - G_IN;    // 안쪽(문짝) 좌우 끝 = 경첩 위치
+    const GATE_OPEN_MS = 1200;                                 // 문 열리는 시간
+    let gateOpenAt = null;                                     // 열리기 시작한 시각 (performance.now)
+
+    function gateArch(g, inset) {
+      const x0 = GW * 0.18 + inset, x1 = GW * 0.82 - inset, top = GH * 0.2 + inset, bot = GH * 0.98;
+      g.beginPath();
+      g.moveTo(x0, bot); g.lineTo(x0, top + (x1 - x0) / 2);
+      g.arc(GW / 2, top + (x1 - x0) / 2, (x1 - x0) / 2, Math.PI, 0);
+      g.lineTo(x1, bot); g.closePath();
+    }
+    function gateLayer(draw) {
+      const c = document.createElement('canvas');
+      c.width = GW; c.height = GH;
+      draw(c.getContext('2d'));
+      return c;
+    }
+    const GATE = {
+      // 틀 + 어두운 안쪽
+      frame: gateLayer(g => {
+        const frame = g.createLinearGradient(0, 0, GW, 0);
+        frame.addColorStop(0, '#3b1d5c'); frame.addColorStop(0.5, '#7c3aed'); frame.addColorStop(1, '#3b1d5c');
+        g.fillStyle = frame; gateArch(g, 0); g.fill();
+        g.fillStyle = '#120a1c'; gateArch(g, G_IN); g.fill();
+      }),
+      // 열렸을 때 보이는 축제의 빛 + 호박 얼굴
+      light: gateLayer(g => {
+        const inside = g.createLinearGradient(0, GH * 0.3, 0, GH);
+        inside.addColorStop(0, '#fff3c4'); inside.addColorStop(0.5, '#ffb347'); inside.addColorStop(1, '#ff7a00');
+        g.fillStyle = inside; gateArch(g, G_IN); g.fill();
+        g.fillStyle = 'rgba(120,40,0,.75)';
+        const fx = GW / 2, fy = GH * 0.6;
+        for (const s of [-1, 1]) {
+          g.beginPath(); g.moveTo(fx + s * 34, fy - 26); g.lineTo(fx + s * 14, fy - 6); g.lineTo(fx + s * 48, fy - 6); g.closePath(); g.fill();
+        }
+        g.beginPath(); g.moveTo(fx - 46, fy + 18);
+        for (let i = 0; i <= 6; i++) g.lineTo(fx - 46 + i * 15.3, fy + 18 + (i % 2 ? 14 : 0));
+        g.lineTo(fx + 46, fy + 34); g.lineTo(fx - 46, fy + 34); g.closePath(); g.fill();
+      }),
+      // 뒤에서 번지는 보랏빛 (열렸을 때만)
+      glow: gateLayer(g => {
+        const glow = g.createRadialGradient(GW / 2, GH * 0.55, 10, GW / 2, GH * 0.55, GW * 0.62);
+        glow.addColorStop(0, 'rgba(190,120,255,.6)'); glow.addColorStop(1, 'rgba(190,120,255,0)');
+        g.fillStyle = glow; g.fillRect(0, 0, GW, GH);
+      }),
+    };
+    // 나무 문짝 (side −1 = 왼쪽, +1 = 오른쪽). 안쪽 아치를 반으로 잘라 그린다
+    for (const side of [-1, 1]) {
+      GATE[side < 0 ? 'left' : 'right'] = gateLayer(g => {
+        g.save();
+        gateArch(g, G_IN); g.clip();
+        g.beginPath(); side < 0 ? g.rect(0, 0, GW / 2, GH) : g.rect(GW / 2, 0, GW / 2, GH); g.clip();
+        const wood = g.createLinearGradient(side < 0 ? G_X0 : GW / 2, 0, side < 0 ? GW / 2 : G_X1, 0);
+        wood.addColorStop(0, side < 0 ? '#4a2a17' : '#6b3f22'); wood.addColorStop(1, side < 0 ? '#6b3f22' : '#4a2a17');
+        g.fillStyle = wood; g.fillRect(0, 0, GW, GH);
+        g.strokeStyle = 'rgba(30,14,6,.7)'; g.lineWidth = 2;               // 판자 이음매
+        for (let x = G_X0; x < G_X1; x += (G_X1 - G_X0) / 6) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, GH); g.stroke(); }
+        g.fillStyle = '#2b2b33';                                            // 쇠띠
+        for (const y of [GH * 0.45, GH * 0.82]) g.fillRect(0, y, GW, 9);
+        g.fillStyle = '#8a8a99';
+        for (const y of [GH * 0.45, GH * 0.82])
+          for (let x = G_X0 + 8; x < G_X1; x += 18) { g.beginPath(); g.arc(x, y + 4.5, 2, 0, 7); g.fill(); }
+        g.restore();
+        g.strokeStyle = '#1a0d05'; g.lineWidth = 3;                         // 가운데 맞닿는 선
+        g.beginPath(); g.moveTo(GW / 2, GH * 0.3); g.lineTo(GW / 2, GH * 0.98); g.stroke();
+      });
+    }
+
+    function gateOpenness() {
+      if (gateOpenAt == null) return 0;
+      const x = Math.min(1, Math.max(0, (performance.now() - gateOpenAt) / GATE_OPEN_MS));
+      return 1 - (1 - x) ** 3;                                  // ease-out
+    }
+    // 스프라이트 좌표계에서 탈출문을 합쳐 그린다. 화면 쪽은 호출하는 곳에서 이동·배율을 맞춘다
+    function renderGate(g, open, t) {
+      if (open > 0) { g.globalAlpha = open; g.drawImage(GATE.glow, 0, 0); g.globalAlpha = 1; }
+      g.drawImage(GATE.frame, 0, 0);
+      if (open > 0) { g.globalAlpha = open; g.drawImage(GATE.light, 0, 0); g.globalAlpha = 1; }
+      // 문짝: 경첩을 축으로 가로 폭을 줄여 안쪽으로 젖혀지는 것처럼 보이게
+      const squeeze = 1 - 0.9 * open;
+      for (const [leaf, hinge] of [[GATE.left, G_X0], [GATE.right, G_X1]]) {
+        g.save();
+        g.translate(hinge, 0); g.scale(squeeze, 1); g.translate(-hinge, 0);
+        g.globalAlpha = 1 - 0.3 * open;
+        g.drawImage(leaf, 0, 0);
+        g.restore();
+      }
+      // 자물쇠: 열리면서 사라진다
+      if (open < 1) {
+        g.save();
+        g.globalAlpha = 1 - open;
+        g.translate(GW / 2, GH * 0.62 + open * 30);
+        g.strokeStyle = '#c9a227'; g.lineWidth = 7;
+        g.beginPath(); g.arc(0, -14, 13, Math.PI, 0); g.stroke();
+        const body = g.createLinearGradient(0, -14, 0, 22);
+        body.addColorStop(0, '#f5d76e'); body.addColorStop(1, '#a37c12');
+        g.fillStyle = body; g.fillRect(-20, -14, 40, 34);
+        g.fillStyle = '#3a2a05'; g.beginPath(); g.arc(0, 0, 4.5, 0, 7); g.fill(); g.fillRect(-2, 0, 4, 10);
+        g.restore();
+      }
+      // 사탕 홈 3칸 (틀 위쪽): 먹은 사탕마다 불이 들어온다
+      const n = session.candies.length;
+      session.candies.forEach((cd, i) => {
+        const x = GW / 2 + (i - (n - 1) / 2) * 38, y = GH * 0.315, on = collected.has(cd.id);
+        g.fillStyle = on ? 'rgba(255,200,90,.35)' : '#0b0612';
+        g.beginPath(); g.arc(x, y, 15, 0, 7); g.fill();
+        g.strokeStyle = on ? '#ffd27a' : '#5b3d82'; g.lineWidth = 3; g.stroke();
+        if (on) g.drawImage(candySprite, x - 30, y - 30, 60, 60);
+      });
+      // EXIT 글자: 잠겨 있을 땐 어둡게
+      g.save();
+      g.font = 'bold 34px system-ui'; g.textAlign = 'center';
+      g.fillStyle = open > 0 ? '#fff' : '#8f7fb0';
+      if (open > 0) { g.shadowColor = 'rgba(160,80,255,.9)'; g.shadowBlur = 12 + 6 * Math.sin(t * 3); }
+      g.fillText('EXIT', GW / 2, GH * 0.17);
+      g.restore();
+    }
+    function drawGate(g, { X, Y, pxPerM, dist }, t) {
+      const open = gateOpenness();
+      const w = Math.min(600, Math.max(18, pxPerM * GATE_W)), h = w * GH / GW;
+      g.save();
+      // 바닥 빛: 잠겨 있을 땐 희미하게, 열리면 호박빛
+      const sg = g.createRadialGradient(X, Y, 0, X, Y, w * 0.7);
+      sg.addColorStop(0, open > 0 ? `rgba(255,160,40,${0.5 * open})` : 'rgba(0,0,0,.45)');
+      sg.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = sg; g.beginPath(); g.ellipse(X, Y, w * 0.7, w * 0.2, 0, 0, 7); g.fill();
+      g.translate(X - w / 2, Y - h); g.scale(w / GW, h / GH);
+      renderGate(g, open, t);
+      g.restore();
+      arLabel(g, `탈출문${open < 1 ? '(잠김)' : ''} ${dist.toFixed(1)}m`, X, Y - h - 6, w / 3);
+    }
+    function arLabel(g, text, X, Y, r) {
+      if (document.body.classList.contains('nodebug')) return;
+      g.save();
+      g.font = `${Math.max(11, Math.min(18, r * 0.45))}px monospace`;
+      g.textAlign = 'center';
+      g.fillStyle = 'rgba(0,0,0,.6)'; g.fillText(text, X + 1, Y + 1);
+      g.fillStyle = '#fff'; g.fillText(text, X, Y);
+      g.restore();
+    }
+
+    // ---- HUD: 남은 시간 (서버 시작 시각 기준, 브라우저 카운트다운) ----
+    const serverNow = () => (Date.now() + (clockOffset ?? 0)) / 1000;
+    function remainingSec() {
+      if (game.s === 'ready' || game.t0 == null) return game.dur;
+      if (game.s === 'over') return 0;
+      if (game.s === 'clear') return Math.max(0, game.dur - (game.el ?? 0));   // 클리어 순간에 멈춤
+      return Math.max(0, game.t0 + game.dur - serverNow());
+    }
+    function dwellProgress() {
+      return gate.dw == null ? 0 : Math.min(1, Math.max(0, (serverNow() - gate.dw) / gate.need));
+    }
+    // 상단 안내: 사탕을 다 모은 뒤 무엇을 해야 하는지
+    function drawGateHint() {
+      const el = $('gatehint');
+      if (game.s !== 'run' || !allCollected()) { el.classList.remove('show'); return; }
+      el.classList.add('show');
+      if (gate.op != null) {
+        $('gatehint-text').textContent = '🚪 문이 열렸다! 안으로 들어가자';
+        $('gatebar-fill').style.width = '100%';
+      } else {
+        const p = dwellProgress();
+        $('gatehint-text').textContent = gate.dw == null
+          ? `탈출문 앞 보라색 원 안에서 ${gate.need}초 기다리기`
+          : `문 여는 중… ${(p * gate.need).toFixed(1)} / ${gate.need}초 (원 밖으로 나가면 처음부터)`;
+        $('gatebar-fill').style.width = `${(p * 100).toFixed(0)}%`;
+      }
+    }
+    setInterval(() => { if (gate.dw != null) drawGateHint(); }, 100);
+    function drawTimer() {
+      const s = Math.ceil(remainingSec());
+      $('timer').textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+      $('timer').classList.toggle('warn', game.s === 'run' && s <= 30);
+    }
+    setInterval(drawTimer, 200);
+
+    // ---- HUD: 사탕 0/3 ----
+    function buildCandySlots() {
+      const box = $('candies');
+      box.querySelectorAll('canvas').forEach(c => c.remove());
+      for (const cd of session.candies) {
+        const c = document.createElement('canvas');
+        c.width = c.height = 68; c.dataset.id = cd.id;
+        c.getContext('2d').drawImage(candySprite, 0, 0, 68, 68);  // 후광이 잘리지 않게 스프라이트 전체를 넣는다
+        box.insertBefore(c, $('candy-n'));
+      }
+      drawCandyCount();
+    }
+    function drawCandyCount() {
+      if (!session) return;
+      document.querySelectorAll('#candies canvas').forEach(c => c.classList.toggle('on', collected.has(c.dataset.id)));
+      $('candy-n').textContent = `${collected.size}/${session.candies.length}`;
+    }
+
+    // ---- 가운데 안내 ----
+    function drawOverlay() {
+      const ov = $('overlay');
+      ov.classList.toggle('clear', game.s === 'clear');
+      if (game.s === 'ready') {
+        $('ov-title').textContent = '🎃 Pumpkin Run';
+        $('ov-sub').textContent = `Lv.${session?.lv ?? 1} ${session?.name ?? ''} — Enter를 눌러 시작`;
+        ov.classList.add('show');
+      } else if (game.s === 'over') {
+        $('ov-title').textContent = game.r === 'timeout' ? 'TIME OVER' : 'GAME OVER';
+        $('ov-sub').textContent = `사탕 ${collected.size}/${session?.candies.length ?? 3} — Enter로 다시 시작`;
+        ov.classList.add('show');
+      } else if (game.s === 'clear') {
+        // 임시 클리어 화면. 닉네임 입력·리더보드는 React 앱(frontend/) 연동 때
+        const el = game.el ?? 0;
+        $('ov-title').textContent = '🎃 CANDY ESCAPE!';
+        $('ov-sub').textContent = `달빛 사탕 3개를 모두 모았다! 기록 ${Math.floor(el / 60)}:${(el % 60).toFixed(1).padStart(4, '0')} — Enter로 다시 시작`;
+        ov.classList.add('show');
+      } else {
+        ov.classList.remove('show');
+      }
+    }
+    let toastTimer = null;
+    function showToast(text) {
+      const el = $('toast');
+      el.textContent = text; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+      clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    // ---- 미니맵: 점유 격자(세션에서 한 번 받음)로 바탕을 한 번만 그리고, 위치만 5 Hz로 덧그린다 ----
+    const MINI_W = 260;
+    let miniBase = null;
+    function buildMinimapBase() {
+      const m = session.map, dpr = devicePixelRatio || 1;
+      const c = $('minimap');
+      c.style.height = `${Math.round(MINI_W * m.h / m.w)}px`;
+      c.width = Math.round(MINI_W * dpr); c.height = Math.round(MINI_W * m.h / m.w * dpr);
+      miniBase = document.createElement('canvas');
+      miniBase.width = c.width; miniBase.height = c.height;
+      const g = miniBase.getContext('2d'), k = c.width / m.w;
+      g.fillStyle = '#1a1526'; g.fillRect(0, 0, c.width, c.height);
+      g.fillStyle = '#c9b8ff';
+      for (let r = 0; r < m.h; r++)
+        for (let col = 0; col < m.w; col++)
+          if (occ[r * m.w + col]) g.fillRect(col * k, r * k, Math.ceil(k), Math.ceil(k));
+    }
+    function drawMinimap() {
+      if (!session || !miniBase) return;
+      const c = $('minimap'), g = c.getContext('2d'), m = session.map, dpr = devicePixelRatio || 1;
+      const k = c.width / m.w;
+      const toC = (x, y) => [(x - m.ox) / m.res * k, c.height - (y - m.oy) / m.res * k];
+      g.drawImage(miniBase, 0, 0);
+      // 남은 사탕
+      for (const cd of session.candies) {
+        if (collected.has(cd.id)) continue;
+        const [u, v] = toC(cd.x, cd.y);
+        g.drawImage(candySprite, u - 14 * dpr, v - 14 * dpr, 28 * dpr, 28 * dpr);
+      }
+      // 문 앞 구역 (사탕을 다 모았고 아직 안 열렸을 때)
+      if (allCollected() && gate.op == null) {
+        const [fx, fy] = gateFront(), [u, v] = toC(fx, fy), r = session.gate.zoneR / m.res * k;
+        g.strokeStyle = '#c084fc'; g.lineWidth = 1.5 * dpr; g.setLineDash([3 * dpr, 2 * dpr]);
+        g.beginPath(); g.arc(u, v, r, 0, 7); g.stroke(); g.setLineDash([]);
+      }
+      // 탈출문: 잠겨 있으면 닫힌 문, 열리면 열린 문
+      {
+        const [u, v] = toC(session.gate.x, session.gate.y), w = 20 * dpr, h = w * GH / GW;
+        g.save(); g.translate(u - w / 2, v - h / 2); g.scale(w / GW, h / GH);
+        renderGate(g, gateOpenness(), performance.now() / 1000);
+        g.restore();
+      }
+      // 부우: 하얀 유령
+      if (boo) {
+        const [u, v] = toC(boo[0], boo[1]), r = 6 * dpr;
+        g.fillStyle = '#f4f4ff';
+        g.beginPath(); g.arc(u, v - r * 0.2, r, Math.PI, 0); g.lineTo(u + r, v + r * 0.9);
+        for (let i = 0; i < 3; i++) g.lineTo(u + r - (i + 0.5) * (2 * r / 3), v + r * (i % 2 ? 0.9 : 0.5));
+        g.lineTo(u - r, v + r * 0.9); g.closePath(); g.fill();
+        g.fillStyle = '#222';
+        g.beginPath(); g.arc(u - r * 0.35, v - r * 0.2, r * 0.18, 0, 7); g.arc(u + r * 0.35, v - r * 0.2, r * 0.18, 0, 7); g.fill();
+      }
+      // 나(펌킨): 주황 원 + 바라보는 방향
+      if (pose) {
+        const [u, v] = toC(pose[0], pose[1]), yaw = pose[2], r = 6 * dpr;
+        g.strokeStyle = '#ffb347'; g.lineWidth = 2 * dpr;
+        g.beginPath(); g.moveTo(u, v); g.lineTo(u + 2.3 * r * Math.cos(yaw), v - 2.3 * r * Math.sin(yaw)); g.stroke();
+        g.fillStyle = '#ff7a00'; g.beginPath(); g.arc(u, v, r, 0, 7); g.fill();
+        g.strokeStyle = '#fff'; g.lineWidth = 1.5 * dpr; g.stroke();
+      }
+    }
+
+    // ---- 개발용 정보 (G) ----
+    setInterval(() => {
+      const lat = vs.lat.length ? vs.lat.reduce((a, b) => a + b) / vs.lat.length : null;
+      const vk = vs.bytes * 8 / 1000, gk = gs.bytes * 8 / 1000;
+      $('vstat').textContent =
+        `영상 ${vs.frames} fps  ${vk.toFixed(0)} kbps  지연 ${lat == null ? '—' : lat.toFixed(0) + ' ms'}` +
+        (vs.dropped ? `  건너뜀 ${vs.dropped}` : '') + (vs.noPose ? `  포즈 없음 ${vs.noPose}` : '') +
+        (lastFrame ? `  ${lastFrame.w}×${lastFrame.h}` : '');
+      $('vstat').className = (lat != null && lat > 500) || vk > 2000 ? 'bad' : '';
+      $('gstat').textContent = `게임 ${gs.msgs} msg/s  ${gk.toFixed(1)} kbps   합계 ${(vk + gk).toFixed(0)} kbps`;
+      Object.assign(vs, { frames: 0, bytes: 0, dropped: 0, lat: [], noPose: 0 });
+      Object.assign(gs, { bytes: 0, msgs: 0 });
+    }, 1000);
+    connectVideo();
+
+    function drawKeys() {
+      document.querySelectorAll('#keys span').forEach(el => el.classList.toggle('on', (mask & +el.dataset.k) > 0));
+    }
+    function drawNet(last) {
+      const el = $('net');
+      if (busy) { el.textContent = '다른 탭이 조작 중 — 이 탭에서 키를 누르면 가져옴'; el.className = 'bad'; return; }
+      el.textContent = rtt == null ? '입력 RTT —' : `입력 RTT ${(last ?? rtt).toFixed(0)} ms (평균 ${rtt.toFixed(0)})`;
+      el.className = rtt != null && rtt > 300 ? 'bad' : '';
+    }
+    function drawHud() {
+      if (!session) return;
+      const s = session, f = v => v.toFixed(2), deg = v => (v * 180 / Math.PI).toFixed(0);
+      $('info').textContent =
+        `Lv.${s.lv} ${s.name}${s.mock ? ' (MOCK)' : ''}  상태 ${game.s}\n` +
+        (pose ? `펌킨 ${f(pose[0])}, ${f(pose[1])}  ${deg(pose[2])}°` : '펌킨 —') + '   ' +
+        (boo ? `부우 ${f(boo[0])}, ${f(boo[1])}` : '부우 —');
+    }
+  </script>
+</body>
+</html>
