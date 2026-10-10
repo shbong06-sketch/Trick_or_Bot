@@ -77,10 +77,7 @@ ros2_ws/**/__pycache__/
 
 
 # VS Code C/C++ cache
-.vscode/browse.vc.db
-.vscode/browse.vc.db-shm
-.vscode/browse.vc.db-wal
-.vscode/browse.vc.db.lock
+.vscode/browse.vc.db*
 
 # VS Code temporary files
 .vscode/ipch/
