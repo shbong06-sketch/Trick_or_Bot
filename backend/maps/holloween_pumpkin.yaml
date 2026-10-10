@@ -1,4 +1,4 @@
-image: holloween_pumpkin_rotated_cw90.pgm
+image: holloween_pumpkin.pgm
 mode: trinary
 resolution: 0.050
 origin: [-5.015, -2.364, 0.0]
