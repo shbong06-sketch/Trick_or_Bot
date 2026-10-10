@@ -185,6 +185,7 @@ def collect():
                    "momentum": expected["momentum"],
                    "batch_size": plan["reference_batch_size"] if reused else plan["new_batch_size"],
                    "weight_decay": 0.0005,
+                   "scheduler": "LambdaLR",
                    "status": status, "selected": number == winner,
                    "inherited_from": parent["inherited_from"] if reused else inherited_from,
                    "config": inherited_from if reused else

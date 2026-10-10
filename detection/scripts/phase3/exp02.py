@@ -167,7 +167,7 @@ def collect():
             row = {"experiment": number, "model": model, "step": "learning_rate",
                    "optimizer": plan["optimizer"], "lr0": lr,
                    "momentum": parent["native"]["momentum"], "batch_size": 16,
-                   "weight_decay": 0.0005, "status": status,
+                   "weight_decay": 0.0005, "scheduler": "LambdaLR", "status": status,
                    "selected": number == winner,
                    "inherited_from": parent["inherited_from"] if reused else
                    f"experiments/phase3/002/{model}/exp01_config.yaml",

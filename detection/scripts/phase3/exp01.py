@@ -21,7 +21,7 @@ EXPERIMENTS = ROOT / "experiments/phase3"
 RESULTS = ROOT / "results/phase3"
 METRICS = ("validation_recall", "validation_f1", "validation_map50_95", "validation_map50")
 TIMING = ("best_epoch", "time_to_best_seconds", "ending_epoch", "total_training_seconds")
-FIELDS = ("experiment", "model", "step", "optimizer", "lr0", "momentum", "batch_size", "weight_decay", "status", "selected",
+FIELDS = ("experiment", "model", "step", "optimizer", "lr0", "momentum", "batch_size", "weight_decay", "scheduler", "status", "selected",
           "inherited_from", "config", *METRICS, *TIMING)
 DELTA_FIELDS = ("experiment", "model", "status", "baseline", *("delta_" + key for key in (*METRICS, *TIMING)))
 
@@ -167,7 +167,7 @@ def merge_csv(path, fields, rows, experiments):
             reader = csv.DictReader(stream)
             old_fields = tuple(reader.fieldnames or ())
             missing = set(fields) - set(old_fields)
-            if (missing - {"batch_size", "weight_decay"}
+            if (missing - {"batch_size", "weight_decay", "scheduler"}
                     or old_fields != tuple(key for key in fields if key not in missing)):
                 raise ValueError(f"Unexpected summary columns: {path}")
             preserved = [row for row in reader if row["experiment"] not in experiments]
@@ -176,6 +176,8 @@ def merge_csv(path, fields, rows, experiments):
                     row["batch_size"] = 16
                 if "weight_decay" in missing:
                     row["weight_decay"] = 0.0005
+                if "scheduler" in missing:
+                    row["scheduler"] = "LambdaLR"
     write_csv(path, fields, sorted([*preserved, *rows], key=lambda row: (row["model"], row["experiment"])))
 
 
@@ -201,6 +203,7 @@ def collect():
                       else "failed" if recorded_status == "failed" else "pending")
             summary.append({"experiment": number, "model": model, "step": "optimizer",
                             **settings, "batch_size": 16, "weight_decay": 0.0005,
+                            "scheduler": "LambdaLR",
                             "status": status, "selected": number == winner,
                             "inherited_from": plan["baseline"].format(model=model),
                             "config": str((directory / "exp01_config.yaml").relative_to(ROOT)),

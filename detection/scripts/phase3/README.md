@@ -1,6 +1,6 @@
 # Phase 3 execution structure
 
-Each stage has one script. Experiments 01–04 are implemented. Each model makes its own selection using validation; later stages inherit that model's selected settings.
+Each stage has one script. Experiments 01–05 are implemented. Each model makes its own selection using validation; later stages inherit that model's selected settings.
 
 | Script | Comparison | Experiment numbers |
 | --- | --- | --- |
@@ -8,7 +8,7 @@ Each stage has one script. Experiments 01–04 are implemented. Each model makes
 | `exp02.py` | SGD LR 0.005 and 0.02 vs reused exp01 LR 0.01 | 003, 004; reuse 002 |
 | `exp03.py` | selected optimizer and LR; batch 8 vs reused batch 16 | 005; reuse 004/002 |
 | `exp04.py` | weight decay 0.0001 and 0.001 vs reused 0.0005 | 006, 007; reuse 004/002 |
-| `exp05.py` | selected settings; LambdaLR vs cosine | assigned later |
+| `exp05.py` | cosine LR vs reused LambdaLR | 008; reuse 004/007 |
 
 The same experiment number is used for both models. Training files, checkpoints, epoch logs, and validation details are stored at `experiments/phase3/<number>/<model>/`. Only summary CSVs and selection JSONs are stored in `results/phase3/`. Runs within a stage are independent; they can be dispatched on separate GPUs, or one at a time on the configured L4. `collect` selects each model independently after the required new runs have validation results.
 
@@ -67,3 +67,16 @@ python3 scripts/phase3/exp04.py collect            # CPU-only summary refresh
 ```
 
 `exp04_summary.csv` includes all three weight decays. `exp04_delta.csv` compares each condition with that model's reused 0.0005 run. The cumulative CSVs add only experiments 006 and 007, with deltas against the Phase 2 baseline. Selection uses validation only; Official Test is unused.
+
+## Experiment 05
+
+`exp05.py` checks exp04's independent selections. YOLO11n reuses 004 (SGD, LR 0.02, momentum 0.937, batch 16, weight decay 0.0005); YOLOv8n reuses 007 (SGD, LR 0.01, momentum 0.937, batch 16, weight decay 0.001). Both reused runs have `cos_lr: false`. New experiment 008 sets only `cos_lr: true` and starts from each model's original pretrained weights. The scheduler labels describe the LR curve; Ultralytics may report the scheduler object class as `LambdaLR` for both curves.
+
+```bash
+python3 scripts/phase3/exp05.py list
+python3 scripts/phase3/exp05.py run-all            # print two new train/evaluate pairs
+python3 scripts/phase3/exp05.py run-all --execute  # run sequentially on the configured GPU
+python3 scripts/phase3/exp05.py collect            # CPU-only summary refresh
+```
+
+`exp05_summary.csv` compares the reused LambdaLR result with cosine for each model; `exp05_delta.csv` is relative to the reused run. The cumulative CSVs add only experiment 008. Once both new validation results exist, collection also writes `<model>_best.yaml` with the selected Phase 3 training and native settings. Official Test is unused.

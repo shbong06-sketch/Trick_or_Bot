@@ -1,0 +1,21 @@
+phase: 3
+step: scheduler
+inherited_selection: results/phase3/exp04_selection.json
+new_experiment: '008'
+reference_scheduler: LambdaLR
+new_scheduler: CosineLR
+models:
+  yolo11n:
+    reference_experiment: '004'
+    optimizer: SGD
+    lr0: 0.02
+    momentum: 0.937
+    batch_size: 16
+    weight_decay: 0.0005
+  yolov8n:
+    reference_experiment: '007'
+    optimizer: SGD
+    lr0: 0.01
+    momentum: 0.937
+    batch_size: 16
+    weight_decay: 0.001
