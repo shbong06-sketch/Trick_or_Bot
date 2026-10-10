@@ -3,7 +3,7 @@ lv: 1
 name: 첫 번째 밤
 time_limit_s: 240        # 4:00
 pick_radius_m: 0.3       # 사탕 획득 반경
-video_fps: 15            # 서버가 중계하는 1인칭 영상 최대 fps
+video_fps: 15            # 서버가 중계하는 1인칭 영상 최대 fpss
 hearts: 3                # 하트 수 (0이 되면 게임오버)
 heartbeat_radius_m: 2.0  # 부우가 이 거리 안이면 두근두근 [확인 필요]
 cctv: []                 # Lv.1은 CCTV 없음. Lv.2부터 [{id, x, y, ...}]
@@ -12,24 +12,24 @@ cctv: []                 # Lv.1은 CCTV 없음. Lv.2부터 [{id, x, y, ...}]
 map_yaml: ../maps/holloween_pumpkin.yaml
 
 # 펌킨 시작 위치 (map 프레임, m / rad). mock 로봇의 초기 위치로도 쓴다
-pumpkin_start: {x: 5.13, y: -1.27, yaw: 1.57}
-boo_start: {x: 0.00, y: 0.00, yaw: 0.00}    # 부우 시작 위치 (시뮬레이터 스폰·AMCL 초기 위치)
+pumpkin_start: {x: -0.7, y: 3, yaw: 1.57}
+boo_start: {x: -3.5, y: -1.85, yaw: 0.00}    # 부우 시작 위치 (시뮬레이터 스폰·AMCL 초기 위치)
 
 # 사탕 좌표 (map 프레임, m). tools/pick_candies.py로 다시 찍으면 이 블록이 교체된다.
 candies:
-  - {id: c1, x: 0.34, y: 0.37}
-  - {id: c2, x: 2.09, y: -1.03}
-  - {id: c3, x: 5.19, y: 1.53}
+  - {id: c1, x: -3.55, y: 3.22}
+  - {id: c2, x: -1, y: 0}
+  - {id: c3, x: -2.47, y: -1.75}
 
 # 탈출문 (map 프레임, m / rad). yaw = 문이 바라보는 방향(문 앞 구역 쪽). 처음엔 잠긴 문으로 보인다
 # 사탕을 다 모은 뒤 문 앞 구역에서 gate_dwell_s 머무르면 열리고, 열린 뒤 문 지점(gate_enter_r)에 닿으면 클리어
-gate: {x: 0.93, y: 2.52, yaw: 0.00}  # yaw [확인 필요]: tools/pick_candies.py --gate 에서 클릭+드래그로 방향 지정
-gate_front_m: 0.4        # 문 지점 → 문 앞 구역 중심 거리
+gate: {x: -4.5, y: -1.8, yaw: 0.00}  # yaw [확인 필요]: tools/pick_candies.py --gate 에서 클릭+드래그로 방향 지정
+gate_front_m: 0.0        # 문 지점 → 문 앞 구역 중심 거리
 gate_zone_r: 0.3         # 문 앞 구역 반경
-gate_dwell_s: 3.0        # 문 앞 구역에서 머물러야 하는 시간
-gate_enter_r: 0.15       # 열린 뒤 문 지점에 이만큼 가까워지면 클리어
+gate_dwell_s: 0.1        # 문 앞 구역에서 머물러야 하는 시간
+gate_enter_r: 0.3       # 열린 뒤 문 지점에 이만큼 가까워지면 클리어
 
 # 부우 순찰 (Lv.1: 위쪽 통로 1자 왕복). mock 부우가 이 선을 오간다. 실제 부우는 /robot1 TF 위치를 쓴다
 boo_patrol:  # [확인 필요] 자리표시 값
-  - {x: 0.00, y: 2.45}
-  - {x: 3.00, y: 2.45}
+  - {x: -3.5, y: -1.85}
+  - {x: -3.00, y: 2.95}
