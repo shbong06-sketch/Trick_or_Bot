@@ -1,0 +1,5 @@
+experiment,model,status,reference_experiment,delta_validation_recall,delta_validation_f1,delta_validation_map50_95,delta_validation_map50,delta_best_epoch,delta_time_to_best_seconds,delta_ending_epoch,delta_total_training_seconds
+004,yolo11n,reused_exp04,004,0.0,0.0,0.0,0.0,0,0.0,0,0.0
+008,yolo11n,complete,004,0.0,0.0,-0.002693424565910818,0.0,3,11.625999999999976,0,3.24090644599346
+007,yolov8n,reused_exp04,007,0.0,0.0,0.0,0.0,0,0.0,0,0.0
+008,yolov8n,complete,007,0.0,0.0,-0.012078447182962249,0.0,0,-0.9080000000000155,0,-1.0201987519976683

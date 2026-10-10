@@ -1,0 +1,38 @@
+model: yolo11n
+status: complete
+selected_experiment: '004'
+scheduler: LambdaLR
+source_config: experiments/phase3/004/yolo11n/exp02_config.yaml
+training:
+  seed: 42
+  input_size:
+  - 704
+  - 704
+  epochs: 100
+  batch_size: 16
+  early_stopping: true
+  patience: 20
+  workers: 2
+  gpu: L4
+native:
+  pretrained: true
+  optimizer: SGD
+  amp: true
+  deterministic: true
+  multi_scale: false
+  rect: false
+  nbs: 16
+  close_mosaic: 10
+  lr0: 0.02
+  momentum: 0.937
+  weight_decay: 0.0005
+  cos_lr: false
+validation:
+  validation_recall: 1.0
+  validation_f1: 1.0
+  validation_map50_95: 0.9629794668730541
+  validation_map50: 1.0
+  best_epoch: 97
+  time_to_best_seconds: 274.704
+  ending_epoch: 100
+  total_training_seconds: 301.06460144500306
