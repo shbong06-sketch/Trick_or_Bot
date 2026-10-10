@@ -1,0 +1,257 @@
+/* 게임 시작 화면 우측 메뉴 */
+
+.game-side-menu {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.game-side-menu button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  text-shadow: 0 2px 8px #000;
+}
+
+.game-side-menu button span {
+  font-size: 30px;
+}
+
+.game-side-menu button:hover {
+  color: #ffb85c;
+}
+
+/* 메뉴 팝업 공통 */
+
+.game-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(12px);
+}
+
+.game-menu-panel {
+  position: relative;
+  width: min(1200px, 95vw);
+  height: min(680px, 86dvh);
+  padding: 30px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(25, 24, 39, 0.97),
+    rgba(12, 14, 27, 0.97)
+  );
+  border: 1px solid rgba(218, 173, 107, 0.5);
+  box-shadow: 0 20px 80px #0009;
+  color: white;
+  animation: menuAppear 0.25s ease-out;
+}
+
+.game-menu-close {
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  z-index: 5;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 42px;
+  cursor: pointer;
+}
+
+.game-menu-heading {
+  margin: 0 0 24px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #b39870;
+  color: #f5d49a;
+  font-size: 25px;
+  text-align: center;
+}
+
+/* 설정 */
+
+.settings-layout {
+  display: flex;
+  height: calc(100% - 85px);
+  gap: 30px;
+}
+
+.settings-tabs {
+  width: 100px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-right: 1px solid #555;
+}
+
+.settings-tabs button {
+  width: 75px;
+  padding: 10px 5px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #bbb;
+  cursor: pointer;
+}
+
+.settings-tabs button.selected {
+  color: #ffd48a;
+  border-color: #b89a65;
+  background: #ffffff16;
+}
+
+.settings-tabs button span {
+  display: block;
+  font-size: 30px;
+}
+
+.settings-tabs button small {
+  font-size: 14px;
+}
+
+.settings-content {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.settings-content h3 {
+  margin: 0 0 18px;
+  font-size: 22px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 58px;
+  margin-bottom: 2px;
+  padding-left: 20px;
+  background: rgba(235, 235, 240, 0.88);
+  color: #292929;
+  font-size: 17px;
+}
+
+.settings-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+  align-self: stretch;
+  padding: 0 20px;
+  background: #ffffff55;
+  font-weight: 600;
+}
+
+.settings-arrow {
+  color: #444;
+}
+
+/* 공지사항 */
+
+.notice-layout {
+  display: grid;
+  grid-template-columns: 32% 1fr;
+  height: calc(100% - 85px);
+  background: #efedf0;
+  color: #242424;
+}
+
+.notice-list {
+  padding: 22px;
+  background: #d9dce7;
+  border-right: 1px solid #bcbcbc;
+}
+
+.notice-selected {
+  padding: 18px;
+  border: 2px solid #e5ad59;
+  background: #343139;
+  color: #f2cb89;
+}
+
+.notice-detail {
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.notice-detail h3 {
+  margin-top: 0;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #bbb;
+}
+
+.notice-placeholder,
+.admin-placeholder {
+  padding: 50px 20px;
+  text-align: center;
+  color: #888;
+}
+
+@keyframes menuAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 650px) {
+  .game-side-menu {
+    right: 12px;
+    top: 15px;
+    gap: 8px;
+  }
+
+  .game-menu-overlay {
+    padding: 10px;
+  }
+
+  .game-menu-panel {
+    padding: 18px;
+  }
+
+  .settings-layout {
+    gap: 10px;
+  }
+
+  .settings-tabs {
+    width: 65px;
+  }
+
+  .settings-tabs button {
+    width: 55px;
+  }
+
+  .settings-row {
+    font-size: 13px;
+    padding-left: 8px;
+  }
+
+  .settings-value {
+    padding: 0 8px;
+    width: 35%;
+  }
+}
