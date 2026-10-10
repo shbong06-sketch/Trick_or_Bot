@@ -1,0 +1,19 @@
+[INFO] [1791634667.288763210] [pumpkin_scenario]: + 16.0s   거리 4.18 m (상태 PATROL)
+[INFO] [1791634674.893537710] [pumpkin_scenario]: + 23.6s   거리 3.14 m (상태 PATROL)
+[INFO] [1791634682.640489706] [pumpkin_scenario]: + 31.4s   거리 2.26 m (상태 PATROL)
+[INFO] [1791634683.981660430] [pumpkin_scenario]: + 32.7s SUSPECT  시작 | Boo=(-3.03,-1.18) 펌킨=(-2.16,0.61) 실제 거리=1.99 m | 펌킨 발견
+[INFO] [1791634688.507936167] [pumpkin_scenario]: + 37.2s CHASE    시작 | Boo=(-3.02,-0.97) 펌킨=(-2.30,0.53) 실제 거리=1.66 m | 의심 게이지 가득
+[INFO] [1791634690.112956561] [pumpkin_scenario]: + 38.8s   거리 1.41 m (상태 CHASE)
+[INFO] [1791634697.877413637] [pumpkin_scenario]: + 46.6s   거리 0.35 m (상태 CHASE)
+[INFO] [1791634697.878893523] [pumpkin_scenario]: + 46.6s SEARCH   시작 | Boo=(-2.72,-0.43) 펌킨=(-2.87,-0.11) 실제 거리=0.35 m | 펌킨을 놓침
+[INFO] [1791634705.395526142] [pumpkin_scenario]: + 54.1s   거리 0.54 m (상태 SEARCH)
+[INFO] [1791634706.734210812] [pumpkin_scenario]: + 55.5s PATROL   시작 | Boo=(-2.54,-0.11) 펌킨=(-3.07,-0.24) 실제 거리=0.54 m | 수색 종료
+[INFO] [1791634709.936040778] [pumpkin_scenario]: + 58.7s SUSPECT  시작 | Boo=(-2.57,-0.02) 펌킨=(-3.07,-0.24) 실제 거리=0.54 m | 펌킨 발견
+[INFO] [1791634712.896747656] [pumpkin_scenario]: + 61.6s   거리 0.53 m (상태 SUSPECT)
+[INFO] [1791634714.329293936] [pumpkin_scenario]: + 63.0s CHASE    시작 | Boo=(-2.58,-0.02) 펌킨=(-3.07,-0.24) 실제 거리=0.53 m | 의심 게이지 가득
+[INFO] [1791634718.648283635] [pumpkin_scenario]: + 67.4s SEARCH   시작 | Boo=(-2.67,-0.12) 펌킨=(-3.07,-0.24) 실제 거리=0.42 m | 펌킨을 놓침
+[INFO] [1791634720.318339894] [pumpkin_scenario]: + 69.0s   거리 0.42 m (상태 SEARCH)
+[INFO] [1791634728.001153289] [pumpkin_scenario]: + 76.7s   거리 0.23 m (상태 SEARCH)
+[INFO] [1791634733.201726359] [pumpkin_scenario]: + 81.9s PATROL   시작 | Boo=(-3.13,-0.43) 펌킨=(-3.07,-0.24) 실제 거리=0.20 m | 수색 종료
+[INFO] [1791634735.527670479] [pumpkin_scenario]: + 84.2s   거리 0.28 m (상태 PATROL)
+[INFO] [1791634741.397468641] [pumpkin_scenario]: + 90.1s 종료: 마지막 실제 거리 0.62 m (상태 PATROL)
