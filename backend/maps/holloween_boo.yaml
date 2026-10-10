@@ -1,4 +1,4 @@
-image: holloween_boo_rotated_cw90.pgm
+image: holloween_boo.pgm
 mode: trinary
 resolution: 0.050
 origin: [-4.859, -4.126, 0.0]
