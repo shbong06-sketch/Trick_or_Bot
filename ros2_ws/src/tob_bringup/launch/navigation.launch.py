@@ -1,27 +1,58 @@
-# TrickOrBot 구현 지침 v2
-# [공통 구현 원칙]
-# - 아래 내용은 구현할 기능의 설명이며, 현재 기능이 구현되어 있다는 뜻은 아니다.
-# - ROS 2 Jazzy와 현재 패키지 구조를 기준으로 최소한의 구현을 작성한다.
-# - docs/interfaces.md와 관련 .msg/.srv 파일을 확인하고 공통 규격을 따른다.
-# - 필수 규격이나 게임 규칙이 미정이면 필요한 결정 사항을 먼저 명시한다.
-# - 미정인 값을 실제 장비에서 확인한 값처럼 사용하지 않는다.
-# - 기존 ROS/Nav2 기능과 공통 모듈을 재사용하고 같은 기능을 중복 구현하지 않는다.
-# - 요청하지 않은 패키지, 외부 서버, DB, 플러그인 구조는 추가하지 않는다.
-# - 단순한 기능을 불필요한 클래스 계층이나 여러 보조 파일로 나누지 않는다.
-# - 필요한 입력 검사와 안전 처리는 구현하되 자동 복구 기능을 임의로 확대하지 않는다.
-# - 이 파일의 완료 기준을 만족하면 추가 기능 구현을 멈춘다.
-#
-# [역할]
-# 부우의 자율 이동에 필요한 Nav2 구성을 실행한다.
-# [입력]
-# 로봇 네임스페이스, nav2.yaml, 지도 연결, use_sim_time.
-# [구현]
-# 설치된 Nav2/TurtleBot launch를 활용하고 프로젝트에 필요한 연결만 적용한다.
-# 최종 속도 출력이 안전 경로 앞쪽으로 들어가도록 설정한다.
-# [실패 처리]
-# 서버가 준비되지 않은 상태를 이동 가능 상태로 취급하지 않는다.
-# [범위]
-# 위치추정 launch와 노드를 중복 실행하지 않는다.
-# 펌킨용 Nav2는 자동 복귀 기능을 선택한 경우에만 추가한다.
-# [완료 기준]
-# 부우의 이동 액션을 사용할 수 있고 속도 출력 경로가 의도대로 연결된다.
+"""Boo의 자율 이동에 필요한 Nav2와 이동 관리 노드를 함께 실행한다.
+
+[입력]
+namespace(기본 robot1), use_sim_time, nav2_params(tob_control/config/nav2.yaml),
+control_params(tob_control/config/control.yaml).
+[구성]
+- turtlebot4_navigation의 nav2.launch.py (플래너·컨트롤러·속도 평활기·충돌 감시)
+- boo_controller_node (FSM 결정을 Nav2 목표로 실행)
+[범위]
+위치추정(AMCL, map_server)은 localization.launch.py가 맡으므로 여기서 실행하지 않는다.
+"""
+
+from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch_ros.actions import Node
+
+
+def generate_launch_description():
+    control_share = get_package_share_directory('tob_control')
+    nav_share = get_package_share_directory('turtlebot4_navigation')
+
+    namespace = LaunchConfiguration('namespace')
+    use_sim_time = LaunchConfiguration('use_sim_time')
+
+    nav2 = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([nav_share, 'launch', 'nav2.launch.py'])),
+        launch_arguments={
+            'namespace': namespace,
+            'use_sim_time': use_sim_time,
+            'params_file': LaunchConfiguration('nav2_params'),
+        }.items())
+
+    controller = Node(
+        package='tob_control',
+        executable='boo_controller_node',
+        namespace=namespace,
+        parameters=[LaunchConfiguration('control_params'),
+                    {'use_sim_time': use_sim_time}],
+        output='screen')
+
+    return LaunchDescription([
+        DeclareLaunchArgument('namespace', default_value='robot1',
+                              description='Boo 로봇 네임스페이스'),
+        DeclareLaunchArgument('use_sim_time', default_value='false',
+                              choices=['true', 'false']),
+        DeclareLaunchArgument('nav2_params',
+                              default_value=PathJoinSubstitution(
+                                  [control_share, 'config', 'nav2.yaml'])),
+        DeclareLaunchArgument('control_params',
+                              default_value=PathJoinSubstitution(
+                                  [control_share, 'config', 'control.yaml'])),
+        nav2,
+        controller,
+    ])
