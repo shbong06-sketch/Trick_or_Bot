@@ -101,7 +101,7 @@ AMR 카메라의 압축 RGB 영상을 구독하고 PT 모델로 Pumpkin을 탐�
 | `confidence_threshold` | 0.5 제안, 아직 미확정 |
 | `device` | GPU 사용 확정; 라이브러리별 지정 형식 및 GPU 인덱스 확인 필요 |
 | `use_sim_time` | 실제 장비에서는 false 제안 |
-| `debug_image_topic` | `/tob/perception/debug/image` 제안 |
+| `debug_image_topic` | `/tob/perception/debug/image/compressed` |
 | 실행 옵션 `--debug` | 지정 시에만 디버그 영상 발행 |
 
 파라미터는 시작 시 읽고 검증하는 방식을 제안한다. 실행 중 모델 교체는 이번 설계 범위에 포함하지 않는다.
@@ -117,7 +117,7 @@ GPU를 사용할 수 없는 경우 Warning 경고를 한 뒤, 자동 종료한�
 - 미탐지 프레임도 발행하여 정상 영상 입력과 미탐지를 확인할 수 있게 한다.
 - 디코딩/추론 실패 프레임은 정상 디버그 결과로 발행하지 않는다.
 - 디버그 영상의 header는 입력 영상의 시각과 frame_id를 유지한다.
-- 출력 타입은 `sensor_msgs/msg/Image`, 인코딩은 `bgr8`을 제안한다.
+- 출력 타입은 `sensor_msgs/msg/CompressedImage`이며, 박스와 신뢰도를 표시한 BGR 영상을 JPEG로 압축하여 발행한다. `format`은 `bgr8; jpeg compressed bgr8`이다.
 - GUI 창은 필수로 띄우지 않으며 ROS 영상 뷰어에서 확인한다.
 - 디버그 영상이 유일한 탐지 결과가 되지 않도록 정식 탐지 토픽은 항상 별도로 발행한다.
 
