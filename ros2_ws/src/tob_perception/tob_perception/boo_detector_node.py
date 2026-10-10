@@ -29,14 +29,17 @@
 
 """Subscribe to compressed Boo RGB images and publish Pumpkin observations."""
 
-from pathlib import Path
+import argparse
 import math
+from pathlib import Path
+import sys
 
 from ament_index_python.packages import (
     PackageNotFoundError,
     get_package_share_directory,
 )
 import cv2
+from cv_bridge import CvBridge
 import numpy as np
 from rcl_interfaces.msg import ParameterDescriptor
 import rclpy
@@ -48,7 +51,8 @@ from rclpy.qos import (
     QoSProfile,
     ReliabilityPolicy,
 )
-from sensor_msgs.msg import CompressedImage
+from rclpy.utilities import remove_ros_args
+from sensor_msgs.msg import CompressedImage, Image
 from tob_interfaces.msg import TargetObservation
 
 from tob_perception.detector import Detector
@@ -57,10 +61,12 @@ from tob_perception.detector import Detector
 class BooDetectorNode(Node):
     """Process new RGB frames using one GPU detector instance."""
 
-    def __init__(self):
+    def __init__(self, debug: bool = False):
         """Read startup parameters and connect image input to observations."""
         super().__init__('boo_detector_node')
         try:
+            self._debug_publisher = None
+            self._debug_bridge = None
             try:
                 package_dir = Path(get_package_share_directory('tob_perception'))
             except PackageNotFoundError:
@@ -74,13 +80,17 @@ class BooDetectorNode(Node):
                 'target_class_id': 0,
                 'confidence_threshold': 0.5,
                 'device': 0,
+                'debug_image_topic': '/tob/perception/debug/image',
             }
             parameters = {}
             for name, default in defaults.items():
                 parameters[name] = self.declare_parameter(
                     name, default, ParameterDescriptor(read_only=True)
                 ).value
-            for name in ('model_path', 'image_topic', 'detection_topic', 'source'):
+            for name in (
+                'model_path', 'image_topic', 'detection_topic', 'source',
+                'debug_image_topic',
+            ):
                 value = parameters[name]
                 if not isinstance(value, str) or not value.strip():
                     raise ValueError(f'{name} must be a nonempty string')
@@ -101,6 +111,14 @@ class BooDetectorNode(Node):
             self._publisher = self.create_publisher(
                 TargetObservation, parameters['detection_topic'], qos
             )
+            if debug:
+                self._debug_class_name = str(
+                    self._detector._model.names[parameters['target_class_id']]
+                )
+                self._debug_bridge = CvBridge()
+                self._debug_publisher = self.create_publisher(
+                    Image, parameters['debug_image_topic'], qos
+                )
             self._subscription = self.create_subscription(
                 CompressedImage, parameters['image_topic'],
                 self._image_callback, qos
@@ -152,14 +170,55 @@ class BooDetectorNode(Node):
             self._publisher.publish(observation)
         except Exception as exc:
             self.get_logger().error(f'Image processing failed: {exc}')
+            return
+
+        if self._debug_publisher is not None:
+            self._publish_debug_image(image, observation)
+
+    def _publish_debug_image(self, image, observation: TargetObservation):
+        """Publish an annotated BGR image without affecting observations."""
+        try:
+            annotated = image.copy()
+            if observation.detected:
+                height, width = annotated.shape[:2]
+                cx = observation.bbox_center_x * width
+                cy = observation.bbox_center_y * height
+                bw = observation.bbox_width * width
+                bh = observation.bbox_height * height
+                x1 = max(0, min(width - 1, round(cx - bw / 2)))
+                y1 = max(0, min(height - 1, round(cy - bh / 2)))
+                x2 = max(0, min(width - 1, round(cx + bw / 2)))
+                y2 = max(0, min(height - 1, round(cy + bh / 2)))
+                cv2.rectangle(annotated, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                label = (
+                    f'{self._debug_class_name} {observation.confidence:.2f}'
+                )
+                cv2.putText(
+                    annotated, label, (x1, max(15, y1 - 8)),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1,
+                    cv2.LINE_AA,
+                )
+            debug_message = self._debug_bridge.cv2_to_imgmsg(
+                annotated, encoding='bgr8', header=observation.header
+            )
+            self._debug_publisher.publish(debug_message)
+        except Exception as exc:
+            self.get_logger().error(f'Debug image publishing failed: {exc}')
 
 
 def main(args=None):
     """Run the node; startup failures terminate without CPU fallback."""
-    rclpy.init(args=args)
+    argv = sys.argv if args is None else ['boo_detector_node', *args]
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        '--debug', action='store_true', help='publish annotated detection images'
+    )
+    options = parser.parse_args(remove_ros_args(args=argv)[1:])
+    # rclpy consumes ROS arguments; argparse handles only non-ROS arguments.
+    rclpy.init(args=argv)
     node = None
     try:
-        node = BooDetectorNode()
+        node = BooDetectorNode(debug=options.debug)
         rclpy.spin(node)
     except (KeyboardInterrupt, ExternalShutdownException):
         pass
