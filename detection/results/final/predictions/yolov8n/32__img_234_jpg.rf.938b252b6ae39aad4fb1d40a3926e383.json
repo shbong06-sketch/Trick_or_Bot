@@ -1,0 +1,8 @@
+{
+  "model": "yolov8n",
+  "image_name": "_img_234_jpg.rf.938b252b6ae39aad4fb1d40a3926e383.jpg",
+  "image_id": 32,
+  "ground_truth": [],
+  "predictions": [],
+  "false_negatives": []
+}

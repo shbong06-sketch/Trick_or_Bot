@@ -1,0 +1,32 @@
+{
+  "model": "yolov8n",
+  "image_name": "_img_578_jpg.rf.4e4ba12752c56d8ff384468deeafb268.jpg",
+  "image_id": 38,
+  "ground_truth": [
+    {
+      "bbox": [
+        307,
+        165,
+        379,
+        224
+      ],
+      "category_id": 0
+    }
+  ],
+  "predictions": [
+    {
+      "bbox": [
+        306.12457275390625,
+        164.51876831054688,
+        378.36370849609375,
+        223.78768920898438
+      ],
+      "score": 0.9342285394668579,
+      "category_id": 0,
+      "match_iou": 0.9679480205164,
+      "matched_gt_index": 0,
+      "outcome": "TP"
+    }
+  ],
+  "false_negatives": []
+}

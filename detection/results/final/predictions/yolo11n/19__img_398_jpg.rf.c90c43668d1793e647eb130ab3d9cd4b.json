@@ -1,0 +1,32 @@
+{
+  "model": "yolo11n",
+  "image_name": "_img_398_jpg.rf.c90c43668d1793e647eb130ab3d9cd4b.jpg",
+  "image_id": 19,
+  "ground_truth": [
+    {
+      "bbox": [
+        0,
+        55,
+        92,
+        172
+      ],
+      "category_id": 0
+    }
+  ],
+  "predictions": [
+    {
+      "bbox": [
+        0.0,
+        58.899349212646484,
+        90.70106506347656,
+        170.81951904296875
+      ],
+      "score": 0.9463071823120117,
+      "category_id": 0,
+      "match_iou": 0.9430767935428657,
+      "matched_gt_index": 0,
+      "outcome": "TP"
+    }
+  ],
+  "false_negatives": []
+}

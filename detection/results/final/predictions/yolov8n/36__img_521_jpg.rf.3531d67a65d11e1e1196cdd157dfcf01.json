@@ -1,0 +1,29 @@
+{
+  "model": "yolov8n",
+  "image_name": "_img_521_jpg.rf.3531d67a65d11e1e1196cdd157dfcf01.jpg",
+  "image_id": 36,
+  "ground_truth": [
+    {
+      "bbox": [
+        63,
+        0,
+        253,
+        20
+      ],
+      "category_id": 0
+    }
+  ],
+  "predictions": [],
+  "false_negatives": [
+    {
+      "bbox": [
+        63,
+        0,
+        253,
+        20
+      ],
+      "category_id": 0,
+      "gt_index": 0
+    }
+  ]
+}

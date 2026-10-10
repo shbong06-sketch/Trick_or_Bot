@@ -1,0 +1,235 @@
+{
+  "protocol": {
+    "confidence": 0.25,
+    "matching_iou": 0.5,
+    "nms_iou": 0.7,
+    "ap_score_cutoff": 0.001,
+    "warmup": 20,
+    "repeats": 3,
+    "benchmark_batch_size": 1,
+    "benchmark_precision": "fp32"
+  },
+  "selected_model": "yolo11n",
+  "models": [
+    {
+      "model": "yolo11n",
+      "selected_experiment": "004",
+      "checkpoint": "experiments/phase3/004/yolo11n/weights/best.pt",
+      "checkpoint_sha256": "58337c0673656b6c6059fac484e1c57d77fcc4d790ae88d90a99b8cae496f46b",
+      "optimizer": "SGD",
+      "lr0": 0.02,
+      "momentum": 0.937,
+      "batch_size": 16,
+      "weight_decay": 0.0005,
+      "scheduler": "LambdaLR",
+      "training_hyperparameters": {
+        "training": {
+          "seed": 42,
+          "input_size": [
+            704,
+            704
+          ],
+          "epochs": 100,
+          "batch_size": 16,
+          "early_stopping": true,
+          "patience": 20,
+          "workers": 2,
+          "gpu": "L4"
+        },
+        "native": {
+          "pretrained": true,
+          "optimizer": "SGD",
+          "amp": true,
+          "deterministic": true,
+          "multi_scale": false,
+          "rect": false,
+          "nbs": 16,
+          "close_mosaic": 10,
+          "lr0": 0.02,
+          "momentum": 0.937,
+          "weight_decay": 0.0005,
+          "cos_lr": false
+        }
+      },
+      "ending_epoch": 100,
+      "run_info_epochs_ending": 101,
+      "total_training_seconds": 301.06460144500306,
+      "validation_map50": 1.0,
+      "validation_map50_95": 0.9629794668730541,
+      "validation_precision": 1.0,
+      "validation_recall": 1.0,
+      "validation_f1": 1.0,
+      "validation_f1_peak": 1.0,
+      "validation_f1_confidence": 0.41717755794525146,
+      "test_map50": 1.0,
+      "test_map50_95": 0.94920620063563,
+      "test_precision": 1.0,
+      "test_recall": 1.0,
+      "test_f1": 1.0,
+      "test_tp": 33,
+      "test_fp": 0,
+      "test_fn": 0,
+      "test_correct_predictions_percent": 100.0,
+      "test_inference_ms_per_image": 13.454470849071171,
+      "test_average_confidence": 0.9228399702996919,
+      "model_size_bytes": 5489626,
+      "parameter_count": 2590035,
+      "training_peak_vram_bytes": 2732735488,
+      "evaluation_peak_vram_bytes": 74228224,
+      "hardware": "NVIDIA L4",
+      "precision": "fp32",
+      "input_size": [
+        704,
+        704
+      ],
+      "confidence": 0.25,
+      "matching_iou": 0.5,
+      "nms_iou": 0.7,
+      "ap_score_cutoff": 0.001,
+      "warmup": 20,
+      "measured_iterations": 126,
+      "test_image_count": 42,
+      "test_annotation_sha256": "361f168cefe61b13fbc8d550114ae07c20bb65c91cdfd3a8a8a775d9b55c943b",
+      "phase1_source": "results/phase1/model_comparison.csv",
+      "phase2_source": "results/phase2/augmentation_summary.csv",
+      "phase3_source": "results/phase3/hyperparameter_summary.csv",
+      "validation_source": "experiments/phase3/004/yolo11n/evaluation/validation_metrics.json"
+    },
+    {
+      "model": "yolov8n",
+      "selected_experiment": "007",
+      "checkpoint": "experiments/phase3/007/yolov8n/weights/best.pt",
+      "checkpoint_sha256": "777ca66d1db078f8ae08c17579d7737621d69bf1eed4c5438fdde7be4222bf56",
+      "optimizer": "SGD",
+      "lr0": 0.01,
+      "momentum": 0.937,
+      "batch_size": 16,
+      "weight_decay": 0.001,
+      "scheduler": "LambdaLR",
+      "training_hyperparameters": {
+        "training": {
+          "seed": 42,
+          "input_size": [
+            704,
+            704
+          ],
+          "epochs": 100,
+          "batch_size": 16,
+          "early_stopping": true,
+          "patience": 20,
+          "workers": 2,
+          "gpu": "L4"
+        },
+        "native": {
+          "pretrained": true,
+          "optimizer": "SGD",
+          "amp": true,
+          "deterministic": true,
+          "multi_scale": false,
+          "rect": false,
+          "nbs": 16,
+          "close_mosaic": 10,
+          "lr0": 0.01,
+          "momentum": 0.937,
+          "weight_decay": 0.001,
+          "cos_lr": false
+        }
+      },
+      "ending_epoch": 100,
+      "run_info_epochs_ending": 101,
+      "total_training_seconds": 256.53158441699634,
+      "validation_map50": 1.0,
+      "validation_map50_95": 0.9718425219883543,
+      "validation_precision": 1.0,
+      "validation_recall": 1.0,
+      "validation_f1": 1.0,
+      "validation_f1_peak": 1.0,
+      "validation_f1_confidence": 0.6122041344642639,
+      "test_map50": 1.0,
+      "test_map50_95": 0.9774214840838923,
+      "test_precision": 1.0,
+      "test_recall": 0.9696969696969697,
+      "test_f1": 0.9846153846153847,
+      "test_tp": 32,
+      "test_fp": 0,
+      "test_fn": 1,
+      "test_correct_predictions_percent": 96.96969696969697,
+      "test_inference_ms_per_image": 11.590528587216145,
+      "test_average_confidence": 0.9468257557600737,
+      "model_size_bytes": 6267114,
+      "parameter_count": 3011043,
+      "training_peak_vram_bytes": 2394496000,
+      "evaluation_peak_vram_bytes": 81795584,
+      "hardware": "NVIDIA L4",
+      "precision": "fp32",
+      "input_size": [
+        704,
+        704
+      ],
+      "confidence": 0.25,
+      "matching_iou": 0.5,
+      "nms_iou": 0.7,
+      "ap_score_cutoff": 0.001,
+      "warmup": 20,
+      "measured_iterations": 126,
+      "test_image_count": 42,
+      "test_annotation_sha256": "361f168cefe61b13fbc8d550114ae07c20bb65c91cdfd3a8a8a775d9b55c943b",
+      "phase1_source": "results/phase1/model_comparison.csv",
+      "phase2_source": "results/phase2/augmentation_summary.csv",
+      "phase3_source": "results/phase3/hyperparameter_summary.csv",
+      "validation_source": "experiments/phase3/007/yolov8n/evaluation/validation_metrics.json"
+    }
+  ],
+  "lineage": {
+    "yolo11n": {
+      "phase1": {
+        "checkpoint": "experiments/phase1/yolo11n/weights/best.pt",
+        "validation_map50": "1.0",
+        "validation_recall": "1.0",
+        "validation_f1": "1.0"
+      },
+      "phase2_baseline": {
+        "checkpoint": "experiments/phase1/yolo11n/weights/best.pt",
+        "validation_map50": "1.0",
+        "validation_recall": "1.0",
+        "validation_f1": "1.0"
+      },
+      "phase3_selected": {
+        "experiment": "004",
+        "step": "learning_rate",
+        "inherited_from": "experiments/phase3/002/yolo11n/exp01_config.yaml",
+        "config": "experiments/phase3/004/yolo11n/exp02_config.yaml",
+        "validation_map50": "1.0",
+        "validation_recall": "1.0",
+        "validation_f1": "1.0",
+        "ending_epoch": "100",
+        "total_training_seconds": "301.06460144500306"
+      }
+    },
+    "yolov8n": {
+      "phase1": {
+        "checkpoint": "experiments/phase1/yolov8n/weights/best.pt",
+        "validation_map50": "1.0",
+        "validation_recall": "1.0",
+        "validation_f1": "1.0"
+      },
+      "phase2_baseline": {
+        "checkpoint": "experiments/phase1/yolov8n/weights/best.pt",
+        "validation_map50": "1.0",
+        "validation_recall": "1.0",
+        "validation_f1": "1.0"
+      },
+      "phase3_selected": {
+        "experiment": "007",
+        "step": "weight_decay",
+        "inherited_from": "experiments/phase3/002/yolov8n/exp01_config.yaml",
+        "config": "experiments/phase3/007/yolov8n/exp04_config.yaml",
+        "validation_map50": "1.0",
+        "validation_recall": "1.0",
+        "validation_f1": "1.0",
+        "ending_epoch": "100",
+        "total_training_seconds": "256.53158441699634"
+      }
+    }
+  }
+}
