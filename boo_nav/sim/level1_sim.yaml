@@ -1,0 +1,42 @@
+# boo_nav 시험용 레벨 파일: backend/config/level1.yaml 복사본에서 map_yaml만 옛 지도로 바꿨다.
+# 좌표(시작·사탕·탈출문)는 옛 지도 좌표계 기준이다.
+lv: 1
+name: 첫 번째 밤
+time_limit_s: 240
+pick_radius_m: 0.3
+video_fps: 15
+hearts: 3
+heartbeat_radius_m: 2.0
+cctv: []
+map_yaml: ../../backend/maps/past_map/holloween.yaml
+pumpkin_start:
+  x: 5.13
+  y: -1.27
+  yaw: 1.57
+boo_start:
+  x: 0.0
+  y: 0.0
+  yaw: 0.0
+candies:
+- id: c1
+  x: 0.34
+  y: 0.37
+- id: c2
+  x: 2.09
+  y: -1.03
+- id: c3
+  x: 5.19
+  y: 1.53
+gate:
+  x: 0.93
+  y: 2.52
+  yaw: 0.0
+gate_front_m: 0.4
+gate_zone_r: 0.3
+gate_dwell_s: 3.0
+gate_enter_r: 0.15
+boo_patrol:
+- x: 0.0
+  y: 2.45
+- x: 3.0
+  y: 2.45

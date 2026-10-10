@@ -1,0 +1,244 @@
+[INFO] [1791616820.315148118] [robot1.boo_controller]: boo_controller 시작: 순찰 지점 2개, 게임 상태 필요=True, 안전 상태 필요=True
+[INFO] [1791616822.307990364] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+[INFO] [1791616824.799264405] [robot1.boo_controller]: Nav2 목표 1 결과: SUCCEEDED
+[INFO] [1791616827.834878921] [robot1.boo_controller]: Nav2 목표 2 결과: SUCCEEDED
+[INFO] [1791616827.907672246] [robot1.boo_controller]: 상태 PATROL → SUSPECT: 펌킨 발견
+[INFO] [1791616829.007520711] [robot1.boo_controller]: 상태 SUSPECT → CHASE: 의심 게이지 가득
+[INFO] [1791616830.114589533] [robot1.boo_controller]: Nav2 목표 4 결과: CANCELED
+[INFO] [1791616832.207259809] [robot1.boo_controller]: 상태 CHASE → SEARCH: 펌킨을 놓침
+[INFO] [1791616833.671427717] [robot1.boo_controller]: Nav2 목표 5 결과: SUCCEEDED
+[INFO] [1791616833.707322019] [robot1.boo_controller]: 상태 SEARCH → PATROL: 수색 종료
+[INFO] [1791616833.807325658] [robot1.boo_controller]: 상태 PATROL → IDLE: 이동 금지 또는 게임 중단
+[INFO] [1791616833.907630921] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+[INFO] [1791616834.007265935] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616834.007669080] [robot1.boo_controller]: 상태 PATROL → IDLE: 이동 금지 또는 게임 중단
+[INFO] [1791616834.026414400] [robot1.boo_controller]: Nav2 목표 6 결과: CANCELED
+[INFO] [1791616834.107504758] [robot1.boo_controller]: 상태 IDLE → PATROL: 게임 진행
+[INFO] [1791616837.107485988] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.107856951] [robot1.boo_controller]: 상태 PATROL → IDLE: 이동 금지 또는 게임 중단
+[INFO] [1791616837.207566331] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.307359021] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.407257950] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.507481411] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.607272354] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.707582592] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.807295120] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616837.907584958] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.007553681] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.107604796] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.207645137] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.307582294] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.407544989] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.507342807] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.607529937] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.707539794] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.807545733] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616838.907527687] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.007564862] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.107335425] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.207349089] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.307589851] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.407591677] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.507573894] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.607241443] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.707571592] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.807551343] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616839.907571818] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.007579019] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.107571152] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.207546587] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.307561971] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.407555821] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.507554137] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.607281379] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.707586461] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.807565654] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616840.907519261] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.007539588] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.107827496] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.207561474] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.307262275] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.407524411] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.507590353] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.607255829] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.707530888] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.807542433] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616841.907566200] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.007472434] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.107526839] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.207558212] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.307297579] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.407565406] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.507561542] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.607258475] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.707257304] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.807547990] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616842.907521219] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.007567987] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.107244429] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.207297469] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.307258515] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.407316962] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.507253604] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.607284204] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.707335886] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.807393899] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616843.907265452] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.007594768] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.107570313] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.207687899] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.307551301] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.407561020] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.507574646] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.607430225] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.707594616] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.807574655] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616844.907214439] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.007544140] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.107574700] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.207542445] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.307541431] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.407573959] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.507590931] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.607249360] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.707720661] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.807566145] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616845.907570645] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.007562027] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.107612205] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.207582440] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.307282932] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.407536806] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.507535437] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.607275455] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.707535933] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.807539222] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616846.907298181] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.007315997] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.107569824] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.207549882] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.307562876] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.407540322] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.507546455] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.607278516] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.707342894] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.807569374] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616847.907276748] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.007596290] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.107250197] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.207444046] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.307555973] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.407533185] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.507550280] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.607218619] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.707481117] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.807550156] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616848.907586584] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.007555096] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.107564327] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.207545827] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.307302510] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.407596151] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.507579422] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.607269334] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.707544262] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.807252205] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616849.907568462] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.007594320] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.107492543] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.207627598] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.307457149] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.407572239] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.507535878] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.607575380] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.707580310] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.807526057] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616850.907603392] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.007538597] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.107534217] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.207549232] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.307406563] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.407554087] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.507531162] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.607267270] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.707550634] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.807524734] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616851.907583648] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.007594134] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.107567030] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.207312272] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.307555576] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.407570532] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.507609742] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.607238478] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.707269385] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.807332743] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616852.907558129] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.007525114] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.107619383] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.207588994] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.307549314] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.407378721] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.507557309] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.607242313] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.707572351] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.807288370] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616853.907564420] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.007535024] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.107344251] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.207544295] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.307549825] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.407548622] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.507544832] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.607230613] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.707569143] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.807281422] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616854.907535519] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.007606884] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.107257183] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.207624945] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.307280877] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.407246921] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.507555751] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.607246587] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.707293333] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.807330232] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616855.907288482] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.007345780] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.107267880] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.207254083] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.307593091] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.407504859] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.507579974] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.607262101] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.707330307] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.807451094] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616856.907384029] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.007338430] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.107572858] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.207256106] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.307259241] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.407275537] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.507304735] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.607290641] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.707591004] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+[INFO] [1791616857.807579468] [robot1.boo_controller]: Nav2 목표 취소: 이동 금지
+Traceback (most recent call last):
+  File "/home/mu-01/Trick_or_Bot/ros2_ws/install/tob_control/lib/tob_control/boo_controller_node", line 33, in <module>
+    sys.exit(load_entry_point('tob-control', 'console_scripts', 'boo_controller_node')())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mu-01/Trick_or_Bot/ros2_ws/build/tob_control/tob_control/boo_controller_node.py", line 275, in main
+    rclpy.spin(node)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/__init__.py", line 247, in spin
+    executor.spin_once()
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 926, in spin_once
+    self._spin_once_impl(timeout_sec)
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 907, in _spin_once_impl
+    handler, entity, node = self.wait_for_ready_callbacks(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 877, in wait_for_ready_callbacks
+    return next(self._cb_iter)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ros/jazzy/lib/python3.12/site-packages/rclpy/executors.py", line 785, in _wait_for_ready_callbacks
+    raise ExternalShutdownException()
+rclpy.executors.ExternalShutdownException

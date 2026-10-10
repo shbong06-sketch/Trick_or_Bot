@@ -1,0 +1,30 @@
+# Gazebo/벤치 시험용 control 설정: control.yaml에서 게임 상태·안전 상태 확인만 끈다.
+# 실제 운용에는 쓰지 않는다(ros2_ws/src/tob_control/config/control.yaml 사용).
+# control.yaml을 바꾸면 이 파일도 같은 값으로 다시 만든다.
+/**:
+  boo_controller:
+    ros__parameters:
+      control_period_s: 0.1
+      obs_timeout_s: 0.5
+      game_timeout_s: 2.0
+      accepted_sources:
+      - boo_camera
+      frame_id: map
+      nav2_action: navigate_to_pose
+      goal_update_dist_m: 0.2
+      goal_min_interval_s: 0.5
+      chase_standoff_m: 0.45
+      require_game_state: false
+      require_safety: false
+      patrol_points_xy:
+      - 1.0
+      - 2.5
+      - 2.5
+      - 2.5
+      suspicion_fill_s: 3.0
+      suspicion_decay_s: 3.0
+      lost_timeout_s: 1.0
+      search_hold_s: 0.0
+      search_timeout_s: 15.0
+      max_goal_failures: 3
+      suspect_hold: true
