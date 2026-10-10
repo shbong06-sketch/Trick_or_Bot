@@ -29,6 +29,7 @@ setup(
     extras_require={
         'test': [
             'pytest',
+            'PyYAML',
         ],
     },
     entry_points={
