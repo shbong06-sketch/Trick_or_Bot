@@ -26,3 +26,119 @@
 # 여러 모델을 교체하는 플러그인 시스템, 학습 파이프라인, ROS 통신은 넣지 않는다.
 # [완료 기준]
 # 정상 이미지와 대상 없는 이미지에서 일관된 결과 형식을 반환한다.
+
+"""GPU-based Pumpkin detection without ROS dependencies."""
+
+from dataclasses import dataclass
+import math
+from pathlib import Path
+
+import numpy as np
+import torch
+from ultralytics import YOLO
+
+
+@dataclass(frozen=True)
+class Detection:
+    """One detection with original-image pixel coordinates (x1, y1, x2, y2)."""
+
+    bbox: tuple[float, float, float, float]
+    class_id: int
+    confidence: float
+    
+
+class Detector:
+    """Load a local PT model once and reuse it for BGR image inference."""
+
+    def __init__(
+        self,
+        model_path: str,
+        confidence_threshold: float = 0.5,
+        device: int = 0,
+        target_class_id: int = 0,
+    ):
+        """Validate configuration and load the model onto the selected GPU."""
+        path = Path(model_path).expanduser()
+        if not path.is_file() or path.suffix.lower() != '.pt':
+            raise ValueError(f'Model must be an existing .pt file: {path}')
+        if (
+            isinstance(confidence_threshold, bool)
+            or not isinstance(confidence_threshold, (int, float))
+            or not math.isfinite(confidence_threshold)
+            or not 0.0 <= confidence_threshold <= 1.0
+        ):
+            raise ValueError('confidence_threshold must be between 0 and 1')
+        if isinstance(device, bool) or not isinstance(device, int) or device < 0:
+            raise ValueError('device must be a nonnegative GPU index')
+        if (
+            isinstance(target_class_id, bool)
+            or not isinstance(target_class_id, int)
+            or target_class_id < 0
+        ):
+            raise ValueError('target_class_id must be a nonnegative integer')
+        if not torch.cuda.is_available() or device >= torch.cuda.device_count():
+            raise RuntimeError(f'GPU {device} is unavailable; CUDA is required')
+
+        try:
+            self._model = YOLO(str(path.resolve()), task='detect')
+            if self._model.task != 'detect':
+                raise ValueError('Model must support object detection')
+            if target_class_id not in self._model.names:
+                raise ValueError(
+                    f'Unknown target class {target_class_id}; '
+                    f'available classes: {self._model.names}'
+                )
+            self._model.to(f'cuda:{device}')
+        except ValueError:
+            raise
+        except Exception as exc:
+            raise RuntimeError(f'Failed to load model {path}: {exc}') from exc
+
+        self.confidence_threshold = float(confidence_threshold)
+        self.device = device
+        self.target_class_id = target_class_id
+
+    def detect(self, image: np.ndarray) -> list[Detection]:
+        """Return target detections, or an empty list for a normal absent target."""
+        if (
+            not isinstance(image, np.ndarray)
+            or image.dtype != np.uint8
+            or image.ndim != 3
+            or image.shape[2] != 3
+            or image.shape[0] == 0
+            or image.shape[1] == 0
+        ):
+            raise ValueError('image must be a nonempty HxWx3 uint8 BGR array')
+
+        try:
+            results = self._model.predict(
+                source=image,
+                conf=self.confidence_threshold,
+                classes=[self.target_class_id],
+                device=self.device,
+                verbose=False,
+                save=False,
+                show=False,
+                stream=False,
+            )
+            if len(results) != 1 or results[0].boxes is None:
+                raise RuntimeError('Model returned an invalid detection result')
+            boxes = results[0].boxes.cpu()
+            detections = []
+            for bbox, class_id, confidence in zip(
+                boxes.xyxy.tolist(), boxes.cls.tolist(), boxes.conf.tolist()
+            ):
+                if not all(math.isfinite(value) for value in [*bbox, confidence]):
+                    raise RuntimeError('Model returned nonfinite detection values')
+                if int(class_id) != self.target_class_id:
+                    continue
+                if confidence < self.confidence_threshold:
+                    continue
+                detections.append(Detection(
+                    bbox=tuple(float(value) for value in bbox),
+                    class_id=int(class_id),
+                    confidence=float(confidence),
+                ))
+            return detections
+        except Exception as exc:
+            raise RuntimeError(f'Detection inference failed: {exc}') from exc
