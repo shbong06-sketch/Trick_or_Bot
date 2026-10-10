@@ -2,7 +2,7 @@
 
 - 작성: 2026-10-08_1550
 - 문서 ID: SDD-TOB-001 (초안, 팀 검토 전)
-- 입력 문서: [SRD_fix01.md](SRD_fix01.md)(TR·SR), [brd.md](brd.md)(BR, Case1~3), [schedule.md](schedule.md), 튜터님 DAY5 "시스템 설계도 마감일" 목차 지침
+- 입력 문서: [SRD_fix03.md](SRD_fix03.md)(TR·SR), [brd.md](brd.md)(BR, Case1~3), [schedule.md](schedule.md), 튜터님 DAY5 "시스템 설계도 마감일" 목차 지침
 - 확인 필요 항목: [open_issues.md](open_issues.md) (본문의 `OI-xx`)
 - 목차 순서(튜터님 지침): **시나리오 → 시스템 아키텍처(전체) → 상세 설계(기능별) → 인터페이스 → 검증 → 구현 적합성(유지보수, 추적성)**
 - 이 문서가 답하는 질문: **어떻게(How).** 기능, 각 기능이 받는 것과 보내는 것, 그 연결을 이 문서만 보고 알 수 있게 쓴다.
@@ -483,7 +483,7 @@ rokey_ws/src/
 | TR-08 | M2, M6 | M2 체포 경계 | TR-17 | M6 | 방전 시험 |
 | TR-09 | M6, M5 | M5 체류 | TR-18 | M1 | M1 정밀도, 좌표 오차 |
 
-BR → TR 연결은 [SRD_fix01.md](SRD_fix01.md) §9의 추적표를 따른다.
+BR → TR 연결은 [SRD_fix03.md](SRD_fix03.md) §9의 추적표를 따른다.
 
 ## 8. 미결정 사항
 

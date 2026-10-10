@@ -7,7 +7,7 @@
   (2) SRD·SDD가 인용할 BR ID를 repo 안에서 확인할 수 있게 하는 용도다.
   두 Notion 문서가 다른 부분은 [open_issues.md](open_issues.md)에 따로 적었다.
 - 입력 문서: 팀 Notion 오전 발표 준비(2026-10-08), BRD-TrickorBot, 타임라인, 주제 선정 회의록
-- 이어지는 문서: [SRD_fix01.md](SRD_fix01.md) → [sdd.md](sdd.md)
+- 이어지는 문서: [SRD_fix03.md](SRD_fix03.md) → [sdd.md](sdd.md)
 
 ---
 
