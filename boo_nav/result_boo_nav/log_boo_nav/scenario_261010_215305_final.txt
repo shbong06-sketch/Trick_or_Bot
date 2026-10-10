@@ -1,0 +1,2 @@
+[37;1m2026-10-10 21:55:52.857 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port7022: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m
+[37;1m2026-10-10 21:55:53.106 [31;1m[[37;1mRTPS_TRANSPORT_SHM[31;1m Error] [37mFailed init_port fastrtps_port7097: open_and_lock_file failed[34;1m -> Function [36mopen_port_internal[m

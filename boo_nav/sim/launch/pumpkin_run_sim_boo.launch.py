@@ -31,7 +31,7 @@ WORLD = 'holloween'   # 경로가 아니라 이름이어야 한다 (TB4 브리�
 LEVEL = REPO / 'boo_nav' / 'sim' / 'level1_sim.yaml'   # holloween_boo 지도와 시작 위치
 ROBOTS = (('robot1', 'boo_start', 'boo_model'), ('robot2', 'pumpkin_start', 'model'))
 SPAWN_GAP_S = 8.0   # 두 번째 로봇은 첫 로봇이 다 뜬 뒤에 스폰 (동시에 띄우면 브리지·컨트롤러가 꼬이기 쉽다)
-LOCALIZATION_DELAY_S = 60.0   # [boo_nav] 원본 15.0. 이 PC에서는 15초에 띄우면 localization 노드가 서로 연결되지 않았다(map_server/get_state 대기 반복)  # 로봇 노드가 다 뜬 뒤 AMCL을 띄운다. 같이 띄우면 map_server가 Configuring에서 멈추는 일이 있다
+LOCALIZATION_DELAY_S = 60.0  # 원본 15.0. 이 PC 시험: 15초=로봇1 AMCL이 응답 유실로 멈춤(1/1), 30초=로봇2 AMCL이 멈춤(2/2), 60초=정상(이번 세션 내내). 로봇 둘의 스폰 부하가 끝난 뒤에 띄워야 한다
 
 
 OVERLAY = Path(os.environ.get('XDG_RUNTIME_DIR', '/tmp')) / 'pumpkin_run_overlay'
@@ -151,7 +151,7 @@ def gazebo(context, *args, **kwargs):
                 str(Path(share('irobot_create_description')).parent)]
     gui_plugins = [os.path.join(share('turtlebot4_gz_gui_plugins'), 'lib'),
                    os.path.join(share('irobot_create_gz_plugins'), 'lib')]
-    gui_config = os.path.join(share('turtlebot4_gz_bringup'), 'gui', model, 'gui.config')
+    gui_config = str(REPO / 'boo_nav' / 'sim' / 'gui' / 'gui.config')   # [boo_nav] 카메라를 위에서 내려다보게 고친 사본(원본: turtlebot4_gz_bringup/gui/<model>/gui.config)
     headless = LaunchConfiguration('headless').perform(context) == 'true'
     gz_args = [f'{WORLD}.sdf', '-r', '-v', '3'] + (['-s'] if headless else ['--gui-config', gui_config])
     return [
