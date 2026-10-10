@@ -1,18 +1,23 @@
-# Detection Docker 실행
+# 환경 준비
+
+[전체 안내](../README.md) · [Phase 1](phase1.md)
+
+Docker와 NVIDIA GPU를 사용할 수 있는 환경에서 진행합니다.
+호스트 명령은 별도 안내가 없으면 `detection/` 기준입니다.
 
 결과는 호스트의 `detection/experiments/`에 저장됩니다.
 
 ## 빌드 및 GPU 확인
 
-각 환경 디렉터리에서 실행합니다.
+사용할 모델의 환경 디렉토리로 이동하여 실행합니다.
 
 | 환경 | 디렉터리 | 서비스 |
 |---|---|---|
-| YOLO | `detection/docker/yolo` | `yolo-trainer` |
-| D-FINE | `detection/docker/dfine` | `trainer` |
-| DEIM-D-FINE | `detection/docker/deim` | `trainer` |
-| RF-DETR | `detection/docker/rfdetr` | `trainer` |
-| RT-DETRv2-S | `detection/docker/rtdetrv2` | `trainer` |
+| YOLO | `docker/yolo` | `yolo-trainer` |
+| D-FINE | `docker/dfine` | `trainer` |
+| DEIM-D-FINE | `docker/deim` | `trainer` |
+| RF-DETR | `docker/rfdetr` | `trainer` |
+| RT-DETRv2-S | `docker/rtdetrv2` | `trainer` |
 
 ```bash
 docker compose build
@@ -21,7 +26,7 @@ docker compose run --rm <서비스> nvidia-smi
 
 YOLO 이미지는 Dockerfile에서 `ultralytics/ultralytics:8.4.152`로 고정합니다.
 
-## Weight 다운로드
+## 사전 학습 가중치 다운로드
 
 다운로드는 최초 한 번만 수행합니다. `wget`은 호스트에서, `gdown`은 일회용 컨테이너에서 실행합니다.
 
@@ -33,9 +38,9 @@ YOLO 이미지는 Dockerfile에서 `ultralytics/ultralytics:8.4.152`로 고정�
 | RF-DETR-N | 자동 다운로드 | `rfdetr/` |
 | RT-DETRv2-S | `wget` (GitHub Releases) | `rtdetrv2_s_coco.pth` |
 
-## YOLO smoke run
+## YOLO 실행 확인
 
-`detection/docker/yolo`에서 실행합니다.
+`detection/` 기준 `docker/yolo`로 이동하여 실행합니다.
 
 ```bash
 for model in yolov8n yolo11n yolo26n; do
@@ -47,9 +52,9 @@ for model in yolov8n yolo11n yolo26n; do
 done
 ```
 
-## D-FINE smoke run
+## D-FINE 실행 확인
 
-`detection/docker/dfine`에서 checkpoint를 최초 한 번 다운로드합니다.
+`detection/` 기준 `docker/dfine`로 이동하여 체크포인트를 최초 한 번 다운로드합니다.
 
 ```bash
 mkdir -p ../../checkpoints
@@ -68,9 +73,9 @@ docker compose run --rm trainer \
   -u epochs=1
 ```
 
-## DEIM-D-FINE smoke run
+## DEIM-D-FINE 실행 확인
 
-`detection/docker/deim`에서 [공식 N checkpoint](https://drive.google.com/file/d/1ZPEhiU9nhW4M5jLnYOFwTSLQC1Ugf62e/view)를
+`detection/` 기준 `docker/deim`으로 이동하여 [공식 N 체크포인트](https://drive.google.com/file/d/1ZPEhiU9nhW4M5jLnYOFwTSLQC1Ugf62e/view)를
 최초 한 번 다운로드합니다. Google Drive 파일은 일회용 컨테이너에서 `gdown`으로 받습니다.
 
 ```bash
@@ -92,12 +97,12 @@ docker compose run --rm trainer \
   -u epoches=1
 ```
 
-## RF-DETR smoke run
+## RF-DETR 실행 확인
 
-`detection/docker/rfdetr`에서 실행합니다. Pretrained weight는 자동 다운로드되어
+`detection/` 기준 `docker/rfdetr`로 이동하여 실행합니다. 사전 학습 가중치는 자동 다운로드되어
 `detection/checkpoints/rfdetr/`에 보관됩니다. Hugging Face 캐시는
 `detection/checkpoints/huggingface/`에 남습니다. 별도 수동 다운로드는 필요하지 않습니다.
-학습 전에 weight만 준비하려면 다음 명령을 실행합니다.
+학습 전에 가중치만 준비하려면 다음 명령을 실행합니다.
 
 ```bash
 docker compose run --rm trainer python -c \
@@ -117,9 +122,9 @@ model.train(
 '
 ```
 
-## RT-DETRv2-S smoke run
+## RT-DETRv2-S 실행 확인
 
-`detection/docker/rtdetrv2`에서 [공식 S (ResNet-18) checkpoint](https://github.com/lyuwenyu/RT-DETR/tree/main/rtdetrv2_pytorch#model-zoo)를
+`detection/` 기준 `docker/rtdetrv2`로 이동하여 [공식 S (ResNet-18) 체크포인트](https://github.com/lyuwenyu/RT-DETR/tree/main/rtdetrv2_pytorch#model-zoo)를
 최초 한 번 다운로드합니다.
 
 ```bash
