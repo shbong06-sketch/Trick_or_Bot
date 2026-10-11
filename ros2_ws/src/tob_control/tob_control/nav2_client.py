@@ -52,10 +52,10 @@ class Nav2Client:
         self._frame_id = frame_id
         self._on_result = on_result
         self._client = ActionClient(node, NavigateToPose, action_name)
-        self._token = 0
+        self._token = 0                       # 목표 번호. 새 목표를 보낼 때마다 1씩 늘어난다
         self._state = Nav2State.IDLE
-        self._handle = None
-        self._cancel_requested = False
+        self._handle = None                   # 수락된 목표의 핸들(취소할 때 쓴다)
+        self._cancel_requested = False        # 수락 전에 취소 요청이 들어왔는지
         self._remaining_m: Optional[float] = None
         self._current_pose: Optional[PoseStamped] = None
 
@@ -85,6 +85,7 @@ class Nav2Client:
         return self._current_pose
 
     def server_ready(self) -> bool:
+        """Nav2의 NavigateToPose 서버가 떠 있으면 True. 켜지기 전에는 목표를 보내지 않기 위해 호출자가 확인한다."""
         return self._client.server_is_ready()
 
     # ---- 목표 전송·취소 ----
@@ -137,6 +138,7 @@ class Nav2Client:
         return pose
 
     def _on_response(self, token: int, future) -> None:
+        """서버가 목표를 수락·거절했을 때 불린다. 거절이면 REJECTED로 끝내고, 수락이면 주행 중(ACTIVE)으로 바꾼다."""
         if token != self._token:
             # 이미 교체된 목표: 수락됐다면 취소만 한다.
             handle = future.result()
@@ -155,6 +157,7 @@ class Nav2Client:
             lambda f, t=token: self._on_done(t, f))
 
     def _on_feedback(self, token: int, msg) -> None:
+        """주행 중 Nav2가 보내는 진행 정보(남은 경로 길이, 현재 자세)를 저장한다. 교체된 목표의 것은 버린다."""
         if token != self._token:
             return
         feedback = msg.feedback
@@ -162,7 +165,8 @@ class Nav2Client:
         self._current_pose = feedback.current_pose
 
     def _on_done(self, token: int, future) -> None:
-        if token != self._token:
+        """목표가 끝났을 때 불린다. Nav2 종료 코드를 SUCCEEDED / CANCELED / FAILED로 옮긴다."""
+        if token != self._token:   # 교체된 이전 목표의 늦은 결과는 무시한다
             return
         status = future.result().status
         if status == GoalStatus.STATUS_SUCCEEDED:
@@ -174,6 +178,7 @@ class Nav2Client:
         self._finish(token, state)
 
     def _finish(self, token: int, state: Nav2State) -> None:
+        """최종 상태를 저장하고 호출자(on_result)에게 한 번 알린다."""
         self._state = state
         self._handle = None
         self._remaining_m = None

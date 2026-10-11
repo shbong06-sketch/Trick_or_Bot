@@ -16,15 +16,18 @@ from tob_interfaces.msg import TargetObservation
 
 
 class ObsPub(Node):
+    """고정된 지도 좌표를 10 Hz로 계속 "보인다"고 발행하는 노드. 거리·시야각·벽 가림은 따지지 않는다."""
+
     def __init__(self, pos):
         super().__init__('fake_obs_pub')
-        self.pos = pos
+        self.pos = pos   # 보인다고 알릴 (x, y). None이면 "안 보임" 관측을 발행
         self.pub = self.create_publisher(
             TargetObservation, '/tob/target/observation',
             QoSProfile(depth=1, reliability=QoSReliabilityPolicy.RELIABLE))
         self.create_timer(0.1, self.tick)
 
     def tick(self):
+        """관측 메시지 하나를 만들어 발행한다(출처 boo_camera, 신뢰도 0.7)."""
         msg = TargetObservation()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'map'
@@ -32,7 +35,7 @@ class ObsPub(Node):
         if self.pos is not None:
             msg.detected = True
             msg.map_valid = True
-            msg.confidence = 0.9
+            msg.confidence = 0.7   # 탐지 담당 팀원이 말한 값(2026-10-11)
             msg.target_position = PointStamped()
             msg.target_position.header.frame_id = 'map'
             msg.target_position.header.stamp = msg.header.stamp
@@ -41,6 +44,7 @@ class ObsPub(Node):
 
 
 def main():
+    """인자: x y(보이는 지도 좌표) 또는 --none, --sim-time."""
     ap = argparse.ArgumentParser()
     ap.add_argument('x', nargs='?', type=float)
     ap.add_argument('y', nargs='?', type=float)

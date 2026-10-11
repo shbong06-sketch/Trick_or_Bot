@@ -154,3 +154,18 @@ def test_failure_stop_is_released_after_hold():
     assert fsm.step(0.1, None).kind == CmdKind.STOP
     assert run(fsm, 1.5, None).kind in (CmdKind.STOP, CmdKind.GOTO)
     assert fsm.step(0.1, None).kind == CmdKind.GOTO   # 쉬었다가 다시 시도
+
+
+def test_far_sighting_starts_suspect_and_chase_after_three_seconds():
+    """거리 조건이 없다: 지도 끝처럼 먼 좌표에서 보여도 곧바로 의심하고, 계속 보이면 3초 뒤 추격한다(개발팀장 지시 2026-10-11)."""
+    fsm = make()
+    far = (50.0, 50.0)
+    fsm.step(0.1, None)
+    fsm.step(0.1, far)
+    assert fsm.behavior == Behavior.SUSPECT
+    run(fsm, 2.7, far)
+    assert fsm.behavior == Behavior.SUSPECT
+    assert fsm.suspicion < 1.0
+    cmd = run(fsm, 0.4, far)
+    assert fsm.behavior == Behavior.CHASE
+    assert (cmd.kind, cmd.target) == (CmdKind.GOTO, far)

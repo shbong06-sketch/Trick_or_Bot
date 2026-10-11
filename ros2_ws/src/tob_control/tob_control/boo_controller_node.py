@@ -6,6 +6,9 @@
 출력: /tob/boo/state(BooState), Nav2 NavigateToPose 목표(노드 네임스페이스 기준).
 [규칙]
 - detected와 map_valid가 모두 참이고, 허용한 출처이며, 만료되지 않은 관측만 추격에 쓴다.
+- 펌킨까지의 거리는 의심 시작 조건이 아니다(개발팀장 구두 지시 2026-10-11). 지도 어디에서든 유효한 관측이면
+  의심을 시작하고, 계속 보이면 suspicion_fill_s(3초) 뒤 추격한다. 몇 m까지 보이는지는 탐지 노드가 정한다.
+- confidence는 보지 않는다(탐지 노드가 detected를 정할 때 이미 반영했다고 본다. 탐지 담당 팀원 설명: 먼 거리에서도 0.7 안팎).
 - 펌킨의 실제 위치(/tob/pumpkin/pose)는 구독하지 않는다. 추격 정보는 관측뿐이다.
 - 게임이 RUNNING이 아니거나 이동이 허용되지 않으면 진행 중인 목표를 취소하고 IDLE로 둔다.
 - 같은 목표를 매 주기 다시 보내지 않는다(목표가 goal_update_dist_m 이상 움직였을 때만 교체).
@@ -34,12 +37,18 @@ def _dist(a: Point, b: Point) -> float:
 
 
 class BooControllerNode(Node):
-    """Boo의 FSM 결정을 Nav2 목표로 실행하고 BooState를 발행한다."""
+    """Boo의 FSM 결정을 Nav2 목표로 실행하고 BooState를 발행한다.
+
+    구조: 구독 콜백은 최신 메시지와 받은 시각만 저장하고, 0.1초 타이머(_tick)가 한꺼번에 판단한다.
+    _tick의 순서: 이동 허용 판단 → 유효한 관측 추출 → FSM 한 걸음 → 명령 실행(목표 전송·취소)
+    → 정지 거리 확인 → 상태 변화 로그 → BooState 발행.
+    """
 
     def __init__(self) -> None:
         super().__init__('boo_controller')
         self._declare_params()
         p = self.get_parameter
+        # --- 파라미터 읽기 (항목별 뜻은 config/control.yaml) ---
         self._period = p('control_period_s').value
         self._obs_timeout = p('obs_timeout_s').value
         self._game_timeout = p('game_timeout_s').value
@@ -51,6 +60,7 @@ class BooControllerNode(Node):
         self._need_safety = p('require_safety').value
         self._frame = p('frame_id').value
 
+        # 순찰 지점은 [x1, y1, x2, y2, ...] 한 줄로 받으므로 (x, y) 쌍으로 묶는다.
         xy = list(p('patrol_points_xy').value)
         points = [(xy[i], xy[i + 1]) for i in range(0, len(xy) - 1, 2)]
         cfg = FsmConfig(
@@ -65,6 +75,7 @@ class BooControllerNode(Node):
         self._fsm = BooFsm(cfg, points)
         self._nav = Nav2Client(self, p('nav2_action').value, self._frame, self._on_nav_result)
 
+        # --- 최근에 받은 메시지와 받은 시각(만료 판단용). 아직 못 받았으면 None ---
         self._obs: Optional[TargetObservation] = None
         self._obs_rx = None
         self._game: Optional[GameState] = None
@@ -72,6 +83,7 @@ class BooControllerNode(Node):
         self._safety: Optional[SafetyState] = None
         self._safety_rx = None
 
+        # --- 목표 전송 상태 ---
         self._last_target: Optional[Point] = None   # 마지막으로 Nav2에 보낸 목표
         self._last_send = None
         self._last_fail = False                      # 마지막 목표가 실패·거절·서버없음으로 끝남
@@ -91,6 +103,7 @@ class BooControllerNode(Node):
 
     # ---- 파라미터 ----
     def _declare_params(self) -> None:
+        """파라미터 이름과 기본값을 선언한다. 실제 값은 config/control.yaml이 덮어쓴다(항목 설명도 그 파일에 있다)."""
         defaults = {
             'control_period_s': 0.1,
             'obs_timeout_s': 0.5,
@@ -117,6 +130,7 @@ class BooControllerNode(Node):
             self.declare_parameter(name, value)
 
     # ---- 구독 콜백 ----
+    # 아래 세 콜백은 최신 메시지와 받은 시각만 저장한다. 판단은 _tick에서 한다.
     def _on_obs(self, msg: TargetObservation) -> None:
         self._obs, self._obs_rx = msg, self.get_clock().now()
 
@@ -128,7 +142,10 @@ class BooControllerNode(Node):
 
     # ---- 유효성 ----
     def _age_s(self, rx_time, header_stamp=None) -> float:
-        """수신 경과 시간과 메시지 원본 시각 경과 중 큰 값."""
+        """메시지가 얼마나 오래됐는지[s]. 받은 뒤 경과 시간과, 메시지에 적힌 발행 시각 기준 경과 시간 중 큰 값.
+
+        발행 시각이 비어 있으면(0) 받은 시각만 쓴다. 지연된 메시지를 최신으로 착각하지 않기 위함이다.
+        """
         now = self.get_clock().now()
         age = (now - rx_time).nanoseconds / 1e9
         if header_stamp is not None and (header_stamp.sec or header_stamp.nanosec):
@@ -137,7 +154,11 @@ class BooControllerNode(Node):
         return age
 
     def _seen_point(self) -> Optional[Point]:
-        """유효한 직접 관측이면 지도 좌표, 아니면 None."""
+        """유효한 직접 관측이면 펌킨의 지도 좌표 (x, y), 아니면 None.
+
+        유효 조건: ① detected와 map_valid가 참 ② 허용한 출처(boo_camera) ③ map 프레임
+        ④ 좌표가 유한한 수 ⑤ obs_timeout_s 안에 받음. 거리는 조건이 아니다.
+        """
         obs = self._obs
         if obs is None or not (obs.detected and obs.map_valid):
             return None
@@ -154,6 +175,7 @@ class BooControllerNode(Node):
         return (x, y)
 
     def _game_running(self) -> bool:
+        """게임이 진행 중(RUNNING)이고 상태 메시지가 만료되지 않았으면 True. 설정으로 확인을 끌 수 있다."""
         if not self._need_game:
             return True
         if self._game is None or self._age_s(self._game_rx) > self._game_timeout:
@@ -161,6 +183,7 @@ class BooControllerNode(Node):
         return self._game.phase == GameState.RUNNING
 
     def _motion_allowed(self) -> bool:
+        """안전 감독이 이동을 허용했고 그 허가가 유효 시간(valid_for_s) 안이면 True. 설정으로 확인을 끌 수 있다."""
         if not self._need_safety:
             return True
         msg = self._safety
@@ -170,9 +193,11 @@ class BooControllerNode(Node):
 
     # ---- 주기 처리 ----
     def _tick(self) -> None:
+        """제어 주기마다 한 번 불리는 중심 함수. 클래스 설명의 순서대로 처리한다."""
         now = self.get_clock().now()
         dt = (now - self._last_tick).nanoseconds / 1e9
         self._last_tick = now
+        # 게임이 진행 중이고 이동이 허용될 때만 움직인다. 아니면 진행 중인 이동을 취소하고 FSM을 IDLE로 둔다.
         enabled = self._game_running() and self._motion_allowed()
         self._fsm.set_enabled(enabled)
         if not enabled:
@@ -193,11 +218,18 @@ class BooControllerNode(Node):
         self._publish_state(seen is not None)
 
     def _maybe_send(self, target: Point) -> None:
+        """목표를 Nav2에 보낼지 판단하고 보낸다. 같은 목표를 매 주기 보내지 않도록 거른다.
+
+        보내지 않는 경우: ① 서버가 아직 준비 안 됨 ② 정지 거리 안에서 멈춘 목표와 거의 같음
+        ③ 마지막 전송 후 goal_min_interval_s가 안 지남 ④ 목표가 goal_update_dist_m 이상 안 움직였고 재시도도 아님.
+        """
         if not self._nav.server_ready():
             return   # 서버가 준비되지 않은 상태를 이동 가능으로 취급하지 않는다(실패로도 세지 않는다)
         now = self.get_clock().now()
+        # 목표가 충분히 움직였는지(처음 보내는 것도 포함)
         moved = self._last_target is None or _dist(target, self._last_target) >= self._update_dist
         if self._hold is not None:
+            # 정지 거리 안이라 멈춘 상태. 펌킨이 다시 멀어져 목표가 움직여야 이동을 재개한다.
             if _dist(target, self._hold) < self._update_dist:
                 if self._fsm.behavior == Behavior.SEARCH:
                     # 정지 거리 안에서 멈춘 자리가 곧 수색 지점이므로 도착으로 본다
@@ -207,7 +239,7 @@ class BooControllerNode(Node):
             self._hold = None
         interval_ok = (self._last_send is None or
                        (now - self._last_send).nanoseconds / 1e9 >= self._min_interval)
-        retry = self._last_fail and not self._nav.busy
+        retry = self._last_fail and not self._nav.busy   # 직전 목표가 실패로 끝났으면 같은 목표여도 다시 보낸다
         if not interval_ok or not (moved or retry):
             return
         self._last_fail = False
@@ -223,6 +255,7 @@ class BooControllerNode(Node):
         return math.atan2(target[1] - pose.pose.position.y, target[0] - pose.pose.position.x)
 
     def _check_standoff(self) -> None:
+        # 정지 거리는 직선이 아니라 Nav2가 알려 준 "경로상 남은 거리"로 잰다.
         """추격 중 경로상 남은 거리가 정지 거리 안이면 목표를 취소하고 그 자리에서 기다린다."""
         remaining = self._nav.remaining_m
         if (self._fsm.behavior == Behavior.CHASE and self._nav.busy and remaining is not None
@@ -231,6 +264,7 @@ class BooControllerNode(Node):
             self._nav.cancel()
 
     def _cancel_goal(self, reason: str) -> None:
+        """진행 중인 Nav2 목표를 취소하고, 목표 기억(마지막 목표·정지 목표)을 지운다."""
         if self._nav.busy:
             self.get_logger().info(f'Nav2 목표 취소: {reason}')
             self._nav.cancel()
@@ -238,6 +272,7 @@ class BooControllerNode(Node):
         self._hold = None
 
     def _on_nav_result(self, token: int, state: Nav2State) -> None:
+        """Nav2 목표가 끝났을 때 불린다. 성공·취소·실패를 구분해 FSM에 알린다(실패는 도착이 아니다)."""
         self.get_logger().info(f'Nav2 목표 {token} 결과: {state.value}')
         if state == Nav2State.SUCCEEDED:
             self._last_fail = False
@@ -250,6 +285,7 @@ class BooControllerNode(Node):
 
     # ---- 발행 ----
     def _publish_state(self, visible: bool) -> None:
+        """현재 행동·의심 게이지·마지막으로 본 위치·사유를 /tob/boo/state로 발행한다. visible은 이번 주기에 보였는지."""
         msg = BooState()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = self._frame

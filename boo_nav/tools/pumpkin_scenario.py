@@ -24,16 +24,19 @@ NAMES = {0: 'IDLE', 1: 'PATROL', 2: 'SUSPECT', 3: 'CHASE', 4: 'SEARCH'}
 
 
 def yaw_of(q):
+    """쿼터니언 q의 바라보는 방향(yaw, 라디안)."""
     return math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
 
 
 class Scenario(Node):
+    """펌킨을 목표 지점으로 몰고 가며 Boo 상태 변화와 두 로봇 사이 거리를 로그로 남기는 노드."""
+
     def __init__(self, goal, seconds):
         super().__init__('pumpkin_scenario')
         self.goal, self.seconds = goal, seconds
-        self.boo = self.pumpkin = None
-        self.behavior = None
-        self.t0 = time.time()
+        self.boo = self.pumpkin = None    # 두 로봇의 최신 지도 위치(AMCL)
+        self.behavior = None              # Boo의 현재 행동 번호 (바뀐 순간을 잡기 위함)
+        self.t0 = time.time()             # 시나리오 시작 시각(로그의 + 경과 초 기준)
         self.create_subscription(PoseWithCovarianceStamped, '/robot1/amcl_pose',
                                  lambda m: setattr(self, 'boo', m.pose.pose), POSE_QOS)
         self.create_subscription(PoseWithCovarianceStamped, '/robot2/amcl_pose',
@@ -44,15 +47,18 @@ class Scenario(Node):
         self.create_timer(5.0, self.report)
 
     def dist(self):
+        """Boo–펌킨 실제 거리[m] (AMCL 위치 기준). 위치를 모르면 nan."""
         if self.boo is None or self.pumpkin is None:
             return float('nan')
         return math.hypot(self.boo.position.x - self.pumpkin.position.x,
                           self.boo.position.y - self.pumpkin.position.y)
 
     def log(self, text):
+        """시나리오 시작 후 경과 초와 함께 로그를 남긴다."""
         self.get_logger().info(f'+{time.time() - self.t0:5.1f}s {text}')
 
     def on_state(self, msg):
+        """Boo 행동이 바뀐 순간(SUSPECT는 탐지 순간)에 두 로봇 위치와 실제 거리를 기록한다."""
         if msg.behavior != self.behavior:
             self.behavior = msg.behavior
             if self.boo and self.pumpkin:
@@ -61,10 +67,12 @@ class Scenario(Node):
                          f'실제 거리={self.dist():.2f} m | {msg.reason}')
 
     def report(self):
+        """5초마다 현재 거리와 Boo 상태를 기록한다."""
         if self.boo and self.pumpkin:
             self.log(f'  거리 {self.dist():.2f} m (상태 {NAMES.get(self.behavior, "?")})')
 
     def tick(self):
+        """0.1초마다 펌킨 속도를 정한다: 목표 방향으로 돌고(최대 0.6 rad/s), 거의 정면이면 0.15 m/s로 전진, 0.15 m 안이면 정지."""
         if time.time() - self.t0 > self.seconds:
             self.log(f'종료: 마지막 실제 거리 {self.dist():.2f} m (상태 {NAMES.get(self.behavior, "?")})')
             raise ExternalShutdownException
@@ -82,6 +90,7 @@ class Scenario(Node):
 
 
 def main():
+    """인자: 펌킨 목표 x y, --seconds(기본 150초 뒤 종료), --sim-time(시뮬레이션 시계 사용)."""
     ap = argparse.ArgumentParser()
     ap.add_argument('x', type=float)
     ap.add_argument('y', type=float)

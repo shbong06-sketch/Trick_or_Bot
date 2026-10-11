@@ -26,13 +26,19 @@ NAMES = {0: 'IDLE', 1: 'PATROL', 2: 'SUSPECT', 3: 'CHASE', 4: 'SEARCH'}
 
 
 class FakeWorld(Node):
+    """컨트롤러 시험용 가짜 세계: 가짜 Nav2 서버 + 게임·안전·관측 발행기 + BooState 기록기.
+
+    가짜 로봇은 목표를 향해 직선으로 speed[m/s]로 움직이고, 목표까지 0.1 m 안이면 도착으로 친다.
+    시험 시나리오는 main()이 seen_at, phase, safe, source 값을 바꿔 가며 진행한다.
+    """
+
     def __init__(self):
         super().__init__('fake_world')
         cb = ReentrantCallbackGroup()
         self.pos = [0.0, 0.0]
         self.speed = 1.0                      # 가짜 로봇 속도 [m/s]
-        self.goals = []                       # (시각, x, y, 결과)
-        self.cancel_count = 0
+        self.goals = []                       # 끝난 목표의 기록: (시작 시각, x, y, 결과)
+        self.cancel_count = 0                 # 취소 요청을 받은 횟수
         self.server = ActionServer(
             self, NavigateToPose, '/robot1/navigate_to_pose', self._execute,
             goal_callback=lambda g: GoalResponse.ACCEPT,
@@ -41,19 +47,21 @@ class FakeWorld(Node):
         self.safe_pub = self.create_publisher(SafetyState, '/tob/boo/safety', QOS)
         self.obs_pub = self.create_publisher(TargetObservation, '/tob/target/observation', QOS)
         self.create_subscription(BooState, '/tob/boo/state', self._on_boo, QOS)
-        self.boo = None
-        self.history = []
-        self.phase = GameState.RUNNING
-        self.safe = True
+        self.boo = None                       # 컨트롤러가 발행한 최신 BooState
+        self.history = []                     # 상태가 바뀐 순간 기록: (시각, 상태 이름, 사유)
+        self.phase = GameState.RUNNING        # 발행할 게임 단계 (시험이 바꾼다)
+        self.safe = True                      # 발행할 이동 허용 여부 (시험이 바꾼다)
         self.seen_at = None                   # None이면 관측 없음
         self.source = 'boo_camera'
         self.create_timer(0.1, self._publish)
 
     def _on_cancel(self, _goal):
+        """Nav2 목표 취소 요청을 항상 받아들이고 횟수만 센다."""
         self.cancel_count += 1
         return CancelResponse.ACCEPT
 
     def _execute(self, handle):
+        """목표 하나를 처리한다: 0.1초마다 목표 쪽으로 이동하고 feedback을 보내며, 취소되거나 도착하면 끝낸다."""
         tx = handle.request.pose.pose.position.x
         ty = handle.request.pose.pose.position.y
         t0 = time.time()
@@ -80,6 +88,7 @@ class FakeWorld(Node):
             time.sleep(0.1)
 
     def _publish(self):
+        """0.1초마다 컨트롤러가 받는 입력(게임 상태, 안전 상태, 관측)을 발행한다. seen_at이 None이면 "안 보임"이다."""
         now = self.get_clock().now().to_msg()
         game = GameState()
         game.phase = self.phase
@@ -103,12 +112,14 @@ class FakeWorld(Node):
         self.obs_pub.publish(obs)
 
     def _on_boo(self, msg):
+        """컨트롤러가 발행한 BooState를 저장하고, 행동이 바뀐 순간을 기록한다."""
         if self.boo is None or msg.behavior != self.boo.behavior:
             self.history.append((time.time(), NAMES[msg.behavior], msg.reason))
         self.boo = msg
 
 
 def wait_until(node, cond, timeout, label):
+    """cond()가 참이 될 때까지 최대 timeout초 기다리고 결과([OK]/[FAIL])를 출력한다. 참이 되면 True."""
     t0 = time.time()
     while time.time() - t0 < timeout:
         if cond():
@@ -120,6 +131,7 @@ def wait_until(node, cond, timeout, label):
 
 
 def main():
+    """시나리오 7개를 차례로 실행하고, 하나라도 실패하면 종료 코드 1로 끝난다."""
     rclpy.init()
     node = FakeWorld()
     ex = MultiThreadedExecutor(num_threads=4)
