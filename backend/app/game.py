@@ -9,6 +9,12 @@ from .bridge import Bridge
 log = logging.getLogger("game")
 
 CHECK_PERIOD = 0.1  # 10 Hz. 획득 판정 → 화면 사라짐 0.5 s 예산에서 판정 지연이 최대 0.1 s
+T0_TOLERANCE_S = 0.5  # GameState 경과시간으로 다시 계산한 시작 시각이 이만큼 어긋나면 화면에 다시 보낸다
+
+# tob_interfaces/msg/GameState.msg phase → 화면 상태. 웹에는 일시정지 화면이 없어 PAUSED는 run으로 보인다
+PHASE_TO_WEB = {0: "ready", 1: "run", 2: "run", 3: "clear", 4: "over"}
+# game_manager(tob_game/rules.py) 실패 사유 → 화면이 구분하는 사유
+REASON_TO_WEB = {"하트 소진": "caught", "제한시간 초과": "timeout"}
 
 
 class Game:
@@ -16,6 +22,9 @@ class Game:
 
     상태: ready(시작 전) → run(진행 중) → clear(탈출 성공) | over(시간 초과)
     탈출문: 잠김 → (사탕을 다 모은 뒤 문 앞 구역에서 dwell_s 머무름) → 열림 → (문 지점 도착) → clear
+
+    bridge.remote_game(ROS)이면 판정은 game_manager가 하고, 여기서는 GameState를 같은 화면 메시지로 옮긴다.
+    이때 탈출문은 사탕을 다 모으면 바로 열린다 (game_manager에는 문 앞 대기 규칙이 없다).
     """
 
     def __init__(self, level: dict, bridge: Bridge):
@@ -36,6 +45,8 @@ class Game:
 
         self.clients: set = set()              # /ws/game 연결들
         self.on_end = None                     # clear·over 때 호출 (로봇 정지)
+        self._starting = False                 # game_manager START 응답을 기다리는 중
+        self.round_id = ""                     # game_manager 회차 ID (remote_game일 때만)
         self._reset_round()
         self.state = "ready"
         self.reason: str | None = None
@@ -112,9 +123,21 @@ class Game:
         log.info("상태 %s%s", state, f" ({reason})" if reason else "")
         await self.broadcast(self.state_msg())
 
-    async def start(self) -> None:
-        if self.state == "run":
-            return
+    async def start(self) -> str | None:
+        """회차 시작. game_manager가 START를 거절하면 시작하지 않고 사유를 돌려준다."""
+        if self.state == "run" or self._starting:
+            return None
+        self._starting = True
+        try:
+            accepted, message = await self.bridge.request_start(self.lv)
+        finally:
+            self._starting = False
+        if not accepted:
+            log.warning("시작 거절: %s", message)
+            return message or "게임 관리자가 시작을 거절했습니다"
+        if self.bridge.remote_game:
+            return None  # 화면 상태는 다음 GameState로 바뀐다
+        self.bridge.reset_pumpkin()
         self._reset_round()
         self.t0 = time.time()
         await self.broadcast(self.collected_msg())
@@ -122,17 +145,30 @@ class Game:
         await self.broadcast(self.hud_msg())
         await self._set_state("run")
 
-    async def reset(self) -> None:
+    async def reset(self) -> str | None:
+        """시작 전 상태로. game_manager가 RESET을 거절하면 사유를 돌려준다."""
+        if self.bridge.remote_game:
+            accepted, message = await self.bridge.request_reset(self.round_id)
+            if not accepted:
+                log.warning("초기화 거절: %s", message)
+                return message or "게임 관리자가 초기화를 거절했습니다"
+            return None  # 화면 상태는 다음 GameState로 바뀐다
+        self.bridge.reset_pumpkin()
         self._reset_round()
         await self.broadcast(self.collected_msg())
         await self.broadcast(self.gate_msg())
         await self.broadcast(self.hud_msg())
         await self._set_state("ready")
+        return None
 
     # ---- 판정 루프 ----
     async def run(self) -> None:
         while True:
             await asyncio.sleep(CHECK_PERIOD)
+            if self.bridge.remote_game:
+                if (gs := self.bridge.game_state()) is not None:
+                    await self._sync(gs)
+                continue
             if self.state != "run":
                 continue
             now = time.time()
@@ -146,6 +182,45 @@ class Game:
             await self._check_candies(x, y, now)
             if len(self.collected) == len(self.candies):
                 await self._check_gate(x, y, now)
+
+    async def _sync(self, gs: dict) -> None:
+        """game_manager의 GameState를 기존 화면 메시지(st·cds·cd·gt·hud·hit)로 옮긴다. 바뀐 것만 보낸다."""
+        now = time.time()
+        if gs["round_id"] != self.round_id:
+            # 새 회차 또는 초기화: 이전 회차의 사탕·하트·문 표시를 지운다
+            self.round_id = gs["round_id"]
+            self._reset_round()
+            await self.broadcast(self.collected_msg())
+            await self.broadcast(self.gate_msg())
+            await self.broadcast(self.hud_msg())
+        for cid in gs["collected"]:
+            if cid not in self.collected:
+                self.collected[cid] = now
+                log.info("획득 %s (game_manager, %d/%d)", cid, len(self.collected), gs["candy_total"])
+                await self.broadcast(json.dumps(
+                    {"t": "cd", "id": cid, "n": len(self.collected), "ts": round(now, 4)}))
+        if gs["max_hp"] and (gs["max_hp"] != self.max_hearts or gs["hp"] != self.hud["hp"]):
+            if gs["hp"] < self.hud["hp"]:
+                log.info("피격 (game_manager): 하트 %d/%d", gs["hp"], gs["max_hp"])
+                await self.broadcast(json.dumps({"t": "hit", "hp": gs["hp"]}))
+            self.max_hearts, self.hud["hp"] = gs["max_hp"], gs["hp"]
+            await self.broadcast(self.hud_msg())
+        if gs["exit_enabled"] and self.opened_at is None:
+            self.opened_at = now
+            await self.broadcast(self.gate_msg())
+
+        state = PHASE_TO_WEB.get(gs["phase"], "ready")
+        if gs["elapsed_s"] + gs["remaining_s"] > 0:
+            self.duration = round(gs["elapsed_s"] + gs["remaining_s"], 2)
+        # 브라우저는 시작 시각 t0으로 카운트다운한다. 경과시간에서 거꾸로 계산하고 어긋날 때만 다시 보낸다
+        t0 = now - gs["elapsed_s"] if state != "ready" else None
+        t0_moved = t0 is not None and (self.t0 is None or abs(self.t0 - t0) > T0_TOLERANCE_S)
+        if state != self.state:
+            self.t0 = t0
+            await self._set_state(state, REASON_TO_WEB.get(gs["reason"], gs["reason"]) or None)
+        elif state == "run" and t0_moved:
+            self.t0 = t0
+            await self.broadcast(self.state_msg())
 
     async def _check_candies(self, x: float, y: float, now: float) -> None:
         for cid, (cx, cy) in self.candies.items():

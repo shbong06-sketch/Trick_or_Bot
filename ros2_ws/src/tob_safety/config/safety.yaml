@@ -23,3 +23,21 @@
 # 게임 레벨에서 안전 기준을 임의로 완화하지 않도록 관리한다.
 # [완료 기준]
 # 각 설정이 실제 검사 코드와 연결되고 사용하지 않는 설정이 없다.
+
+# 펌킨 velocity_gate (tob_safety/velocity_gate_node.py)
+# 실행: ros2 run tob_safety velocity_gate --ros-args -r __node:=pumpkin_velocity_gate --params-file <이 파일>
+#       Gazebo는 뒤에 -p output_stamped:=true -p use_sim_time:=true 추가
+# 출력 연결(output_*)은 통합 launch를 만들 때 robots.yaml 매핑으로 옮길 수 있다.
+pumpkin_velocity_gate:
+  ros__parameters:
+    robot_id: pumpkin
+    output_topic: /robot2/cmd_vel  # Collision Monitor 설정 전이라 로봇 cmd_vel에 바로 발행 [확인 필요] ros2 topic list
+    output_stamped: false          # 실물 [확인 필요] ros2 topic info -v /robot2/cmd_vel (Twist면 false). Gazebo는 true
+    output_frame: base_link        # output_stamped일 때만 사용
+    default_mode: manual         # control_mode 발행자가 아직 없으므로 키보드 조작을 기본으로 둔다
+    max_lin: 0.2                 # m/s, 최종 속도 상한. 백엔드 robot.yaml 요구사항 상한과 같은 값 [실물 확인 필요]
+    max_ang: 1.0                 # rad/s, 최종 회전 상한 [체감 보고 조정]
+    cmd_timeout_s: 0.5           # 선택된 명령을 마지막으로 받은 뒤 이 시간이 지나면 0 속도 (백엔드 10 Hz 재전송 기준)
+    require_safety_state: false  # safety_supervisor 구현 전 임시. 구현되면 true로 바꾼다
+    safety_max_age_s: 0.5        # SafetyState 발행·수신 시각 허용 기간 상한(초). valid_for_s와 작은 쪽 적용 [조정 필요]
+    check_rate_hz: 20.0          # 명령·허가 만료 검사 주기

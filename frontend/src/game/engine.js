@@ -187,6 +187,7 @@ export class GameEngine {
       }
       case 'hud': this.hud = { hp: m.hp, max: m.max, bs: m.bs, sg: m.sg, cc: m.cc }; break;
       case 'hit': this.hit = { n: (this.hit?.n ?? 0) + 1, hp: m.hp }; break;
+      case 'err': this.showToast(m.m); break;
       case 'busy': this.busy = true; break;
       case 'own': this.busy = false; break;
       case 'cds':

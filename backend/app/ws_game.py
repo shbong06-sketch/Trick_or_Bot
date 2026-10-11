@@ -72,7 +72,8 @@ async def ws_game(ws: WebSocket):
                         teleop.halt("다른 탭이 조작권을 가져감")
                         await _notify(prev, '{"t":"busy"}')
                     await ws.send_text('{"t":"own"}')
-                await game.start()
+                if (err := await game.start()) is not None:
+                    await ws.send_text(json.dumps({"t": "err", "m": f"시작할 수 없음: {err}"}))
             if t == "cdlog":
                 # 브라우저가 보고한 측정값 (서버 시계 기준으로 환산된 ms)
                 log.info("측정 %s: 판정→수신 %.0f ms, 판정→화면에서 사라짐 %.0f ms",
@@ -90,3 +91,6 @@ async def ws_game(ws: WebSocket):
         if ws is teleop.owner:
             teleop.owner = None
             teleop.halt("WebSocket 끊김")
+        if not game.clients and game.state != "run":
+            # 화면이 모두 닫혔으면 mock 펌킨을 시작 위치로 (다시 열었을 때 이전 위치가 보이지 않게)
+            ws.app.state.bridge.reset_pumpkin()

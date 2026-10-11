@@ -67,11 +67,9 @@ class MockBridge(Bridge):
     """
 
     def __init__(self, level: dict):
-        start = level["pumpkin_start"]
+        self._start = level["pumpkin_start"]
         self._lock = threading.Lock()
-        self._x, self._y, self._yaw = start["x"], start["y"], start["yaw"]
-        self._lin = self._ang = 0.0
-        self._t = time.monotonic()
+        self.reset_pumpkin()
         self._candies = [(c["x"], c["y"]) for c in level["candies"]]
         self._patrol = [(p["x"], p["y"]) for p in level.get("boo_patrol") or []]
         self._boo_speed = float(ROBOT["boo"]["mock_speed"])
@@ -110,6 +108,13 @@ class MockBridge(Bridge):
         else:
             self._x += lin * math.cos(self._yaw) * dt
             self._y += lin * math.sin(self._yaw) * dt
+
+    def reset_pumpkin(self) -> None:
+        """시작 위치·정지 상태로. 위치는 서버 메모리에만 있어 웹을 다시 열어도 남기 때문에 회차마다 되돌린다."""
+        with self._lock:
+            self._x, self._y, self._yaw = self._start["x"], self._start["y"], self._start["yaw"]
+            self._lin = self._ang = 0.0
+            self._t = time.monotonic()
 
     def send_cmd(self, lin: float, ang: float) -> None:
         with self._lock:

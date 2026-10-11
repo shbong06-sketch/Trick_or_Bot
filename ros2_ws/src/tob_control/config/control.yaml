@@ -23,3 +23,11 @@
 # 같은 값의 서로 다른 원본을 만들지 않는다.
 # [완료 기준]
 # 필요한 동작을 설정으로 조정할 수 있고 중복된 기준값이 없다.
+
+# 펌킨 조작 연동 (tob_control/pumpkin_controller_node.py)
+# 실행: ros2 run tob_control pumpkin_controller --ros-args --params-file <이 파일>
+pumpkin_controller:
+  ros__parameters:
+    game_state_timeout_s: 1.0    # GameState를 이만큼 못 받으면 조작 중지 (game_manager state_period_s 0.1초 기준) [조정 필요]
+    request_max_age_s: 0.5       # 만든 지 이만큼 지난 이동 요청은 넘기지 않는다
+    check_rate_hz: 10.0          # 게임 상태 만료 검사 주기

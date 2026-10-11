@@ -15,7 +15,10 @@ sudo apt install ros-jazzy-turtlebot4-simulator ros-jazzy-turtlebot4-navigation
 source /opt/ros/jazzy/setup.bash
 ros2 launch ~/cobot4_ws/simulation/launch/pumpkin_run_sim.launch.py      # 창 없이: headless:=true
 
-# 터미널 2: 게임 서버 (시뮬레이터용 설정)
+# 터미널 2~4: game_manager, pumpkin_controller, velocity_gate (README.md의 ros2 run 명령에 아래 인자 추가)
+#   모두: -p use_sim_time:=true      velocity_gate만: -p output_stamped:=true
+
+# 터미널 5: 게임 서버 (시뮬레이터용 설정)
 source /opt/ros/jazzy/setup.bash
 cd ~/cobot4_ws/backend
 ROBOT_CONFIG=robot_sim.yaml .venv/bin/python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
@@ -28,7 +31,7 @@ ROBOT_CONFIG=robot_sim.yaml .venv/bin/python -m uvicorn app.main:app --host 0.0.
 - 월드 바닥의 초록 원 = 사탕 자리, 보라 원 = 탈출문·문 앞 구역 (AR이 맞는지 보는 용도, 충돌 없음)
 - 종료는 터미널 1에서 Ctrl+C (Gazebo 창을 닫아도 전체가 같이 꺼짐)
 
-## 실물과 다른 점 (`backend/config/robot_sim.yaml`)
+## 실물과 다른 점 (`backend/config/robot_sim.yaml`, cmd_vel 형식은 velocity_gate의 `output_stamped:=true`)
 
 | 항목 | 시뮬레이터 |
 | --- | --- |

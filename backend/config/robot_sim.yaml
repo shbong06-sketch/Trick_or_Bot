@@ -1,11 +1,9 @@
 # Gazebo(TurtleBot4 시뮬레이터)용 로봇 설정. 실행: ROBOT_CONFIG=robot_sim.yaml
-# 실물과 다른 점: cmd_vel이 TwistStamped, 카메라가 preview 토픽(raw → 런치에서 compressed로 변환), 시뮬레이션 시간
+# 실물과 다른 점: 카메라가 preview 토픽(raw → 런치에서 compressed로 변환), 시뮬레이션 시간
 use_sim_time: true
 
 pumpkin:
-  cmd_vel_topic: /robot2/cmd_vel
-  cmd_vel_type: TwistStamped
-  cmd_vel_frame: base_link
+  cmd_request_topic: /tob/pumpkin/cmd_request   # pumpkin_controller 입력. 로봇 cmd_vel 연결은 ros2_ws tob_bringup/config/robots.yaml
   max_lin: 0.2
   max_ang: 1.0
   cmd_rate_hz: 10

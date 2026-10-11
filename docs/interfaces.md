@@ -136,6 +136,12 @@ ROS 2 메시지 타입은 `패키지/msg/메시지명`, 서비스 타입은 `패
 | `/tob/pumpkin/safety` | `tob_interfaces/msg/SafetyState` | 안전 감독 노드 | Pumpkin 이동 명령 게이트 |
 | `/tob/boo/safety` | `tob_interfaces/msg/SafetyState` | 안전 감독 노드 | Boo 이동 명령 게이트 |
 | `/tob/game/command` | `tob_interfaces/srv/GameCommand` | 게임 관리 노드 | 웹 ROS 연결부 |
+| `/tob/pumpkin/cmd_request` | `geometry_msgs/msg/TwistStamped` | 웹 ROS 연결부 (키보드 조작) | `pumpkin_controller_node.py` |
+| `/tob/pumpkin/cmd_manual` | `geometry_msgs/msg/TwistStamped` | `pumpkin_controller_node.py` | Pumpkin 이동 명령 게이트 |
+| `/tob/pumpkin/cmd_auto` | `geometry_msgs/msg/TwistStamped` | Pumpkin Nav2 (예정) | Pumpkin 이동 명령 게이트 |
+| `/tob/pumpkin/control_mode` | `std_msgs/msg/String` (`manual`·`auto`·`stop`, TRANSIENT_LOCAL) | 미정 (Nav2 연동 시 결정) | Pumpkin 이동 명령 게이트 |
+
+Pumpkin 이동 명령 경로: `웹 → /tob/pumpkin/cmd_request → pumpkin_controller(게임 RUNNING 확인) → /tob/pumpkin/cmd_manual → velocity_gate(모드·만료·안전·속도 상한) → 로봇 cmd_vel`. pumpkin_controller는 `game_manager`의 `/tob/game/state`가 RUNNING이고 만료되지 않았을 때만 요청을 넘긴다. 로봇 cmd_vel 토픽과 메시지 형식은 현재 `tob_safety/config/safety.yaml`의 `output_*` 파라미터에서 정한다.
 
 ### 4.2 로봇 이름과 실제 토픽 연결
 

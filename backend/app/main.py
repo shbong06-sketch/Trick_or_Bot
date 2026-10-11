@@ -80,14 +80,16 @@ def get_session(lv: int = 1):
 @app.post("/api/game/start")
 async def start_game():
     """회차 시작 (운영자용). 플레이어 화면에서는 Enter로 시작한다."""
-    await app.state.game.start()
+    if (err := await app.state.game.start()) is not None:
+        raise HTTPException(409, err)
     return {"state": app.state.game.state}
 
 
 @app.post("/api/game/reset")
 async def reset_game():
     """시작 전 상태로 되돌린다. 로봇 복귀는 이후 단계."""
-    await app.state.game.reset()
+    if (err := await app.state.game.reset()) is not None:
+        raise HTTPException(409, err)
     return {"state": app.state.game.state}
 
 

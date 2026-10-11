@@ -11,7 +11,7 @@ W, A, S, D = 1, 2, 4, 8
 
 
 class Teleop:
-    """WASD 비트마스크 → cmd_vel. 키를 누르는 동안 일정 주기로 발행하고, 입력이 끊기면 정지한다."""
+    """WASD 비트마스크 → 펌킨 이동 요청. 키를 누르는 동안 일정 주기로 발행하고, 입력이 끊기면 정지한다."""
 
     def __init__(self, bridge: Bridge, cfg: dict):
         self.bridge = bridge

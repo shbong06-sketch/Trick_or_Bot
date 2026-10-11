@@ -27,3 +27,119 @@
 # 최종 안전 상한·명령 선택은 velocity_gate가 담당하며 cmd_vel을 직접 우회 발행하지 않는다.
 # [완료 기준]
 # 조작 허용·중단·입력 단절에 따라 이동 요청이 올바르게 전환된다.
+#
+# [구현 메모]
+# - 운영자 복구 모드는 아직 합의되지 않아 구현하지 않았다. 지금은 플레이어 조작만 다룬다.
+
+import math
+import time
+
+from geometry_msgs.msg import TwistStamped
+import rclpy
+from rclpy.clock import Clock, ClockType
+from rclpy.duration import Duration
+from rclpy.executors import ExternalShutdownException
+from rclpy.node import Node
+from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
+from rclpy.time import Time
+from tob_interfaces.msg import GameState
+
+# docs/interfaces.md 10.1 상태 메시지 권장 QoS
+STATE_QOS = QoSProfile(reliability=ReliabilityPolicy.RELIABLE,
+                       durability=DurabilityPolicy.VOLATILE,
+                       history=HistoryPolicy.KEEP_LAST, depth=1)
+
+
+def _finite(t) -> bool:
+    return all(math.isfinite(v) for v in (t.linear.x, t.linear.y, t.linear.z,
+                                          t.angular.x, t.angular.y, t.angular.z))
+
+
+class PumpkinController(Node):
+    """웹 이동 요청을 게임이 RUNNING일 때만 velocity_gate로 넘긴다."""
+
+    def __init__(self):
+        super().__init__('pumpkin_controller')
+        self._state_timeout = float(self.declare_parameter('game_state_timeout_s', 1.0).value)
+        self._request_max_age = Duration(
+            seconds=float(self.declare_parameter('request_max_age_s', 0.5).value))
+        check_hz = float(self.declare_parameter('check_rate_hz', 10.0).value)
+
+        self._phase: int | None = None
+        self._state_rx: float | None = None     # 마지막 GameState 수신 시각 (단조 시계)
+        self._allowed = False
+        self._allowed_since: Time | None = None  # 이 시각 이전에 만든 요청은 넘기지 않는다
+        self._block_reason = '게임 상태 미수신'
+
+        self._pub = self.create_publisher(TwistStamped, '/tob/pumpkin/cmd_manual', 10)
+        self.create_subscription(TwistStamped, '/tob/pumpkin/cmd_request', self._on_request, 10)
+        self.create_subscription(GameState, '/tob/game/state', self._on_state, STATE_QOS)
+        # GameState가 끊긴 것은 콜백으로 알 수 없으므로 주기적으로 확인한다.
+        # game_manager와 같이 /clock이 멈춰도 검사하도록 STEADY_TIME 타이머를 쓴다
+        self.create_timer(1.0 / check_hz, self._update_allowed,
+                          clock=Clock(clock_type=ClockType.STEADY_TIME))
+        self.get_logger().info('대기: 게임 상태 미수신')
+
+    def _on_state(self, msg: GameState) -> None:
+        self._phase = msg.phase
+        self._state_rx = time.monotonic()
+        self._update_allowed()
+
+    def _current_block_reason(self) -> str | None:
+        if self._state_rx is None:
+            return '게임 상태 미수신'
+        if time.monotonic() - self._state_rx > self._state_timeout:
+            return '게임 상태 만료'
+        if self._phase != GameState.RUNNING:
+            return f'게임 진행 중 아님 (phase={self._phase})'
+        return None
+
+    def _update_allowed(self) -> None:
+        reason = self._current_block_reason()
+        allowed = reason is None
+        if allowed and not self._allowed:
+            # 진행 전·일시정지 중에 만든 오래된 요청은 재개 후에도 실행하지 않는다
+            self._allowed_since = self.get_clock().now()
+            self.get_logger().info('조작 허용')
+        elif not allowed and (self._allowed or reason != self._block_reason):
+            if self._allowed:
+                self._publish_stop()
+            self.get_logger().info(f'조작 중지: {reason}')
+            self._block_reason = reason
+        self._allowed = allowed
+
+    def _on_request(self, msg: TwistStamped) -> None:
+        if not self._allowed:
+            return
+        if not _finite(msg.twist):
+            self.get_logger().warn('유한값이 아닌 이동 요청을 버림')
+            self._publish_stop()
+            return
+        stamp = Time.from_msg(msg.header.stamp, clock_type=self.get_clock().clock_type)
+        if stamp < self._allowed_since:
+            return
+        if self.get_clock().now() - stamp > self._request_max_age:
+            self.get_logger().warn('오래된 이동 요청을 버림', throttle_duration_sec=1.0)
+            return
+        self._pub.publish(msg)
+
+    def _publish_stop(self) -> None:
+        msg = TwistStamped()
+        msg.header.stamp = self.get_clock().now().to_msg()
+        self._pub.publish(msg)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = PumpkinController()
+    try:
+        rclpy.spin(node)
+    except (KeyboardInterrupt, ExternalShutdownException):
+        pass
+    finally:
+        node.destroy_node()
+        rclpy.try_shutdown()
+
+
+if __name__ == '__main__':
+    main()
