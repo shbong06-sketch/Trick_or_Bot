@@ -1,0 +1,19 @@
+# 모두 실측 전 초기 운영값이다. 실제 발행 주기·지연·제어 만료시간에 맞춰 확인한다.
+# 상대 level_path는 설치된 이 기본 설정 파일의 부모(config/) 기준이다.
+# 외부 파라미터 YAML 사용 시에는 level_path를 절대 경로로 지정한다.
+game_manager:
+  ros__parameters:
+    level_path: levels/level1.yaml
+    result_log_path: ~/.local/state/tob_game/rounds.jsonl
+    tick_period_s: 0.05
+    state_period_s: 0.1
+    pose_timeout_s: 0.5
+    observation_timeout_s: 0.5
+    receive_timeout_s: 0.5
+    future_tolerance_s: 0.05
+    observation_position_skew_s: 0.2
+    safety_max_valid_for_s: 1.0
+    max_clock_step_s: 1.0
+    observation_sources: [boo_camera]
+    # 원본 영상의 실제 header.frame_id와 일치하도록 지정한다.
+    observation_frame_ids: [camera_optical_frame]
