@@ -3,9 +3,11 @@ import { GameEngine } from '../game/engine.js';
 import { SPRITE, candySprite } from '../game/sprites.js';
 import { HudDefs, ScreenEffects, StatusBar, SuspicionGauge } from '../game/Hud.jsx';
 import { isMuted, playBoo, playHeartbeat, setMuted, unlockAudio } from '../game/audio.js';
+import QuarterView from '../game/QuarterView.jsx';   // ★ 3D 쿼터뷰
 import '../game/game.css';
 
-// 도망자(펌킨) 플레이 화면: 1인칭 영상 + AR + HUD. 실시간 처리는 GameEngine, 여기서는 HUD와 화면 전환만 그린다.
+// 도망자(펌킨) 플레이 화면: 3D 쿼터뷰 + HUD. 실시간 처리는 GameEngine, 여기서는 HUD와 화면 전환만 그린다.
+//   (기존 1인칭 영상+AR canvas는 지우지 않고 숨겨 둔다 — GameEngine이 아직 필요로 함)
 //   ready → (Enter/시작) → run → clear: 닉네임 입력 → 리더보드
 //                              → over : 재시작 → 레벨 선택
 export default function PlayerPage({ selectedLevel, onRestart, onLeaderboard }) {
@@ -61,8 +63,10 @@ export default function PlayerPage({ selectedLevel, onRestart, onLeaderboard }) 
   return (
     <div className={`pr-screen ${s?.debug ? '' : 'pr-nodebug'} ${shake ? 'pr-shake' : ''}`}>
       <HudDefs />
-      {!s?.hasVideo && <span className="pr-placeholder">영상 기다리는 중…</span>}
-      <canvas ref={videoRef} className="pr-video" />
+      {/* ★ 맨 아래 층: 3D 쿼터뷰. 지도·위치는 GameEngine이 받은 값을 그대로 넘긴다 */}
+      {session && <QuarterView session={session} pose={s?.pose} boo={s?.boo} />}
+      {/* ★ 기존 1인칭 영상 canvas: GameEngine이 필요로 해서 남겨두고 화면에서만 숨김 */}
+      <canvas ref={videoRef} className="pr-video" style={{ display: 'none' }} />
       <ScreenEffects heartbeat={heartbeat} chase={chase} hit={s?.hit} />
 
       {/* 상단 중앙: 남은 시간 + 사탕 */}

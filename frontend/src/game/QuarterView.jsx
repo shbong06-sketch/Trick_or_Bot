@@ -4,6 +4,11 @@ import { unpackOcc } from './geometry.js';
 import { toWorld, cellToMap, mapBounds, yawToRotY } from './quarterProjection.js';
 import './game.css';
 
+// ★ 쿼터뷰 카메라 설정. 호박 기준 어디에 둘지(m)와 따라가는 부드러움
+const CAM_OFFSET = new THREE.Vector3(0, 2.2, 1.8);   // (동서, 높이, 남쪽으로 떨어진 거리) → 약 50° 내려다봄
+const LOOK_OFFSET = new THREE.Vector3(0, 0.15, 0);   // 호박 발밑이 아니라 몸통쯤을 바라봄
+const CAM_TAU = 0.25;                                 // 클수록 천천히 따라옴 (초)
+
 export default function QuarterView({ session, pose, boo }) {
   const canvasRef = useRef(null);
   const modelsRef = useRef(null);
@@ -56,7 +61,8 @@ export default function QuarterView({ session, pose, boo }) {
     const gate = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.4), new THREE.MeshStandardMaterial({ color: 0xa855f7 }));
     gate.position.copy(toWorld(session.gate.x, session.gate.y, 0.2));
     scene.add(gate);
-        // 호박·유령 (위치를 받기 전까지는 숨겨둠)
+
+    // 호박·유령 (위치를 받기 전까지는 숨겨둠)
     const pumpkin = createPumpkinModel();
     const booModel = createBooModel();
     pumpkin.visible = false;
@@ -64,12 +70,14 @@ export default function QuarterView({ session, pose, boo }) {
     scene.add(pumpkin, booModel);
     modelsRef.current = { pumpkin, boo: booModel };
 
-    // 3. 카메라: 지금은 지도 전체를 남쪽 위에서 내려다봄 (확인용)
+    // 3. 카메라: 호박 위치가 오기 전에는 지도 전체를 보여줌
     const center = toWorld(cx, cy, 0);
     camera.position.set(center.x, 6, center.z + 5);
     camera.lookAt(center);
+    const camLook = new THREE.Vector3();   // ★ 카메라가 바라보는 점 (부드럽게 이동)
+    let camFollowing = false;              // ★ 호박을 처음 찾았는지
 
-    // 화면 크기 맞추기 + 매 프레임 그리기
+    // 화면 크기 맞추기
     const resize = () => {
       renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
@@ -77,9 +85,35 @@ export default function QuarterView({ session, pose, boo }) {
     };
     window.addEventListener('resize', resize);
     resize();
-    let id;
-    const loop = () => { renderer.render(scene, camera); id = requestAnimationFrame(loop); };
-    loop();
+
+    // ★ 매 프레임: 카메라가 호박을 따라간 뒤 그리기
+    const want = new THREE.Vector3();
+    const look = new THREE.Vector3();
+    let id, last = performance.now();
+    const loop = (now) => {
+      const dt = Math.min(0.1, (now - last) / 1000);   // 지난 프레임 이후 흐른 시간(초)
+      last = now;
+
+      if (pumpkin.visible) {
+        // 호박 "위치"만 사용. rotation은 쓰지 않으므로 제자리 회전에 카메라가 따라 돌지 않는다
+        want.copy(pumpkin.position).add(CAM_OFFSET);
+        look.copy(pumpkin.position).add(LOOK_OFFSET);
+        if (!camFollowing) {                             // 처음엔 바로 그 자리로
+          camera.position.copy(want);
+          camLook.copy(look);
+          camFollowing = true;
+        } else {                                         // 이후엔 부드럽게 따라감
+          const a = 1 - Math.exp(-dt / CAM_TAU);
+          camera.position.lerp(want, a);
+          camLook.lerp(look, a);
+        }
+        camera.lookAt(camLook);
+      }
+
+      renderer.render(scene, camera);
+      id = requestAnimationFrame(loop);
+    };
+    id = requestAnimationFrame(loop);
 
     // 화면을 떠날 때 정리
     return () => {
@@ -91,6 +125,7 @@ export default function QuarterView({ session, pose, boo }) {
     };
   }, [session]);
 
+  // 위치가 바뀔 때마다 호박·유령을 옮김
   useEffect(() => {
     const md = modelsRef.current;
     if (!md) return;
@@ -133,7 +168,7 @@ function createPumpkinModel() {
   eyeL.position.set(0.115, 0.20, 0.045);
   eyeR.position.set(0.115, 0.20, -0.045);
   const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.02, 0.08), black);
-  mouth.position.set(0.12, 0.14, 0);
+  mouth.position.set(0.13, 0.14, 0);         // 몸통 표면 밖으로 살짝 나오게
   g.add(robotBase(), body, stem, eyeL, eyeR, mouth);
   return g;
 }
